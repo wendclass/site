@@ -1,0 +1,45 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment variables (NEVER commit secrets)
+.env
+.env*.local
+
+# Raw design source archives (kept locally)
+000_Autres/
+001_72h CJ 2026/
+002_GSDA/
+003_IPERMIC/
+004_Club CJ/
+005_Mon Frère Parle/
+006_Off Day/
+007_Victoire Bominos/
+008_Café Inspire/
+011_Bang/
+012_Yam Wekre/
+Avant Après/
+Ressources & Données sur Class S/
+generate-favicons.ps1
+
