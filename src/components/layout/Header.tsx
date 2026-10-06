@@ -33,13 +33,13 @@ export const Header: React.FC = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'glass-header py-3 shadow-soft border-b border-violet-imperial/10'
-          : 'bg-transparent py-5'
+          ? 'glass-header py-2.5 shadow-soft border-b border-violet-imperial/10'
+          : 'bg-transparent py-3.5 sm:py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Logo */}
-        <Logo variant="violet" size="md" />
+        {/* Logo (reduced by half) */}
+        <Logo variant="violet" size="sm" />
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8 bg-white/70 backdrop-blur-md px-6 py-2 rounded-full border border-violet-imperial/10 shadow-sm" aria-label="Navigation principale">

@@ -28,7 +28,7 @@ import {
   BRANCH_E_OPTIONS
 } from '../../data/formulaire';
 import { CtaButton } from '../ui/CtaButton';
-import { submitDemande } from '../../lib/supabase';
+import { submitDemande, trackVisitEvent } from '../../lib/supabase';
 
 export const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState<FormDataState>(initialFormData);
@@ -36,6 +36,29 @@ export const ContactForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const stepStartTimeRef = React.useRef<number>(Date.now());
+  const maxStepReachedRef = React.useRef<number>(1);
+  const isSubmittedRef = React.useRef<boolean>(false);
+
+  // Track initial step 1 on mount
+  React.useEffect(() => {
+    trackVisitEvent({
+      event_type: 'etape_formulaire',
+      page_or_step: '1',
+      duration_seconds: 0,
+    });
+
+    return () => {
+      // If user reached step >= 2 and left without completing submission
+      if (!isSubmittedRef.current && maxStepReachedRef.current >= 2) {
+        trackVisitEvent({
+          event_type: 'formulaire_abandonne',
+          page_or_step: String(maxStepReachedRef.current),
+          duration_seconds: Math.round((Date.now() - stepStartTimeRef.current) / 1000),
+        });
+      }
+    };
+  }, []);
 
   // Total steps is 4 (+ 1 confirmation screen)
   const totalSteps = 4;
@@ -199,7 +222,19 @@ export const ContactForm: React.FC = () => {
 
   const handleNext = () => {
     if (validateCurrentStep()) {
-      setCurrentStep((prev) => Math.min(prev + 1, totalSteps));
+      const nextStep = Math.min(currentStep + 1, totalSteps);
+      const timeSpentOnCurrentStep = Math.round((Date.now() - stepStartTimeRef.current) / 1000);
+      
+      // Track progression
+      trackVisitEvent({
+        event_type: 'etape_formulaire',
+        page_or_step: String(nextStep),
+        duration_seconds: timeSpentOnCurrentStep,
+      });
+
+      maxStepReachedRef.current = Math.max(maxStepReachedRef.current, nextStep);
+      stepStartTimeRef.current = Date.now();
+      setCurrentStep(nextStep);
     }
   };
 
@@ -253,6 +288,15 @@ export const ContactForm: React.FC = () => {
         return;
       }
 
+      isSubmittedRef.current = true;
+      
+      // Track submission success event
+      trackVisitEvent({
+        event_type: 'formulaire_soumis',
+        page_or_step: 'soumis',
+        duration_seconds: Math.round((Date.now() - stepStartTimeRef.current) / 1000),
+      });
+
       setIsSubmitting(false);
       setIsSuccess(true);
       try {
@@ -265,7 +309,7 @@ export const ContactForm: React.FC = () => {
       } catch {
         // Fallback gracefully
       }
-    } catch (err: any) {
+    } catch {
       setIsSubmitting(false);
       setErrorMsg('Impossible d’enregistrer votre demande. Veuillez vérifier votre connexion ou nous contacter directement sur WhatsApp.');
     }

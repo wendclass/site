@@ -13,8 +13,10 @@ import {
   FileText,
   Save,
   ArrowUpRight,
+  Trash2,
+  AlertTriangle,
 } from 'lucide-react';
-import { Demande, updateDemandeStatus, updateDemandeNotes } from '../../lib/supabase';
+import { Demande, updateDemandeStatus, updateDemandeNotes, deleteDemande } from '../../lib/supabase';
 
 interface AdminDemandesProps {
   demandes: Demande[];
@@ -36,6 +38,10 @@ export const AdminDemandes: React.FC<AdminDemandesProps> = ({
   const [isSavingNotes, setIsSavingNotes] = useState(false);
   const [notesFeedback, setNotesFeedback] = useState<string | null>(null);
 
+  // Deletion state
+  const [demandeToDelete, setDemandeToDelete] = useState<Demande | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
   // Sync internal notes when a demande is opened
   React.useEffect(() => {
     if (selectedDemande) {
@@ -50,6 +56,20 @@ export const AdminDemandes: React.FC<AdminDemandesProps> = ({
       if (selectedDemande && selectedDemande.id === id) {
         onSelectDemande({ ...selectedDemande, status: newStatus });
       }
+      onRefresh();
+    }
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!demandeToDelete) return;
+    setIsDeleting(true);
+    const success = await deleteDemande(demandeToDelete.id);
+    setIsDeleting(false);
+    if (success) {
+      if (selectedDemande && selectedDemande.id === demandeToDelete.id) {
+        onSelectDemande(null);
+      }
+      setDemandeToDelete(null);
       onRefresh();
     }
   };
@@ -77,6 +97,17 @@ export const AdminDemandes: React.FC<AdminDemandesProps> = ({
       unknown: 'Je ne sais pas encore (Orientation)',
     };
     return map[type] || type;
+  };
+
+  const formatGoal = (goalId: string) => {
+    const map: Record<string, string> = {
+      more_clients: 'Attirer plus de clients',
+      new_offer: 'Faire connaître un nouveau produit/service',
+      stand_out: 'Me démarquer de mes concurrents',
+      credibility: 'Être pris au sérieux',
+      other: 'Autre besoin spécifique',
+    };
+    return map[goalId] || goalId;
   };
 
   const getStatusBadge = (status: Demande['status']) => {
@@ -446,7 +477,7 @@ export const AdminDemandes: React.FC<AdminDemandesProps> = ({
               <div className="flex flex-wrap gap-1.5">
                 {(selectedDemande.goals || []).map((goalId, idx) => (
                   <span key={idx} className="px-2.5 py-1 rounded-full bg-violet-imperial/20 border border-violet-imperial/30 text-xs text-white">
-                    {goalId}
+                    {formatGoal(goalId)}
                   </span>
                 ))}
               </div>
@@ -515,17 +546,77 @@ export const AdminDemandes: React.FC<AdminDemandesProps> = ({
                 rows={3}
                 className="w-full p-3 rounded-xl bg-onyx border border-violet-imperial/20 text-white placeholder:text-white/30 text-xs font-body focus:outline-none focus:border-amethyste"
               />
-              <div className="flex justify-end">
+              <div className="flex items-center justify-between pt-2">
+                <button
+                  type="button"
+                  onClick={() => setDemandeToDelete(selectedDemande)}
+                  className="px-3.5 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/20 text-xs font-semibold flex items-center gap-1.5 transition-all font-body"
+                >
+                  <Trash2 className="w-3.5 h-3.5 text-rose-400" />
+                  <span>Supprimer définitivement cette demande</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={handleSaveNotes}
                   disabled={isSavingNotes}
-                  className="px-4 py-2 rounded-xl bg-violet-imperial hover:bg-violet-imperial/80 text-white text-xs font-semibold flex items-center gap-1.5 transition-all font-body disabled:opacity-50"
+                  className="px-4 py-2 rounded-xl bg-violet-imperial hover:bg-violet-imperial/80 text-white text-xs font-semibold flex items-center gap-1.5 transition-all font-body disabled:opacity-50 shadow-glow"
                 >
                   <Save className="w-3.5 h-3.5" />
                   <span>{isSavingNotes ? 'Enregistrement...' : 'Sauvegarder la note'}</span>
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal for Permanent Deletion */}
+      {demandeToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-ardoise border border-rose-500/30 rounded-3xl p-6 sm:p-8 max-w-md w-full space-y-6 shadow-2xl">
+            <div className="flex items-center gap-3 text-rose-400">
+              <div className="p-3 rounded-2xl bg-rose-500/15 border border-rose-500/30">
+                <AlertTriangle className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-title font-semibold text-white">
+                  Supprimer définitivement ?
+                </h3>
+                <p className="text-xs text-rose-300/80 font-body">Action irréversible</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-ivoire-violet/80 font-body leading-relaxed">
+              Êtes-vous sûr de vouloir supprimer définitivement la demande de{' '}
+              <strong className="text-white">{demandeToDelete.full_name}</strong> (
+              {demandeToDelete.company_name}) ? Cette ligne sera définitivement effacée de la base de données.
+            </p>
+
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setDemandeToDelete(null)}
+                disabled={isDeleting}
+                className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-medium text-ivoire-violet/80 transition-colors font-body"
+              >
+                Annuler
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDelete}
+                disabled={isDeleting}
+                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold flex items-center gap-2 transition-all font-body shadow-lg disabled:opacity-50"
+              >
+                {isDeleting ? (
+                  <span>Suppression en cours...</span>
+                ) : (
+                  <>
+                    <Trash2 className="w-4 h-4" />
+                    <span>Confirmer la suppression</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
         </div>

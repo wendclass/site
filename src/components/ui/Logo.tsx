@@ -15,7 +15,8 @@ export const Logo: React.FC<LogoProps> = ({
   asLink = true
 }) => {
   const sizeClasses = {
-    sm: 'h-6 w-auto',
+    xs: 'h-4 w-auto',
+    sm: 'h-4.5 sm:h-5.5 w-auto',
     md: 'h-8 sm:h-9 w-auto',
     lg: 'h-10 sm:h-12 w-auto'
   };

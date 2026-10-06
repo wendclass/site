@@ -265,6 +265,208 @@ export const updateDemandeNotes = async (id: string, internal_notes: string): Pr
   }
 };
 
+export const deleteDemande = async (id: string): Promise<boolean> => {
+  try {
+    if (isSupabaseConfigured() && supabase) {
+      const { error } = await supabase
+        .from('demandes')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      return true;
+    } else {
+      const currentList = getLocalStore<Demande[]>(STORAGE_KEYS.DEMANDES, []);
+      const filtered = currentList.filter((d) => d.id !== id);
+      setLocalStore(STORAGE_KEYS.DEMANDES, filtered);
+      return true;
+    }
+  } catch (err) {
+    console.error('deleteDemande error:', err);
+    return false;
+  }
+};
+
+// --- ANALYTICS (STATISTIQUES DE VISITE) ---
+export type VisitEventType = 'page_vue' | 'etape_formulaire' | 'formulaire_soumis' | 'formulaire_abandonne';
+
+export interface VisitEvent {
+  id?: string;
+  session_id: string;
+  event_type: VisitEventType;
+  page_or_step: string;
+  duration_seconds?: number;
+  created_at?: string;
+}
+
+const ANALYTICS_STORAGE_KEY = 'class_s_analytics_events';
+const SESSION_STORAGE_KEY = 'class_s_anonymous_session_id';
+
+export const getAnonymousSessionId = (): string => {
+  try {
+    let sid = sessionStorage.getItem(SESSION_STORAGE_KEY);
+    if (!sid) {
+      sid = `sess_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+      sessionStorage.setItem(SESSION_STORAGE_KEY, sid);
+    }
+    return sid;
+  } catch {
+    return `sess_${Date.now()}`;
+  }
+};
+
+export const trackVisitEvent = async (event: {
+  event_type: VisitEventType;
+  page_or_step: string;
+  duration_seconds?: number;
+}): Promise<void> => {
+  try {
+    const session_id = getAnonymousSessionId();
+    const eventPayload = {
+      session_id,
+      event_type: event.event_type,
+      page_or_step: event.page_or_step,
+      duration_seconds: Math.max(0, Math.round(event.duration_seconds || 0)),
+    };
+
+    if (isSupabaseConfigured() && supabase) {
+      // Non-blocking insert into evenements_visite table
+      void supabase
+        .from('evenements_visite')
+        .insert([eventPayload])
+        .then(({ error }) => {
+          if (error) {
+            console.warn('[Analytics] Track error (table might be initializing):', error.message);
+          }
+        });
+    } else {
+      // Fallback local storage
+      const existing = getLocalStore<VisitEvent[]>(ANALYTICS_STORAGE_KEY, []);
+      const newEvt: VisitEvent = {
+        ...eventPayload,
+        id: `evt_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+        created_at: new Date().toISOString(),
+      };
+      setLocalStore(ANALYTICS_STORAGE_KEY, [newEvt, ...existing].slice(0, 1000));
+    }
+  } catch (err) {
+    // Best-effort non-blocking: never throws
+    console.warn('[Analytics] Suppressed tracking error:', err);
+  }
+};
+
+export const fetchVisitEvents = async (): Promise<VisitEvent[]> => {
+  try {
+    if (isSupabaseConfigured() && supabase) {
+      const { data, error } = await supabase
+        .from('evenements_visite')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(2000);
+
+      if (error) {
+        console.warn('fetchVisitEvents Supabase error, falling back to local:', error);
+        return getLocalStore<VisitEvent[]>(ANALYTICS_STORAGE_KEY, getInitialMockAnalytics());
+      }
+      return data || [];
+    } else {
+      return getLocalStore<VisitEvent[]>(ANALYTICS_STORAGE_KEY, getInitialMockAnalytics());
+    }
+  } catch (err) {
+    console.warn('fetchVisitEvents error:', err);
+    return getLocalStore<VisitEvent[]>(ANALYTICS_STORAGE_KEY, getInitialMockAnalytics());
+  }
+};
+
+// Realistic mock analytics data when database is fresh or offline
+const getInitialMockAnalytics = (): VisitEvent[] => {
+  const events: VisitEvent[] = [];
+  const now = Date.now();
+  const pages = ['/', '/offres', '/projets', '/a-propos'];
+
+  for (let i = 0; i < 45; i++) {
+    const sId = `sess_mock_${i}`;
+    const timestamp = new Date(now - Math.random() * 7 * 86400000).toISOString();
+    
+    // Page views
+    const randomPage = pages[Math.floor(Math.random() * pages.length)];
+    events.push({
+      id: `mock-pv-${i}`,
+      session_id: sId,
+      event_type: 'page_vue',
+      page_or_step: randomPage,
+      duration_seconds: Math.floor(Math.random() * 75) + 15,
+      created_at: timestamp,
+    });
+
+    // Form Funnel simulation
+    if (Math.random() > 0.3) {
+      events.push({
+        id: `mock-step1-${i}`,
+        session_id: sId,
+        event_type: 'etape_formulaire',
+        page_or_step: '1',
+        duration_seconds: Math.floor(Math.random() * 20) + 5,
+        created_at: timestamp,
+      });
+
+      if (Math.random() > 0.25) {
+        events.push({
+          id: `mock-step2-${i}`,
+          session_id: sId,
+          event_type: 'etape_formulaire',
+          page_or_step: '2',
+          duration_seconds: Math.floor(Math.random() * 25) + 8,
+          created_at: timestamp,
+        });
+
+        if (Math.random() > 0.2) {
+          events.push({
+            id: `mock-step3-${i}`,
+            session_id: sId,
+            event_type: 'etape_formulaire',
+            page_or_step: '3',
+            duration_seconds: Math.floor(Math.random() * 30) + 10,
+            created_at: timestamp,
+          });
+
+          if (Math.random() > 0.15) {
+            events.push({
+              id: `mock-step4-${i}`,
+              session_id: sId,
+              event_type: 'etape_formulaire',
+              page_or_step: '4',
+              duration_seconds: Math.floor(Math.random() * 35) + 12,
+              created_at: timestamp,
+            });
+
+            if (Math.random() > 0.1) {
+              events.push({
+                id: `mock-sub-${i}`,
+                session_id: sId,
+                event_type: 'formulaire_soumis',
+                page_or_step: 'soumis',
+                duration_seconds: 0,
+                created_at: timestamp,
+              });
+            } else {
+              events.push({
+                id: `mock-ab-${i}`,
+                session_id: sId,
+                event_type: 'formulaire_abandonne',
+                page_or_step: '4',
+                duration_seconds: 15,
+                created_at: timestamp,
+              });
+            }
+          }
+        }
+      }
+    }
+  }
+  return events;
+};
+
 // --- PROJETS (PUBLIC & ADMIN) ---
 export const fetchPublicProjects = async (): Promise<Project[]> => {
   try {

@@ -6,9 +6,11 @@ import {
   Demande,
   DbProject,
   DbTestimonial,
+  VisitEvent,
   fetchDemandes,
   fetchAdminProjects,
   fetchAdminTestimonials,
+  fetchVisitEvents,
 } from '../../lib/supabase';
 import { AdminAuth } from './AdminAuth';
 import { AdminLayout, AdminTab } from './AdminLayout';
@@ -16,6 +18,7 @@ import { AdminDashboard } from './AdminDashboard';
 import { AdminDemandes } from './AdminDemandes';
 import { AdminProjets } from './AdminProjets';
 import { AdminTemoignages } from './AdminTemoignages';
+import { AdminStats } from './AdminStats';
 
 export const AdminPage: React.FC = () => {
   const [session, setSession] = useState<AdminSession | null>(getAdminSession());
@@ -23,6 +26,7 @@ export const AdminPage: React.FC = () => {
   const [demandes, setDemandes] = useState<Demande[]>([]);
   const [projects, setProjects] = useState<DbProject[]>([]);
   const [testimonials, setTestimonials] = useState<DbTestimonial[]>([]);
+  const [events, setEvents] = useState<VisitEvent[]>([]);
 
   const [selectedDemande, setSelectedDemande] = useState<Demande | null>(null);
   const [isCreatingNewProject, setIsCreatingNewProject] = useState(false);
@@ -31,14 +35,16 @@ export const AdminPage: React.FC = () => {
   // Load all admin data
   const loadData = async () => {
     try {
-      const [demandesData, projectsData, testimonialsData] = await Promise.all([
+      const [demandesData, projectsData, testimonialsData, eventsData] = await Promise.all([
         fetchDemandes(),
         fetchAdminProjects(),
         fetchAdminTestimonials(),
+        fetchVisitEvents(),
       ]);
       setDemandes(demandesData);
       setProjects(projectsData);
       setTestimonials(testimonialsData);
+      setEvents(eventsData);
     } catch (err) {
       console.error('Error loading admin data:', err);
     }
@@ -102,6 +108,7 @@ export const AdminPage: React.FC = () => {
           demandes={demandes}
           projects={projects}
           testimonials={testimonials}
+          events={events}
           onNavigateTab={(tab) => setActiveTab(tab)}
           onSelectDemande={(d) => {
             setSelectedDemande(d);
@@ -124,6 +131,13 @@ export const AdminPage: React.FC = () => {
           onRefresh={loadData}
           selectedDemande={selectedDemande}
           onSelectDemande={setSelectedDemande}
+        />
+      )}
+
+      {activeTab === 'statistiques' && (
+        <AdminStats
+          events={events}
+          onRefresh={loadData}
         />
       )}
 

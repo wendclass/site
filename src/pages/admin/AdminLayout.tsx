@@ -4,6 +4,7 @@ import {
   Inbox,
   FolderKanban,
   MessageSquareQuote,
+  BarChart3,
   LogOut,
   ExternalLink,
   ShieldCheck,
@@ -12,7 +13,7 @@ import {
 import { Logo } from '../../components/ui/Logo';
 import { AdminSession } from '../../lib/supabase';
 
-export type AdminTab = 'dashboard' | 'demandes' | 'projets' | 'temoignages';
+export type AdminTab = 'dashboard' | 'demandes' | 'projets' | 'temoignages' | 'statistiques';
 
 interface AdminLayoutProps {
   session: AdminSession;
@@ -42,6 +43,11 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
       label: 'Demandes de devis',
       icon: Inbox,
       badge: newDemandesCount > 0 ? newDemandesCount : undefined,
+    },
+    {
+      id: 'statistiques' as AdminTab,
+      label: 'Statistiques de visite',
+      icon: BarChart3,
     },
     {
       id: 'projets' as AdminTab,

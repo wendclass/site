@@ -5,20 +5,22 @@ import {
   MessageSquareQuote,
   Sparkles,
   ArrowUpRight,
-  Clock,
   Building,
   User,
   Phone,
   PlusCircle,
   Eye,
+  TrendingUp,
+  Users,
 } from 'lucide-react';
-import { Demande, DbProject, DbTestimonial } from '../../lib/supabase';
+import { Demande, DbProject, DbTestimonial, VisitEvent } from '../../lib/supabase';
 
 interface AdminDashboardProps {
   demandes: Demande[];
   projects: DbProject[];
   testimonials: DbTestimonial[];
-  onNavigateTab: (tab: 'demandes' | 'projets' | 'temoignages') => void;
+  events: VisitEvent[];
+  onNavigateTab: (tab: 'demandes' | 'projets' | 'temoignages' | 'statistiques') => void;
   onSelectDemande: (demande: Demande) => void;
   onNewProject: () => void;
   onNewTestimonial: () => void;
@@ -28,15 +30,32 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   demandes,
   projects,
   testimonials,
+  events,
   onNavigateTab,
   onSelectDemande,
   onNewProject,
   onNewTestimonial,
 }) => {
   const newDemandesCount = demandes.filter((d) => d.status === 'nouveau').length;
-  const inProgressCount = demandes.filter((d) => d.status === 'en_cours').length;
   const publishedProjectsCount = projects.filter((p) => p.status === 'publie').length;
   const publishedTestimonialsCount = testimonials.filter((t) => t.status === 'publie').length;
+
+  // Calculate 7d analytics metrics
+  const now = Date.now();
+  const cutoff7d = now - 7 * 86400000;
+  const recent7dEvents = events.filter((e) => {
+    const t = e.created_at ? new Date(e.created_at).getTime() : now;
+    return t >= cutoff7d;
+  });
+
+  const uniqueVisitors7d = new Set(recent7dEvents.map((e) => e.session_id)).size;
+  const step1Count = new Set(
+    recent7dEvents.filter((e) => e.event_type === 'etape_formulaire' && e.page_or_step === '1').map((e) => e.session_id)
+  ).size;
+  const submittedCount = new Set(
+    recent7dEvents.filter((e) => e.event_type === 'formulaire_soumis').map((e) => e.session_id)
+  ).size;
+  const formCompletionRate = step1Count > 0 ? Math.round((submittedCount / step1Count) * 100) : 0;
 
   const recentDemandes = demandes.slice(0, 6);
 
@@ -127,25 +146,26 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </div>
         </div>
 
-        {/* Card 2: Total demandes */}
+        {/* Card 2: Statistiques de visite */}
         <div
-          onClick={() => onNavigateTab('demandes')}
+          onClick={() => onNavigateTab('statistiques')}
           className="p-6 rounded-3xl bg-ardoise/70 border border-violet-imperial/20 shadow-lg hover:border-violet-imperial/50 transition-all cursor-pointer group"
         >
           <div className="flex items-center justify-between mb-4">
             <div className="p-3 rounded-2xl bg-violet-imperial/20 text-amethyste">
-              <Clock className="w-6 h-6" />
+              <Users className="w-6 h-6" />
             </div>
-            <span className="text-[11px] font-semibold text-amethyste bg-violet-imperial/10 px-2 py-0.5 rounded-full">
-              {inProgressCount} en cours
+            <span className="text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full flex items-center gap-1">
+              <TrendingUp className="w-3 h-3" />
+              <span>{formCompletionRate}% conversion</span>
             </span>
           </div>
           <div className="space-y-1">
             <span className="text-3xl sm:text-4xl font-title font-bold text-white">
-              {demandes.length}
+              {uniqueVisitors7d}
             </span>
             <p className="text-xs text-ivoire-violet/70 font-body">
-              Total des formulaires reçus
+              Visiteurs uniques (7 derniers jours)
             </p>
           </div>
         </div>

@@ -8,6 +8,7 @@ import { Projets } from './pages/Projets';
 import { APropos } from './pages/APropos';
 import { AdminPage } from './pages/admin/AdminPage';
 import { useReducedMotion } from './hooks/useReducedMotion';
+import { usePageTracking } from './hooks/usePageTracking';
 
 const AnimatedPublicRoutes: React.FC = () => {
   const location = useLocation();
@@ -100,6 +101,9 @@ const AnimatedPublicRoutes: React.FC = () => {
 const AppRoot: React.FC = () => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/classs');
+
+  // Safely track public pages anonymously
+  usePageTracking();
 
   if (isAdminRoute) {
     return <AdminPage />;
