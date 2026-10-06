@@ -162,7 +162,7 @@ const setLocalStore = <T>(key: string, value: T): void => {
 export const submitDemande = async (data: Omit<Demande, 'id' | 'created_at' | 'status' | 'internal_notes'>): Promise<{ success: boolean; error?: string; id?: string }> => {
   try {
     if (isSupabaseConfigured() && supabase) {
-      const { data: inserted, error } = await supabase
+      const { error } = await supabase
         .from('demandes')
         .insert([
           {
@@ -176,15 +176,13 @@ export const submitDemande = async (data: Omit<Demande, 'id' | 'created_at' | 's
             status: 'nouveau',
             internal_notes: '',
           },
-        ])
-        .select('id')
-        .single();
+        ]);
 
       if (error) {
         console.error('Supabase submitDemande error:', error);
         throw error;
       }
-      return { success: true, id: inserted?.id };
+      return { success: true };
     } else {
       // Fallback local mock
       const newDemande: Demande = {
