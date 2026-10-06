@@ -50,6 +50,28 @@ export const AdminPage: React.FC = () => {
     }
   }, [session]);
 
+  // Handle URL query parameters (e.g. ?demande_id=...&tab=demandes) from email notification links
+  useEffect(() => {
+    if (session && demandes.length > 0) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetDemandeId = urlParams.get('demande_id');
+      const targetTab = urlParams.get('tab') as AdminTab | null;
+
+      if (targetDemandeId) {
+        const found = demandes.find((d) => d.id === targetDemandeId);
+        if (found) {
+          setSelectedDemande(found);
+          setActiveTab('demandes');
+          return;
+        }
+      }
+
+      if (targetTab && ['dashboard', 'demandes', 'projets', 'temoignages'].includes(targetTab)) {
+        setActiveTab(targetTab);
+      }
+    }
+  }, [session, demandes]);
+
   // Handle logout
   const handleLogout = () => {
     clearAdminSession();
