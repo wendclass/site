@@ -33,7 +33,23 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
       setIsFirstSetup(true);
     }
 
-    // Check if Supabase OAuth redirect returned a session
+    // Check URL search and hash for OAuth errors (e.g. from Supabase / Google)
+    const urlParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.replace('#', '?'));
+    const errorDesc = urlParams.get('error_description') || hashParams.get('error_description');
+    
+    if (errorDesc) {
+      const decodedError = decodeURIComponent(errorDesc.replace(/\+/g, ' '));
+      if (decodedError.includes('Unable to exchange external code') || decodedError.includes('unexpected_failure')) {
+        setErrorMsg('Configuration Google OAuth incomplète dans Supabase / Google Cloud. Vérifiez les identifiants Client ID / Secret et l’URI de redirection.');
+      } else {
+        setErrorMsg(`Erreur d'authentification : ${decodedError}`);
+      }
+      // Clean up URL without reload
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    // Check if Supabase OAuth redirect returned a valid session
     if (isSupabaseConfigured() && supabase) {
       supabase.auth.getSession().then(({ data: { session } }) => {
         if (session && session.user?.email) {
