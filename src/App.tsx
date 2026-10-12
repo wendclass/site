@@ -5,6 +5,8 @@ import { Layout } from './components/layout/Layout';
 import { Accueil } from './pages/Accueil';
 import { Offres } from './pages/Offres';
 import { Projets } from './pages/Projets';
+import { Blog } from './pages/Blog';
+import { BlogPost } from './pages/BlogPost';
 import { APropos } from './pages/APropos';
 import { AdminPage } from './pages/admin/AdminPage';
 import { useReducedMotion } from './hooks/useReducedMotion';
@@ -76,6 +78,32 @@ const AnimatedPublicRoutes: React.FC = () => {
               exit="exit"
             >
               <Projets />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/blog"
+          element={
+            <motion.div
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <Blog />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/blog/:slug"
+          element={
+            <motion.div
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <BlogPost />
             </motion.div>
           }
         />

@@ -77,6 +77,21 @@ export interface DbTestimonial {
   created_at: string;
 }
 
+export interface DbArticle {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  cover_image?: string;
+  tags: string[];
+  status: 'publie' | 'brouillon';
+  meta_description?: string;
+  published_at?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 // ==============================================================================
 // LOCAL STORAGE MOCK STORE FOR FALLBACK & DEMO
 // ==============================================================================
@@ -84,6 +99,7 @@ const STORAGE_KEYS = {
   DEMANDES: 'class_s_demandes_v1',
   PROJETS: 'class_s_projets_v1',
   TEMOIGNAGES: 'class_s_temoignages_v1',
+  ARTICLES: 'class_s_articles_v1',
   ADMIN_CONFIG: 'class_s_admin_config_v1',
   ADMIN_SESSION: 'class_s_admin_session_v1',
 };
@@ -129,6 +145,90 @@ const getInitialTestimonials = (): DbTestimonial[] => {
       display_order: idx + 1,
       created_at: new Date(Date.now() - idx * 172800000).toISOString(),
     }));
+};
+
+const getInitialArticles = (): DbArticle[] => {
+  return [
+    {
+      id: 'art-1-logo-vs-identite',
+      slug: 'pourquoi-un-logo-seul-ne-sauvera-pas-votre-entreprise',
+      title: 'Pourquoi un logo seul ne sauvera jamais votre entreprise (et ce qu\'il vous faut vraiment)',
+      excerpt: 'Beaucoup d\'entrepreneurs pensent qu\'un joli logo suffit à attirer des clients haut de gamme. En réalité, un logo sans système d\'identité visuelle est une coquille vide. Décryptage d\'une erreur coûteuse.',
+      content: `
+        <p>Combien de fois avez-vous vu un créateur d’entreprise commander un logo express sur une plateforme low-cost, pour ensuite s’étonner que ses prospects négocient férocement le moindre devis ?</p>
+        <h2>Le grand malentendu du logo isolé</h2>
+        <p>Un logo n’est pas une identité visuelle. Un logo n’est que la <strong>signature</strong> apposée au bas d’un contrat. Si le contrat n’a pas de substance, la signature ne vaut rien.</p>
+        <blockquote>« Un logo sans écosystème visuel, c'est comme porter une montre de luxe avec un costume déchiré : le décalage saute immédiatement aux yeux et détruit la confiance. »</blockquote>
+        <p>Lorsque vos prospects entrent en contact avec votre marque, ils ne jugent pas uniquement votre pictogramme ou vos initiales stylisées. Ils perçoivent l’atmosphère globale : la typographie de vos titres, l'équilibre des espaces blancs, la hiérarchie de vos documents et l'harmonie chromatique de vos supports.</p>
+        <h2>Ce qui construit une véritable valeur perçue</h2>
+        <p>Pour qu’une marque s’impose avec autorité et justifie des tarifs élevés sur son marché, elle a besoin d'un ensemble cohérent :</p>
+        <ul>
+          <li><strong>Une typographie maîtresse</strong> qui impose instantanément le ton (luxe, rigueur institutionnelle, audace contemporaine).</li>
+          <li><strong>Une palette chromatique stratégique</strong> pensée pour déclencher une émotion ciblée dès les 3 premières secondes.</li>
+          <li><strong>Une grille de composition rigoureuse</strong> qui rend vos publications immédiatement identifiables sans même chercher votre nom.</li>
+          <li><strong>Un territoire photographique et iconographique</strong> qui reflète le niveau d'exigence de vos prestations.</li>
+        </ul>
+        <h2>Le passage à l'action</h2>
+        <p>Si vous souhaitez attirer des clients exigeants et prêts à investir dans votre savoir-faire, ne cherchez pas un simple dessin. Bâtissez un univers visuel solide qui inspire le respect et supprime toute hésitation lors de la prise de décision.</p>
+      `,
+      cover_image: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80',
+      tags: ['Identité Visuelle', 'Stratégie de Marque', 'Branding'],
+      status: 'publie',
+      meta_description: 'Découvrez pourquoi un logo seul ne suffit pas à asseoir votre crédibilité et comment un véritable système d\'identité visuelle transforme la perception de votre entreprise.',
+      published_at: new Date(Date.now() - 3 * 86400000).toISOString(),
+      created_at: new Date(Date.now() - 5 * 86400000).toISOString(),
+      updated_at: new Date(Date.now() - 3 * 86400000).toISOString(),
+    },
+    {
+      id: 'art-2-erreurs-reseaux-sociaux',
+      slug: '5-erreurs-graphiques-reseaux-sociaux-credibilite',
+      title: 'Les 5 erreurs graphiques sur les réseaux sociaux qui détruisent votre crédibilité',
+      excerpt: 'Des visuels saturés, des polices illisibles, une incohérence de couleurs d\'un post à l\'autre... Voici les faux pas visuels qui font fuir vos prospects qualifiés et comment les corriger sans tarder.',
+      content: `
+        <p>Sur LinkedIn, Instagram ou Facebook, vous n'avez que <strong>1,7 seconde</strong> pour capter l'attention d'un décideur avant qu'il ne fasse défiler son écran. Pourtant, la grande majorité des publications d'entreprises commettent les mêmes erreurs critiques.</p>
+        <h2>1. Le syndrome du sapin de Noël typographique</h2>
+        <p>Utiliser trois ou quatre polices différentes sur une seule affiche ou vignette est la manière la plus rapide de paraître amateur. Limitez-vous à <strong>deux typographies maximum</strong> : une avec du caractère pour le titre, et une police ultra-lisible pour les détails informatifs.</p>
+        <h2>2. Le contraste sacrifié au nom de la créativité</h2>
+        <p>Un texte gris clair sur fond blanc ou jaune sur violet clair est quasiment invisible sur un smartphone en plein soleil. Si votre client potentiel doit plisser les yeux pour déchiffrer votre message, vous l'avez déjà perdu.</p>
+        <h2>3. L'absence d'alignement et de respiration</h2>
+        <p>Remplir chaque millimètre carré d'un visuel par peur du vide est une tentation courante. Or, le <strong>vide spatial (espace négatif)</strong> est précisément ce qui donne un sentiment de luxe, de sérieux et de maîtrise. Laissez vos contenus respirer.</p>
+        <h2>4. Des formats inadaptés aux écrans mobiles</h2>
+        <p>Publier un visuel horizontal (16:9) sur un fil pensé pour le format vertical (4:5 ou 9:16) vous fait perdre plus de 60% de l'espace d'écran disponible pour capter le regard.</p>
+        <h2>5. L'incohérence d'une publication à l'autre</h2>
+        <p>Si votre marque change de couleurs, de styles et de mises en page chaque semaine, vos abonnés ne vous mémorisent jamais. C’est la répétition d'une grammaire visuelle rigoureuse qui crée la notoriété.</p>
+      `,
+      cover_image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
+      tags: ['Réseaux Sociaux', 'Design Graphique', 'Visibilité'],
+      status: 'publie',
+      meta_description: 'Typographies illisibles, manque de cohérence chromatique, surcharge d\'informations : évitez ces 5 erreurs graphiques qui font fuir vos prospects sur les réseaux sociaux.',
+      published_at: new Date(Date.now() - 7 * 86400000).toISOString(),
+      created_at: new Date(Date.now() - 10 * 86400000).toISOString(),
+      updated_at: new Date(Date.now() - 7 * 86400000).toISOString(),
+    },
+    {
+      id: 'art-3-conversion-commerciale',
+      slug: 'transformer-identite-visuelle-en-levier-de-conversion',
+      title: 'Comment transformer une identité visuelle en levier de conversion commerciale',
+      excerpt: 'Le design n\'est pas une simple décoration esthétique : c\'est un outil de vente puissant. Découvrez comment structurer votre univers de marque pour inspirer confiance et justifier des tarifs premium.',
+      content: `
+        <p>Dans l’esprit de nombreux dirigeants, le branding reste perçu comme une dépense accessoire ou purement esthétique. C’est une erreur fondamentale d’analyse commerciale : le design est le premier multiplicateur de conversion d'une entreprise.</p>
+        <h2>Le biais de beauté et l'effet de halo</h2>
+        <p>Les sciences cognitives ont démontré depuis longtemps l'existence du biais de confirmation et de l'<em>effet de halo</em> : nous attribuons spontanément une plus grande compétence technique et un professionnalisme supérieur aux entreprises dont la présentation visuelle est impeccable.</p>
+        <blockquote>« À compétences égales, le prospect choisit toujours l'entreprise qui lui inspire le plus de confiance au premier coup d'œil. »</blockquote>
+        <h2>Réduire la friction lors de la négociation du prix</h2>
+        <p>Pourquoi les grandes marques d'exception peuvent-elles pratiquer des marges confortables sans contestation ? Parce que chaque point de contact visuel rassure le client sur la qualité de son investissement. Une entreprise de services ou un cabinet qui adopte cette posture visuelle élimine instantanément l'objection du prix.</p>
+        <h2>Un investissement pérenne pour les années à venir</h2>
+        <p>Une identité visuelle stratégique et intemporelle ne se démode pas au bout d'une saison. Elle pose les fondations durables de votre entreprise pour les années à venir, en augmentant la valeur vie de chaque client conquis.</p>
+      `,
+      cover_image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=80',
+      tags: ['Business', 'Conversion', 'Branding Premium'],
+      status: 'publie',
+      meta_description: 'Le design graphique n\'est pas une simple dépense esthétique : c\'est un investissement stratégique qui réduit les frictions de vente et justifie des tarifs élevés.',
+      published_at: new Date(Date.now() - 14 * 86400000).toISOString(),
+      created_at: new Date(Date.now() - 16 * 86400000).toISOString(),
+      updated_at: new Date(Date.now() - 14 * 86400000).toISOString(),
+    },
+  ];
 };
 
 // Helper for local mock storage
@@ -783,6 +883,175 @@ export const deleteTestimonial = async (id: string): Promise<boolean> => {
     }
   } catch (err) {
     console.error('deleteTestimonial error:', err);
+    return false;
+  }
+};
+
+// ==============================================================================
+// BLOG & ARTICLES (PUBLIC & ADMIN)
+// ==============================================================================
+export const fetchPublicArticles = async (): Promise<DbArticle[]> => {
+  try {
+    if (isSupabaseConfigured() && supabase) {
+      const { data, error } = await supabase
+        .from('articles')
+        .select('*')
+        .eq('status', 'publie')
+        .order('published_at', { ascending: false });
+
+      if (error) throw error;
+      if (data && data.length > 0) {
+        return data as DbArticle[];
+      }
+    }
+  } catch (err) {
+    console.warn('fetchPublicArticles from Supabase failed, using local fallback:', err);
+  }
+
+  // Fallback to local stored articles
+  const localList = getLocalStore<DbArticle[]>(STORAGE_KEYS.ARTICLES, getInitialArticles());
+  return localList
+    .filter((a) => a.status === 'publie')
+    .sort((a, b) => new Date(b.published_at || b.created_at).getTime() - new Date(a.published_at || a.created_at).getTime());
+};
+
+export const fetchPublicArticleBySlug = async (slug: string): Promise<DbArticle | null> => {
+  try {
+    if (isSupabaseConfigured() && supabase) {
+      const { data, error } = await supabase
+        .from('articles')
+        .select('*')
+        .eq('slug', slug)
+        .eq('status', 'publie')
+        .maybeSingle();
+
+      if (error) throw error;
+      if (data) return data as DbArticle;
+    }
+  } catch (err) {
+    console.warn(`fetchPublicArticleBySlug(${slug}) from Supabase failed, trying local fallback:`, err);
+  }
+
+  // Fallback
+  const localList = getLocalStore<DbArticle[]>(STORAGE_KEYS.ARTICLES, getInitialArticles());
+  const found = localList.find((a) => a.slug === slug && a.status === 'publie');
+  return found || null;
+};
+
+export const fetchAdminArticles = async (): Promise<DbArticle[]> => {
+  try {
+    if (isSupabaseConfigured() && supabase) {
+      const { data, error } = await supabase
+        .from('articles')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      if (data) return data as DbArticle[];
+    }
+  } catch (err) {
+    console.warn('fetchAdminArticles from Supabase failed, using local fallback:', err);
+  }
+
+  // Fallback
+  const localList = getLocalStore<DbArticle[]>(STORAGE_KEYS.ARTICLES, getInitialArticles());
+  return [...localList].sort(
+    (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  );
+};
+
+export const saveArticle = async (
+  article: Partial<DbArticle>
+): Promise<{ success: boolean; article?: DbArticle; error?: string }> => {
+  try {
+    const isNew = !article.id;
+    const now = new Date().toISOString();
+    const publishedAt =
+      article.status === 'publie'
+        ? article.published_at || now
+        : article.published_at || undefined;
+
+    const payload: Partial<DbArticle> = {
+      ...article,
+      published_at: publishedAt,
+      updated_at: now,
+    };
+
+    if (isSupabaseConfigured() && supabase) {
+      if (isNew) {
+        const { data, error } = await supabase
+          .from('articles')
+          .insert([payload])
+          .select()
+          .single();
+
+        if (error) throw error;
+        return { success: true, article: data as DbArticle };
+      } else {
+        const { data, error } = await supabase
+          .from('articles')
+          .update(payload)
+          .eq('id', article.id!)
+          .select()
+          .single();
+
+        if (error) throw error;
+        return { success: true, article: data as DbArticle };
+      }
+    } else {
+      // Local fallback
+      const current = getLocalStore<DbArticle[]>(STORAGE_KEYS.ARTICLES, getInitialArticles());
+      let saved: DbArticle;
+
+      if (isNew) {
+        saved = {
+          id: `art-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+          slug: article.slug || `article-${Date.now()}`,
+          title: article.title || 'Sans titre',
+          excerpt: article.excerpt || '',
+          content: article.content || '',
+          cover_image: article.cover_image,
+          tags: article.tags || [],
+          status: article.status || 'brouillon',
+          meta_description: article.meta_description,
+          published_at: publishedAt,
+          created_at: now,
+          updated_at: now,
+        };
+        setLocalStore(STORAGE_KEYS.ARTICLES, [saved, ...current]);
+      } else {
+        saved = {
+          ...current.find((a) => a.id === article.id)!,
+          ...payload,
+        } as DbArticle;
+        const updated = current.map((item) => (item.id === article.id ? saved : item));
+        setLocalStore(STORAGE_KEYS.ARTICLES, updated);
+      }
+
+      return { success: true, article: saved };
+    }
+  } catch (err: any) {
+    console.error('saveArticle error:', err);
+    return { success: false, error: err?.message || 'Erreur lors de la sauvegarde de l\'article.' };
+  }
+};
+
+export const deleteArticle = async (id: string): Promise<boolean> => {
+  try {
+    if (isSupabaseConfigured() && supabase) {
+      const { error } = await supabase.from('articles').delete().eq('id', id);
+      if (error) throw error;
+      return true;
+    } else {
+      const current = getLocalStore<DbArticle[]>(STORAGE_KEYS.ARTICLES, getInitialArticles());
+      setLocalStore(
+        STORAGE_KEYS.ARTICLES,
+        current.filter((item) => item.id !== id)
+      );
+      return true;
+    }
+  } catch (err) {
+    console.error('deleteArticle error:', err);
     return false;
   }
 };

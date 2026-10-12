@@ -13,32 +13,39 @@ import {
   TrendingUp,
   Users,
 } from 'lucide-react';
-import { Demande, DbProject, DbTestimonial, VisitEvent } from '../../lib/supabase';
+import { Demande, DbProject, DbTestimonial, DbArticle, VisitEvent } from '../../lib/supabase';
+import { AdminTab } from './AdminLayout';
+import { Newspaper } from 'lucide-react';
 
 interface AdminDashboardProps {
   demandes: Demande[];
   projects: DbProject[];
   testimonials: DbTestimonial[];
+  articles?: DbArticle[];
   events: VisitEvent[];
-  onNavigateTab: (tab: 'demandes' | 'projets' | 'temoignages' | 'statistiques') => void;
+  onNavigateTab: (tab: AdminTab) => void;
   onSelectDemande: (demande: Demande) => void;
   onNewProject: () => void;
   onNewTestimonial: () => void;
+  onNewArticle?: () => void;
 }
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({
   demandes,
   projects,
   testimonials,
+  articles = [],
   events,
   onNavigateTab,
   onSelectDemande,
   onNewProject,
   onNewTestimonial,
+  onNewArticle,
 }) => {
   const newDemandesCount = demandes.filter((d) => d.status === 'nouveau').length;
   const publishedProjectsCount = projects.filter((p) => p.status === 'publie').length;
   const publishedTestimonialsCount = testimonials.filter((t) => t.status === 'publie').length;
+  const publishedArticlesCount = articles.filter((a) => a.status === 'publie').length;
 
   // Calculate 7d analytics metrics
   const now = Date.now();
@@ -104,6 +111,14 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         <div className="flex flex-wrap items-center gap-3">
           <button
             type="button"
+            onClick={onNewArticle || (() => onNavigateTab('articles'))}
+            className="px-4 py-2.5 rounded-2xl bg-amethyste/20 hover:bg-amethyste/30 text-ivoire-violet hover:text-white text-xs font-semibold flex items-center gap-2 transition-all active:scale-95 border border-amethyste/30"
+          >
+            <Newspaper className="w-4 h-4 text-amethyste" />
+            <span>Rédiger un article</span>
+          </button>
+          <button
+            type="button"
             onClick={onNewProject}
             className="px-4 py-2.5 rounded-2xl bg-violet-imperial hover:bg-violet-imperial/80 text-white text-xs font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-glow"
           >
@@ -122,7 +137,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       </div>
 
       {/* KPI Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6">
         {/* Card 1: Nouvelles demandes */}
         <div
           onClick={() => onNavigateTab('demandes')}
@@ -212,6 +227,29 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             </span>
             <p className="text-xs text-ivoire-violet/70 font-body">
               Retours clients certifiés
+            </p>
+          </div>
+        </div>
+
+        {/* Card 5: Articles de Blog */}
+        <div
+          onClick={() => onNavigateTab('articles')}
+          className="p-6 rounded-3xl bg-ardoise/70 border border-violet-imperial/20 shadow-lg hover:border-violet-imperial/50 transition-all cursor-pointer group"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div className="p-3 rounded-2xl bg-amethyste/15 text-amethyste">
+              <Newspaper className="w-6 h-6" />
+            </div>
+            <span className="text-[11px] font-semibold text-amethyste bg-amethyste/10 px-2 py-0.5 rounded-full">
+              {publishedArticlesCount} publiés
+            </span>
+          </div>
+          <div className="space-y-1">
+            <span className="text-3xl sm:text-4xl font-title font-bold text-white">
+              {articles.length}
+            </span>
+            <p className="text-xs text-ivoire-violet/70 font-body">
+              Articles & Analyses SEO
             </p>
           </div>
         </div>

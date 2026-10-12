@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /classs
 
-Sitemap: https://class-s.design/sitemap.xml
+Sitemap: https://wendclass.vercel.app/sitemap.xml

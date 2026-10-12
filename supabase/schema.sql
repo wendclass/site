@@ -194,3 +194,68 @@ CREATE POLICY "Admin full access on project images bucket"
     TO authenticated
     USING (bucket_id = 'project-images' AND (auth.jwt() ->> 'email' = 'wendclasss@gmail.com'))
     WITH CHECK (bucket_id = 'project-images' AND (auth.jwt() ->> 'email' = 'wendclasss@gmail.com'));
+
+-- ==============================================================================
+-- 9. TABLE DES ARTICLES DU BLOG
+-- ==============================================================================
+CREATE TABLE IF NOT EXISTS public.articles (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    slug TEXT NOT NULL UNIQUE,
+    title TEXT NOT NULL,
+    excerpt TEXT NOT NULL,
+    content TEXT NOT NULL,
+    cover_image TEXT,
+    tags TEXT[] NOT NULL DEFAULT '{}',
+    status TEXT NOT NULL DEFAULT 'brouillon' CHECK (status IN ('publie', 'brouillon')),
+    meta_description TEXT,
+    published_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_articles_slug ON public.articles (slug);
+CREATE INDEX IF NOT EXISTS idx_articles_status ON public.articles (status);
+CREATE INDEX IF NOT EXISTS idx_articles_published_at ON public.articles (published_at DESC);
+
+ALTER TABLE public.articles ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Public can view published articles" 
+    ON public.articles FOR SELECT 
+    TO anon, authenticated 
+    USING (status = 'publie');
+
+CREATE POLICY "Admin can manage all articles" 
+    ON public.articles FOR ALL 
+    TO authenticated 
+    USING (auth.jwt() ->> 'email' = 'wendclasss@gmail.com')
+    WITH CHECK (auth.jwt() ->> 'email' = 'wendclasss@gmail.com');
+
+-- ==============================================================================
+-- 10. TABLE DES ÉVÉNEMENTS DE VISITE (ANALYTICS)
+-- ==============================================================================
+CREATE TABLE IF NOT EXISTS public.evenements_visite (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    session_id TEXT NOT NULL,
+    event_type TEXT NOT NULL CHECK (event_type IN ('page_vue', 'etape_formulaire', 'formulaire_soumis', 'formulaire_abandonne')),
+    page_or_step TEXT NOT NULL,
+    duration_seconds INT DEFAULT 0,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_evenements_visite_created_at ON public.evenements_visite (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_evenements_visite_session_id ON public.evenements_visite (session_id);
+CREATE INDEX IF NOT EXISTS idx_evenements_visite_event_type ON public.evenements_visite (event_type);
+
+ALTER TABLE public.evenements_visite ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Public can record visit events" 
+    ON public.evenements_visite FOR INSERT 
+    TO anon, authenticated 
+    WITH CHECK (true);
+
+CREATE POLICY "Admin can view all analytics" 
+    ON public.evenements_visite FOR ALL 
+    TO authenticated 
+    USING (auth.jwt() ->> 'email' = 'wendclasss@gmail.com')
+    WITH CHECK (auth.jwt() ->> 'email' = 'wendclasss@gmail.com');
+
