@@ -1,4 +1,4 @@
-export default async function handler(req: any, res: any) {
+export default async function handler(_req: any, res: any) {
   const baseUrl = 'https://wendclass.vercel.app';
   const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || 'https://mtinydrkpxffrlsuwpzh.supabase.co';
   const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '';
