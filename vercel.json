@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/googlebea468e8e5719358.html",
+      "destination": "/api/google-verify"
+    },
+    {
       "source": "/sitemap.xml",
       "destination": "/api/sitemap"
     },
