@@ -191,6 +191,7 @@ export default async function handler(req: any, res: any) {
   // Clean existing primary and OG tags to inject new ones
   const tagsToInject = `
     <meta name="description" content="${pageDesc.replace(/"/g, '&quot;')}" />
+    <meta name="google-site-verification" content="uAGXDPmoO6XucCzpRl333ekqaBbHkN-KZ3tY1HIOuSU" />
     <link rel="canonical" href="${pageUrl}" />
     <!-- Open Graph -->
     <meta property="og:title" content="${pageTitle.replace(/"/g, '&quot;')}" />
