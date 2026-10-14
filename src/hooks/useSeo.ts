@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { SITE_CONFIG } from '../config/site';
 
 interface SeoProps {
   title?: string;
@@ -24,14 +25,11 @@ export const useSeo = ({
   jsonLd,
 }: SeoProps) => {
   useEffect(() => {
-    const siteTitle = 'Class S — Identité visuelle qui vous impose';
+    const siteTitle = SITE_CONFIG.defaultTitle;
     const finalTitle = title ? `${title} | Class S` : siteTitle;
-    const finalDescription =
-      description ||
-      "Class S — Marque personnelle de Scott Nana, Brand & Graphic Designer. Identités visuelles d'exception à Ouagadougou et à l'international.";
+    const finalDescription = description || SITE_CONFIG.defaultDescription;
     const currentUrl = canonicalUrl || window.location.href;
-    const finalImage =
-      ogImage || 'https://wendclass.vercel.app/assets/logo/logo-violet.png';
+    const finalImage = ogImage || SITE_CONFIG.logoUrl;
 
     // 1. Update Title
     document.title = finalTitle;

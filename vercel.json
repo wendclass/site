@@ -19,6 +19,15 @@
       ]
     },
     {
+      "source": "/classs(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/(.*)",
       "headers": [
         {
@@ -59,11 +68,27 @@
     },
     {
       "source": "/blog/:slug",
-      "destination": "/api/blog-ssr?slug=:slug"
+      "destination": "/api/ssr?route=/blog/:slug&slug=:slug"
     },
     {
       "source": "/blog",
-      "destination": "/api/blog-ssr"
+      "destination": "/api/ssr?route=/blog"
+    },
+    {
+      "source": "/offres",
+      "destination": "/api/ssr?route=/offres"
+    },
+    {
+      "source": "/projets",
+      "destination": "/api/ssr?route=/projets"
+    },
+    {
+      "source": "/a-propos",
+      "destination": "/api/ssr?route=/a-propos"
+    },
+    {
+      "source": "/",
+      "destination": "/api/ssr?route=/"
     },
     {
       "source": "/((?!api/|sitemap\\.xml|robots\\.txt|googlebea468e8e5719358\\.html).*)",
