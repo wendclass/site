@@ -1,7 +1,9 @@
-import { Ratelimit } from '@upstash/ratelimit';
-import { Redis } from '@upstash/redis';
+// ==============================================================================
+// RATE LIMITING ENGINE (UPSTASH REST HTTP + IN-MEMORY FALLBACK)
+// ==============================================================================
+// Utilise directement l'API HTTP REST native d'Upstash sans dépendance lourde,
+// garantissant une compatibilité 100% native avec Vercel Serverless Functions.
 
-// Simple in-memory fallback if Upstash Redis credentials are not configured
 const memoryStore = new Map<string, { count: number; expiresAt: number }>();
 
 function inMemoryRateLimit(
@@ -26,20 +28,20 @@ function inMemoryRateLimit(
 }
 
 export function getClientIp(req: any): string {
-  const forwarded = req.headers['x-forwarded-for'];
+  const forwarded = req.headers ? req.headers['x-forwarded-for'] : null;
   if (typeof forwarded === 'string') {
     return forwarded.split(',')[0].trim();
   }
   return (
-    req.headers['x-real-ip'] ||
+    (req.headers && req.headers['x-real-ip']) ||
     req.socket?.remoteAddress ||
     '127.0.0.1'
   );
 }
 
-interface RateLimitConfig {
+export interface RateLimitConfig {
   maxRequests: number;
-  windowDuration: `${number} s` | `${number} m` | `${number} h` | `${number} d`;
+  windowDuration?: string;
   windowMs: number;
   prefix: string;
 }
@@ -49,38 +51,56 @@ export async function checkRateLimit(
   config: RateLimitConfig
 ): Promise<{ success: boolean; limit: number; remaining: number; reset: number }> {
   const ip = getClientIp(req);
-  const identifier = `${config.prefix}:${ip}`;
+  const identifier = `rl:${config.prefix}:${ip}`;
 
   const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
   const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
 
-  // If Upstash Redis credentials are set, use Redis across all serverless instances
+  // 1. Si les identifiants Upstash sont configurés, utiliser l'API REST HTTP native
   if (redisUrl && redisToken) {
     try {
-      const redis = new Redis({
-        url: redisUrl,
-        token: redisToken,
+      const windowSeconds = Math.max(1, Math.ceil(config.windowMs / 1000));
+      const cleanUrl = redisUrl.replace(/\/+$/, '');
+
+      // Exécution atomique via le pipeline HTTP Upstash (INCR + EXPIRE si premier accès)
+      const res = await fetch(`${cleanUrl}/pipeline`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${redisToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify([
+          ['INCR', identifier],
+          ['EXPIRE', identifier, windowSeconds, 'NX'],
+        ]),
       });
 
-      const ratelimit = new Ratelimit({
-        redis,
-        limiter: Ratelimit.slidingWindow(config.maxRequests, config.windowDuration),
-        analytics: true,
-        prefix: config.prefix,
-      });
+      if (res.ok) {
+        const data = await res.json();
+        // data[0] contient le résultat de INCR
+        const currentCount = Number(data[0]?.result) || 1;
 
-      const result = await ratelimit.limit(ip);
-      return {
-        success: result.success,
-        limit: result.limit,
-        remaining: result.remaining,
-        reset: result.reset,
-      };
+        if (currentCount > config.maxRequests) {
+          return {
+            success: false,
+            limit: config.maxRequests,
+            remaining: 0,
+            reset: Date.now() + config.windowMs,
+          };
+        }
+
+        return {
+          success: true,
+          limit: config.maxRequests,
+          remaining: Math.max(0, config.maxRequests - currentCount),
+          reset: Date.now() + config.windowMs,
+        };
+      }
     } catch (err) {
-      console.warn('Upstash rate limit error, falling back to memory store:', err);
+      console.warn('[RateLimit] Upstash HTTP request failed, fallback to in-memory:', err);
     }
   }
 
-  // Fallback to in-memory store
+  // 2. Repli automatique en mémoire vive
   return inMemoryRateLimit(identifier, config.maxRequests, config.windowMs);
 }
