@@ -1,18 +1,4 @@
-import { checkRateLimit } from './_lib/ratelimit';
-
-export default async function handler(req: any, res: any) {
-  // Rate limiting (30 req / 1 min per IP)
-  const rateLimit = await checkRateLimit(req, {
-    maxRequests: 30,
-    windowDuration: '1 m',
-    windowMs: 60 * 1000,
-    prefix: 'sitemap',
-  });
-
-  if (!rateLimit.success) {
-    return res.status(429).send('Trop de requêtes. Veuillez patienter une minute.');
-  }
-
+export default async function handler(_req: any, res: any) {
   const baseUrl = 'https://wendclass.vercel.app';
   const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || 'https://mtinydrkpxffrlsuwpzh.supabase.co';
   const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '';

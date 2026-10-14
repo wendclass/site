@@ -1,7 +1,70 @@
-import { checkRateLimit, getClientIp } from './_lib/ratelimit';
-
 // Allowed project types
 const ALLOWED_PROJECT_TYPES = ['logo', 'social', 'print', 'event', 'website', 'unknown'];
+
+// In-memory fallback if Upstash Redis credentials are not configured
+const memoryStore = new Map<string, { count: number; expiresAt: number }>();
+
+function inMemoryRateLimit(key: string, limit: number, windowMs: number): boolean {
+  const now = Date.now();
+  const entry = memoryStore.get(key);
+  if (!entry || entry.expiresAt < now) {
+    memoryStore.set(key, { count: 1, expiresAt: now + windowMs });
+    return true;
+  }
+  if (entry.count >= limit) {
+    return false;
+  }
+  entry.count += 1;
+  return true;
+}
+
+function getClientIp(req: any): string {
+  const forwarded = req.headers ? req.headers['x-forwarded-for'] : null;
+  if (typeof forwarded === 'string') {
+    return forwarded.split(',')[0].trim();
+  }
+  return (
+    (req.headers && req.headers['x-real-ip']) ||
+    req.socket?.remoteAddress ||
+    '127.0.0.1'
+  );
+}
+
+async function checkContactRateLimit(ip: string): Promise<boolean> {
+  const maxRequests = 5;
+  const windowMs = 10 * 60 * 1000; // 10 minutes
+  const identifier = `rl:contact:${ip}`;
+
+  const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
+  const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+  if (redisUrl && redisToken) {
+    try {
+      const cleanUrl = redisUrl.replace(/\/+$/, '');
+      const res = await fetch(`${cleanUrl}/pipeline`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${redisToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify([
+          ['INCR', identifier],
+          ['EXPIRE', identifier, 600, 'NX'],
+        ]),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const currentCount = Number(data[0]?.result) || 1;
+        return currentCount <= maxRequests;
+      }
+    } catch (err) {
+      console.warn('[RateLimit] Upstash HTTP failed, fallback to memory:', err);
+    }
+  }
+
+  return inMemoryRateLimit(identifier, maxRequests, windowMs);
+}
 
 export default async function handler(req: any, res: any) {
   // 1. Only allow POST
@@ -14,14 +77,9 @@ export default async function handler(req: any, res: any) {
     const ip = getClientIp(req);
 
     // 2. Rate limiting (5 submissions per 10 minutes per IP)
-    const rateLimit = await checkRateLimit(req, {
-      maxRequests: 5,
-      windowDuration: '10 m',
-      windowMs: 10 * 60 * 1000,
-      prefix: 'contact',
-    });
+    const isAllowed = await checkContactRateLimit(ip);
 
-    if (!rateLimit.success) {
+    if (!isAllowed) {
       return res.status(429).json({
         success: false,
         error: 'Trop de requêtes envoyées depuis cette connexion. Veuillez patienter 10 minutes avant de réessayer.',

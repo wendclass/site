@@ -1,20 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { checkRateLimit } from './_lib/ratelimit';
 
 export default async function handler(req: any, res: any) {
-  // Rate limiting (100 req / 1 min per IP)
-  const rateLimit = await checkRateLimit(req, {
-    maxRequests: 100,
-    windowDuration: '1 m',
-    windowMs: 60 * 1000,
-    prefix: 'blog-ssr',
-  });
-
-  if (!rateLimit.success) {
-    return res.status(429).send('Trop de requêtes. Veuillez patienter une minute.');
-  }
-
   const slug = (req.query.slug as string) || '';
   const baseUrl = 'https://wendclass.vercel.app';
   const supabaseUrl =
