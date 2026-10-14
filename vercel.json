@@ -57,6 +57,11 @@
       ]
     }
   ],
+  "functions": {
+    "api/ssr.js": {
+      "includeFiles": "dist/**"
+    }
+  },
   "rewrites": [
     {
       "source": "/googlebea468e8e5719358.html",

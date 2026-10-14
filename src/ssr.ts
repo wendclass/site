@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { offersData } from '../src/data/offres';
-import { projectsData, Project } from '../src/data/projets';
-import { FAQ_ITEMS } from '../src/data/faq';
-import { SITE_URL, SITE_CONFIG } from '../src/config/site';
+import { offersData } from './data/offres';
+import { projectsData, Project } from './data/projets';
+import { FAQ_ITEMS } from './data/faq';
+import { SITE_URL, SITE_CONFIG } from './config/site';
 
 // Supabase configuration
 const supabaseUrl =
