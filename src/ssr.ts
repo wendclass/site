@@ -199,6 +199,7 @@ export default async function handler(req: any, res: any) {
   // Load HTML template
   let html = '';
   const candidatePaths = [
+    path.join(process.cwd(), 'dist', 'app.html'),
     path.join(process.cwd(), 'dist', 'index.html'),
     path.join(process.cwd(), 'index.html'),
   ];

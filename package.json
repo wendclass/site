@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && esbuild src/ssr.ts --bundle --platform=node --format=esm --packages=external --outfile=api/ssr.js",
+    "build": "tsc && vite build && node -e \"const fs=require('fs'); fs.copyFileSync('dist/index.html','dist/app.html'); fs.unlinkSync('dist/index.html');\" && esbuild src/ssr.ts --bundle --platform=node --format=esm --packages=external --outfile=api/ssr.js",
     "preview": "vite preview"
   },
   "dependencies": {

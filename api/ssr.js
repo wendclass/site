@@ -727,6 +727,7 @@ async function handler(req, res) {
   else if (rawRoute.startsWith("/blog")) normalizedRoute = "/blog";
   let html = "";
   const candidatePaths = [
+    path.join(process.cwd(), "dist", "app.html"),
     path.join(process.cwd(), "dist", "index.html"),
     path.join(process.cwd(), "index.html")
   ];

@@ -97,7 +97,7 @@
     },
     {
       "source": "/((?!api/|sitemap\\.xml|robots\\.txt|googlebea468e8e5719358\\.html).*)",
-      "destination": "/index.html"
+      "destination": "/app.html"
     }
   ]
 }
