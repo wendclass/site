@@ -28,6 +28,7 @@ import {
   BRANCH_E_OPTIONS
 } from '../../data/formulaire';
 import { CtaButton } from '../ui/CtaButton';
+import { Turnstile } from '../ui/Turnstile';
 import { submitDemande, trackVisitEvent } from '../../lib/supabase';
 
 export const ContactForm: React.FC = () => {
@@ -36,6 +37,8 @@ export const ContactForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string>('');
+  const [honeypotValue, setHoneypotValue] = useState<string>('');
   const stepStartTimeRef = React.useRef<number>(Date.now());
   const maxStepReachedRef = React.useRef<number>(1);
   const isSubmittedRef = React.useRef<boolean>(false);
@@ -214,6 +217,10 @@ export const ContactForm: React.FC = () => {
         setErrorMsg('Veuillez renseigner votre numéro WhatsApp.');
         return false;
       }
+      if (import.meta.env.VITE_TURNSTILE_SITE_KEY && !turnstileToken) {
+        setErrorMsg('Veuillez valider la vérification de sécurité anti-robot.');
+        return false;
+      }
     }
 
     setErrorMsg(null);
@@ -280,6 +287,8 @@ export const ContactForm: React.FC = () => {
         full_name: formData.fullName,
         company_name: formData.companyName,
         whatsapp_number: formData.whatsappNumber,
+        turnstile_token: turnstileToken,
+        company_website_hp: honeypotValue,
       });
 
       if (!result.success) {
@@ -971,6 +980,36 @@ export const ContactForm: React.FC = () => {
                         <span className="text-[11px] text-onyx/50 block mt-1">
                           Réponse directe sur votre messagerie sous 24h ouvrées.
                         </span>
+                      </div>
+
+                      {/* Honeypot anti-bot (invisible to legitimate visitors) */}
+                      <div className="opacity-0 absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+                        <label htmlFor="company_website_hp">Laissez ce champ vide</label>
+                        <input
+                          id="company_website_hp"
+                          type="text"
+                          name="company_website_hp"
+                          autoComplete="off"
+                          tabIndex={-1}
+                          value={honeypotValue}
+                          onChange={(e) => setHoneypotValue(e.target.value)}
+                        />
+                      </div>
+
+                      {/* Cloudflare Turnstile anti-bot verification */}
+                      <div className="pt-2 flex justify-center">
+                        <Turnstile
+                          onSuccess={(token) => {
+                            setTurnstileToken(token);
+                            setErrorMsg(null);
+                          }}
+                          onError={() => {
+                            setTurnstileToken('');
+                          }}
+                          onExpire={() => {
+                            setTurnstileToken('');
+                          }}
+                        />
                       </div>
                     </div>
                   </motion.div>

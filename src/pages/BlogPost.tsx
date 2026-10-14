@@ -18,6 +18,7 @@ import {
 } from '../lib/supabase';
 import { useSeo } from '../hooks/useSeo';
 import { CtaButton } from '../components/ui/CtaButton';
+import DOMPurify from 'dompurify';
 
 export const BlogPost: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -259,7 +260,7 @@ export const BlogPost: React.FC = () => {
             [&>li]:text-ivoire-violet/90
             [&>strong]:text-white [&>strong]:font-semibold
             [&>a]:text-amethyste [&>a]:underline [&>a]:hover:text-white [&>a]:transition-colors"
-          dangerouslySetInnerHTML={{ __html: article.content }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(article.content) }}
         />
 
         {/* Social Share Bar */}

@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { DbArticle, saveArticle, deleteArticle } from '../../lib/supabase';
 import { RichTextEditor } from '../../components/admin/RichTextEditor';
+import DOMPurify from 'dompurify';
 
 interface AdminArticlesProps {
   articles: DbArticle[];
@@ -499,7 +500,7 @@ export const AdminArticles: React.FC<AdminArticlesProps> = ({
 
                     <div
                       className="prose prose-invert max-w-none text-sm leading-relaxed text-ivoire-violet/90 font-body pt-4"
-                      dangerouslySetInnerHTML={{ __html: editingArticle.content || '' }}
+                      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(editingArticle.content || '') }}
                     />
                   </div>
                 </div>

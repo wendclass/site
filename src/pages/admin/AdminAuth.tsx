@@ -16,6 +16,35 @@ interface AdminAuthProps {
   onAuthenticated: (session: AdminSession) => void;
 }
 
+const LOCKOUT_THRESHOLD = 5;
+const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15 minutes
+
+const getLockoutUntil = (): number => {
+  const val = localStorage.getItem('class_s_admin_lockout_until');
+  return val ? parseInt(val, 10) : 0;
+};
+
+const getFailedAttempts = (): number => {
+  const val = localStorage.getItem('class_s_admin_failed_attempts');
+  return val ? parseInt(val, 10) : 0;
+};
+
+const recordFailedAttempt = (): { locked: boolean; remainingMs: number } => {
+  const current = getFailedAttempts() + 1;
+  localStorage.setItem('class_s_admin_failed_attempts', String(current));
+  if (current >= LOCKOUT_THRESHOLD) {
+    const lockoutUntil = Date.now() + LOCKOUT_DURATION_MS;
+    localStorage.setItem('class_s_admin_lockout_until', String(lockoutUntil));
+    return { locked: true, remainingMs: LOCKOUT_DURATION_MS };
+  }
+  return { locked: false, remainingMs: 0 };
+};
+
+const clearFailedAttempts = (): void => {
+  localStorage.removeItem('class_s_admin_failed_attempts');
+  localStorage.removeItem('class_s_admin_lockout_until');
+};
+
 export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
   // Step 1: Google OAuth verification, Step 2: App Password verification
   const [step, setStep] = useState<1 | 2>(1);
@@ -25,6 +54,22 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
   const [isFirstSetup, setIsFirstSetup] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [lockoutRemaining, setLockoutRemaining] = useState<number>(0);
+
+  useEffect(() => {
+    const checkLockout = () => {
+      const until = getLockoutUntil();
+      const remaining = Math.max(0, Math.ceil((until - Date.now()) / 1000));
+      setLockoutRemaining(remaining);
+      if (remaining === 0 && until > 0) {
+        clearFailedAttempts();
+      }
+    };
+
+    checkLockout();
+    const interval = setInterval(checkLockout, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     // Check if initial app password exists
@@ -57,7 +102,7 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
             setGoogleEmail(session.user.email);
             setStep(2);
           } else {
-            setErrorMsg('Accès refusé. Cette adresse email n’est pas autorisée.');
+            setErrorMsg('Accès non autorisé. Identifiants incorrects.');
             supabase?.auth.signOut();
           }
         }
@@ -101,6 +146,11 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
   // Handler for Factor 2: App Password Verification / Initial Setup
   const handleAppPasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (lockoutRemaining > 0) {
+      setErrorMsg('Verrouillage de sécurité actif. Veuillez patienter avant de réessayer.');
+      return;
+    }
+
     setIsLoading(true);
     setErrorMsg(null);
 
@@ -123,6 +173,7 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
         const newHash = await hashAppPassword(appPassword);
         setStoredAppPasswordHash(newHash);
         setIsFirstSetup(false);
+        clearFailedAttempts();
 
         const newSession: AdminSession = {
           email: ADMIN_ALLOWED_EMAIL,
@@ -138,10 +189,19 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
       // Existing verification
       const inputHash = await hashAppPassword(appPassword);
       if (inputHash !== storedHash) {
-        setErrorMsg('Mot de passe applicatif incorrect.');
+        const { locked } = recordFailedAttempt();
+        if (locked) {
+          setErrorMsg('Trop de tentatives infructueuses. Accès verrouillé par sécurité pour 15 minutes.');
+        } else {
+          const attemptsLeft = LOCKOUT_THRESHOLD - getFailedAttempts();
+          setErrorMsg(`Mot de passe applicatif incorrect. (${attemptsLeft} tentative${attemptsLeft > 1 ? 's' : ''} restante${attemptsLeft > 1 ? 's' : ''})`);
+        }
         setIsLoading(false);
         return;
       }
+
+      // Successful verification
+      clearFailedAttempts();
 
       const verifiedSession: AdminSession = {
         email: ADMIN_ALLOWED_EMAIL,
@@ -254,6 +314,18 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
                 <span>Compte Google vérifié : {googleEmail}</span>
               </div>
 
+              {lockoutRemaining > 0 && (
+                <div className="p-3.5 rounded-2xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs font-body flex items-center gap-2.5 animate-pulse">
+                  <ShieldAlert className="w-5 h-5 shrink-0 text-rose-400" />
+                  <div>
+                    <p className="font-semibold">Verrouillage de sécurité anti-brute force</p>
+                    <p className="text-[11px] text-rose-200/80">
+                      Veuillez patienter encore {Math.floor(lockoutRemaining / 60)}m {String(lockoutRemaining % 60).padStart(2, '0')}s avant de pouvoir réessayer.
+                    </p>
+                  </div>
+                </div>
+              )}
+
               {isFirstSetup ? (
                 <div className="space-y-4">
                   <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-body">
@@ -274,7 +346,8 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
                       onChange={(e) => setAppPassword(e.target.value)}
                       placeholder="••••••••"
                       required
-                      className="w-full px-4 py-3 rounded-2xl bg-onyx/70 border border-violet-imperial/30 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-amethyste focus:ring-1 focus:ring-amethyste transition-all font-body"
+                      disabled={lockoutRemaining > 0 || isLoading}
+                      className="w-full px-4 py-3 rounded-2xl bg-onyx/70 border border-violet-imperial/30 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-amethyste focus:ring-1 focus:ring-amethyste transition-all font-body disabled:opacity-40"
                     />
                   </div>
 
@@ -289,7 +362,8 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="••••••••"
                       required
-                      className="w-full px-4 py-3 rounded-2xl bg-onyx/70 border border-violet-imperial/30 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-amethyste focus:ring-1 focus:ring-amethyste transition-all font-body"
+                      disabled={lockoutRemaining > 0 || isLoading}
+                      className="w-full px-4 py-3 rounded-2xl bg-onyx/70 border border-violet-imperial/30 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-amethyste focus:ring-1 focus:ring-amethyste transition-all font-body disabled:opacity-40"
                     />
                   </div>
                 </div>
@@ -306,7 +380,8 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
                     placeholder="••••••••"
                     required
                     autoFocus
-                    className="w-full px-4 py-3 rounded-2xl bg-onyx/70 border border-violet-imperial/30 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-amethyste focus:ring-1 focus:ring-amethyste transition-all font-body"
+                    disabled={lockoutRemaining > 0 || isLoading}
+                    className="w-full px-4 py-3 rounded-2xl bg-onyx/70 border border-violet-imperial/30 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-amethyste focus:ring-1 focus:ring-amethyste transition-all font-body disabled:opacity-40"
                   />
                 </div>
               )}
@@ -325,7 +400,7 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
                 </button>
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || lockoutRemaining > 0}
                   className="flex-1 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-violet-imperial to-amethyste hover:opacity-95 text-white font-semibold text-sm shadow-glow flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 font-body"
                 >
                   {isLoading ? (

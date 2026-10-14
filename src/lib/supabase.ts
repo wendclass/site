@@ -258,33 +258,41 @@ const setLocalStore = <T>(key: string, value: T): void => {
 // API SERVICE LAYER (SUPABASE WITH AUTOMATIC FALLBACK)
 // ==============================================================================
 
-// --- DEMANDES (CONTACT FORM) ---
-export const submitDemande = async (data: Omit<Demande, 'id' | 'created_at' | 'status' | 'internal_notes'>): Promise<{ success: boolean; error?: string; id?: string }> => {
-  try {
-    if (isSupabaseConfigured() && supabase) {
-      const { error } = await supabase
-        .from('demandes')
-        .insert([
-          {
-            project_type: data.project_type,
-            goals: data.goals,
-            goals_other: data.goals_other || null,
-            branch_data: data.branch_data,
-            full_name: data.full_name,
-            company_name: data.company_name,
-            whatsapp_number: data.whatsapp_number,
-            status: 'nouveau',
-            internal_notes: '',
-          },
-        ]);
+export interface SubmitDemandePayload extends Omit<Demande, 'id' | 'created_at' | 'status' | 'internal_notes'> {
+  turnstile_token?: string;
+  company_website_hp?: string;
+}
 
-      if (error) {
-        console.error('Supabase submitDemande error:', error);
-        throw error;
-      }
-      return { success: true };
-    } else {
-      // Fallback local mock
+export const submitDemande = async (
+  data: SubmitDemandePayload
+): Promise<{ success: boolean; error?: string; id?: string }> => {
+  try {
+    // Send to secure serverless endpoint /api/contact
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const resData = await response.json();
+      return { success: true, id: resData.id };
+    }
+
+    // Capture specific serverless rejection errors (400, 429)
+    const errorJson = await response.json().catch(() => null);
+    if (errorJson && errorJson.error) {
+      return { success: false, error: errorJson.error };
+    }
+
+    throw new Error(`Erreur serveur (${response.status})`);
+  } catch (err: any) {
+    console.warn('API /api/contact call failed, checking fallback:', err);
+
+    // Fallback in local mock development
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
       const newDemande: Demande = {
         ...data,
         id: `demande-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
@@ -296,9 +304,11 @@ export const submitDemande = async (data: Omit<Demande, 'id' | 'created_at' | 's
       setLocalStore(STORAGE_KEYS.DEMANDES, [newDemande, ...currentList]);
       return { success: true, id: newDemande.id };
     }
-  } catch (err: any) {
-    console.error('Submit demande failed:', err);
-    return { success: false, error: err?.message || 'Une erreur est survenue lors de l’envoi de votre demande.' };
+
+    return {
+      success: false,
+      error: err?.message || 'Une erreur est survenue lors de l’envoi de votre demande.',
+    };
   }
 };
 
