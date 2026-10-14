@@ -241,23 +241,50 @@ export default async function handler(req: any, res: any) {
 
     jsonLd = {
       '@context': 'https://schema.org',
-      '@type': 'ProfessionalService',
-      name: SITE_CONFIG.name,
-      alternateName: SITE_CONFIG.alternateName,
-      url: baseUrl,
-      logo: SITE_CONFIG.logoUrl,
-      image: pageImage,
-      description: SITE_CONFIG.anchorPhrase,
-      founder: {
-        '@type': 'Person',
-        name: SITE_CONFIG.founder,
-        jobTitle: SITE_CONFIG.jobTitle,
-        sameAs: Object.values(SITE_CONFIG.socialLinks),
-      },
-      areaServed: {
-        '@type': 'AdministrativeArea',
-        name: 'Ouagadougou, Burkina Faso',
-      },
+      '@graph': [
+        {
+          '@type': 'ProfessionalService',
+          '@id': `${baseUrl}/#organization`,
+          name: SITE_CONFIG.name,
+          alternateName: SITE_CONFIG.alternateName,
+          url: `${baseUrl}/`,
+          logo: SITE_CONFIG.logoUrl,
+          image: pageImage,
+          description: SITE_CONFIG.anchorPhrase,
+          founder: {
+            '@type': 'Person',
+            name: SITE_CONFIG.founder,
+            jobTitle: SITE_CONFIG.jobTitle,
+            sameAs: Object.values(SITE_CONFIG.socialLinks),
+          },
+          areaServed: {
+            '@type': 'AdministrativeArea',
+            name: 'Ouagadougou, Burkina Faso',
+          },
+        },
+        {
+          '@type': 'WebSite',
+          '@id': `${baseUrl}/#website`,
+          name: SITE_CONFIG.name,
+          url: `${baseUrl}/`,
+          description: pageDesc,
+          publisher: {
+            '@id': `${baseUrl}/#organization`,
+          },
+        },
+        {
+          '@type': 'FAQPage',
+          '@id': `${baseUrl}/#faq`,
+          mainEntity: FAQ_ITEMS.map((item) => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: item.answer,
+            },
+          })),
+        },
+      ],
     };
 
     ssrContent = `
@@ -292,19 +319,19 @@ export default async function handler(req: any, res: any) {
                 </div>
               </div>
 
-              <!-- Right Visual Showcase: exact container dimensions preventing any layout shift (CLS = 0) -->
+              <!-- Right Visual Showcase: aligned on first React mount (bg-onyx container SANS image with aria-label) -->
               <div class="lg:col-span-6 w-full">
                 <div class="relative w-full max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto">
                   <div class="relative bg-onyx rounded-2xl md:rounded-3xl p-3 sm:p-4 shadow-soft-lg border border-violet-imperial/20 overflow-hidden">
                     <div class="flex items-center justify-between px-2 py-1.5 mb-2 border-b border-white/10 text-xs text-ivoire-violet/70">
                       <div class="flex items-center gap-2">
                         <span class="inline-block w-2.5 h-2.5 rounded-full bg-amethyste"></span>
-                        <span class="font-medium tracking-wide uppercase text-[11px] text-or-champagne">Projet en vitrine : Bang</span>
+                        <span class="font-medium tracking-wide uppercase text-[11px] text-or-champagne">Vitrine de projets Class S</span>
                       </div>
-                      <span class="text-[11px] text-ivoire-violet/50">Identité Visuelle & Stratégie</span>
+                      <span class="text-[11px] text-ivoire-violet/50">Direction Artistique</span>
                     </div>
-                    <div class="relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-xl overflow-hidden bg-onyx/80">
-                      <img src="/assets/projets/bang/SUBWAY LED BILLBOARD bang.png" alt="Projet en vitrine : Bang" class="w-full h-full object-cover" />
+                    <div class="relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-xl overflow-hidden bg-onyx/90" aria-label="Vitrine animée des projets Class S">
+                      <div class="w-full h-full grid grid-cols-4 grid-rows-4 gap-[2px] bg-onyx"></div>
                     </div>
                   </div>
                 </div>

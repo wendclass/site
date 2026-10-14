@@ -100,7 +100,7 @@
       "destination": "/app.html"
     },
     {
-      "source": "/((?!api/|sitemap\\.xml|robots\\.txt|googlebea468e8e5719358\\.html|classs).*)",
+      "source": "/((?!api/|assets/|favicon|sitemap\\.xml|robots\\.txt|googlebea468e8e5719358\\.html|classs).*)",
       "destination": "/api/ssr?route=/$1"
     }
   ]
