@@ -96,8 +96,12 @@
       "destination": "/api/ssr?route=/"
     },
     {
-      "source": "/((?!api/|sitemap\\.xml|robots\\.txt|googlebea468e8e5719358\\.html).*)",
+      "source": "/classs(.*)",
       "destination": "/app.html"
+    },
+    {
+      "source": "/((?!api/|sitemap\\.xml|robots\\.txt|googlebea468e8e5719358\\.html|classs).*)",
+      "destination": "/api/ssr?route=/$1"
     }
   ]
 }

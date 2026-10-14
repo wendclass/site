@@ -182,19 +182,22 @@ async function getArticlesList(): Promise<any[]> {
 export default async function handler(req: any, res: any) {
   const baseUrl = process.env.SITE_URL || process.env.VITE_SITE_URL || SITE_URL;
   const rawRoute = (req.query.route as string) || req.url?.split('?')[0] || '/';
+  // Clean and normalize incoming route
+  const cleanPath = (rawRoute.split('?')[0] || '/').replace(/\/+$/, '') || '/';
   const slug =
     (req.query.slug as string) ||
-    (rawRoute.startsWith('/blog/')
-      ? rawRoute.replace(/^\/blog\//, '').split('?')[0]
+    (cleanPath.startsWith('/blog/')
+      ? cleanPath.slice('/blog/'.length)
       : '');
 
-  // Determine normalized route
   let normalizedRoute = '/';
-  if (rawRoute.startsWith('/offres')) normalizedRoute = '/offres';
-  else if (rawRoute.startsWith('/projets')) normalizedRoute = '/projets';
-  else if (rawRoute.startsWith('/a-propos')) normalizedRoute = '/a-propos';
-  else if (rawRoute.startsWith('/blog/')) normalizedRoute = '/blog/:slug';
-  else if (rawRoute.startsWith('/blog')) normalizedRoute = '/blog';
+  if (cleanPath === '/') normalizedRoute = '/';
+  else if (cleanPath === '/offres') normalizedRoute = '/offres';
+  else if (cleanPath === '/projets') normalizedRoute = '/projets';
+  else if (cleanPath === '/a-propos') normalizedRoute = '/a-propos';
+  else if (cleanPath.startsWith('/blog/')) normalizedRoute = '/blog/:slug';
+  else if (cleanPath === '/blog') normalizedRoute = '/blog';
+  else normalizedRoute = '404';
 
   // Load HTML template
   let html = '';
@@ -223,6 +226,8 @@ export default async function handler(req: any, res: any) {
   let pageType = 'website';
   let ssrContent = '';
   let jsonLd: any = null;
+  let statusCode = 200;
+  let isNoIndex = false;
 
   // ROUTE 1: ACCUEIL (/)
   if (normalizedRoute === '/') {
@@ -257,25 +262,54 @@ export default async function handler(req: any, res: any) {
 
     ssrContent = `
       <main class="space-y-0" style="font-family:'Jost', sans-serif; color:#0D0A18;">
-        <!-- Hero Section -->
-        <section class="relative pt-8 pb-16 md:pt-14 md:pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider mb-4">
-            <span>Brand & Graphic Design • Ouagadougou</span>
-          </div>
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-title font-semibold text-onyx leading-tight mb-4" style="font-family:'Cormorant Garamond', Georgia, serif;">
-            D'une image qui existe à une image qui fait vendre.
-          </h1>
-          <p class="text-base sm:text-lg text-onyx/80 font-normal leading-relaxed max-w-2xl mb-8">
-            Avant chaque projet, je définis ce que vos clients doivent faire, puis je conçois chaque élément pour les y conduire.
-          </p>
-          <div class="flex flex-wrap gap-4 mb-8">
-            <a href="/#contact" class="px-6 py-3 bg-[#6600CC] text-white font-semibold rounded-full">Prendre contact</a>
-            <a href="/projets" class="px-6 py-3 border border-onyx/20 text-onyx font-semibold rounded-full">Voir mes réalisations</a>
-          </div>
-          <div class="pt-6 border-t border-violet-imperial/10 flex flex-wrap gap-6 text-xs text-onyx/70">
-            <span>✓ Direction artistique sur mesure</span>
-            <span>✓ Délais d'exécution rapides</span>
-            <span>✓ Zéro modèle générique</span>
+        <!-- 1. Hero Section: Exact parity with Accueil.tsx 2-column grid -->
+        <section class="relative pt-8 pb-20 md:pt-14 md:pb-28 overflow-hidden">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+              <!-- Left Copy: lg:col-span-6 matching React component perfectly -->
+              <div class="lg:col-span-6 space-y-6 sm:space-y-8 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider">
+                  <span>Brand & Graphic Design • Ouagadougou</span>
+                </div>
+
+                <h1 class="text-[2.2rem] sm:text-5xl lg:text-6xl xl:text-7xl font-title font-semibold text-onyx leading-[1.1] tracking-tight" style="font-family:'Cormorant Garamond', Georgia, serif;">
+                  D'une image qui existe à une image qui fait vendre.
+                </h1>
+
+                <p class="text-base sm:text-lg lg:text-xl text-onyx/80 font-normal leading-relaxed max-w-xl mx-auto lg:mx-0">
+                  Avant chaque projet, je définis ce que vos clients doivent faire, puis je conçois chaque élément pour les y conduire.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3.5 pt-2">
+                  <a href="/#contact" class="px-6 py-3.5 bg-[#6600CC] text-white font-semibold rounded-full inline-block text-center text-sm sm:text-base">Prendre contact</a>
+                  <a href="/projets" class="px-6 py-3.5 border border-onyx/20 text-onyx font-semibold rounded-full inline-block text-center text-sm sm:text-base">Voir mes réalisations</a>
+                </div>
+
+                <div class="pt-6 border-t border-violet-imperial/10 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-onyx/70">
+                  <span>✓ Direction artistique sur mesure</span>
+                  <span>✓ Délais d'exécution rapides</span>
+                  <span>✓ Zéro modèle générique</span>
+                </div>
+              </div>
+
+              <!-- Right Visual Showcase: exact container dimensions preventing any layout shift (CLS = 0) -->
+              <div class="lg:col-span-6 w-full">
+                <div class="relative w-full max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto">
+                  <div class="relative bg-onyx rounded-2xl md:rounded-3xl p-3 sm:p-4 shadow-soft-lg border border-violet-imperial/20 overflow-hidden">
+                    <div class="flex items-center justify-between px-2 py-1.5 mb-2 border-b border-white/10 text-xs text-ivoire-violet/70">
+                      <div class="flex items-center gap-2">
+                        <span class="inline-block w-2.5 h-2.5 rounded-full bg-amethyste"></span>
+                        <span class="font-medium tracking-wide uppercase text-[11px] text-or-champagne">Projet en vitrine : Bang</span>
+                      </div>
+                      <span class="text-[11px] text-ivoire-violet/50">Identité Visuelle & Stratégie</span>
+                    </div>
+                    <div class="relative aspect-[4/3] sm:aspect-[16/11] w-full rounded-xl overflow-hidden bg-onyx/80">
+                      <img src="/assets/projets/bang/SUBWAY LED BILLBOARD bang.png" alt="Projet en vitrine : Bang" class="w-full h-full object-cover" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -382,6 +416,37 @@ export default async function handler(req: any, res: any) {
     pageDesc =
       "Découvrez nos 5 formules d'accompagnement en identité visuelle, branding social media, sites web et communication événementielle à Ouagadougou.";
     pageCanonical = `${baseUrl}/offres`;
+
+    jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: pageTitle,
+      url: pageCanonical,
+      description: pageDesc,
+      provider: {
+        '@type': 'ProfessionalService',
+        name: SITE_CONFIG.name,
+        url: baseUrl,
+      },
+      mainEntity: {
+        '@type': 'ItemList',
+        name: "Formules d'accompagnement Class S",
+        numberOfItems: offersData.length,
+        itemListElement: offersData.map((offer, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'Service',
+            name: offer.title,
+            description: offer.subtitle,
+            provider: {
+              '@type': 'ProfessionalService',
+              name: SITE_CONFIG.name,
+            },
+          },
+        })),
+      },
+    };
 
     ssrContent = `
       <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
@@ -494,6 +559,37 @@ export default async function handler(req: any, res: any) {
 
     const projects = await getProjects();
 
+    jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'CollectionPage',
+      name: pageTitle,
+      url: pageCanonical,
+      description: pageDesc,
+      provider: {
+        '@type': 'ProfessionalService',
+        name: SITE_CONFIG.name,
+        url: baseUrl,
+      },
+      mainEntity: {
+        '@type': 'ItemList',
+        name: 'Réalisations & Études de Cas Class S',
+        numberOfItems: projects.length,
+        itemListElement: projects.map((proj, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          item: {
+            '@type': 'CreativeWork',
+            name: proj.title,
+            description: proj.tagline || proj.category,
+            creator: {
+              '@type': 'Person',
+              name: SITE_CONFIG.founder,
+            },
+          },
+        })),
+      },
+    };
+
     ssrContent = `
       <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
         <!-- Header -->
@@ -578,6 +674,25 @@ export default async function handler(req: any, res: any) {
     pageDesc =
       "Class S est un studio d'identité visuelle à Ouagadougou, au service des entrepreneurs et des PME. Découvrez l'histoire et la vision du design d'impact par Scott Nana.";
     pageCanonical = `${baseUrl}/a-propos`;
+
+    jsonLd = {
+      '@context': 'https://schema.org',
+      '@type': 'AboutPage',
+      name: pageTitle,
+      url: pageCanonical,
+      description: pageDesc,
+      mainEntity: {
+        '@type': 'Person',
+        name: SITE_CONFIG.founder,
+        jobTitle: SITE_CONFIG.jobTitle,
+        worksFor: {
+          '@type': 'ProfessionalService',
+          name: SITE_CONFIG.name,
+          url: baseUrl,
+        },
+        sameAs: Object.values(SITE_CONFIG.socialLinks),
+      },
+    };
 
     ssrContent = `
       <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
@@ -677,7 +792,28 @@ export default async function handler(req: any, res: any) {
       article = await getArticle(slug);
     }
 
-    if (slug && article) {
+    if (slug && !article) {
+      pageTitle = "Article introuvable (404) | Class S";
+      pageDesc = "Cet article de blog n'existe pas ou a été supprimé.";
+      pageCanonical = `${baseUrl}/blog/${slug}`;
+      statusCode = 404;
+      isNoIndex = true;
+
+      ssrContent = `
+        <main class="max-w-3xl mx-auto px-4 py-24 text-center" style="font-family:'Jost', sans-serif; color:#0D0A18;">
+          <span class="text-xs font-bold uppercase tracking-wider text-violet-imperial block mb-3">Erreur 404</span>
+          <h1 class="text-4xl sm:text-5xl font-title font-semibold text-onyx mb-4" style="font-family:'Cormorant Garamond', Georgia, serif;">
+            Article introuvable
+          </h1>
+          <p class="text-base text-onyx/75 mb-8 max-w-lg mx-auto">
+            L'article demandé n'existe pas ou a été supprimé.
+          </p>
+          <a href="/blog" class="px-6 py-3 bg-[#6600CC] text-white font-semibold rounded-full inline-block">
+            Retourner au Journal Class S
+          </a>
+        </main>
+      `;
+    } else if (slug && article) {
       pageTitle = `${article.title} | Class S`;
       pageDesc = article.meta_description || article.excerpt || pageDesc;
       pageImage = article.cover_image || `${baseUrl}/assets/logo/og-image.png`;
@@ -788,6 +924,30 @@ export default async function handler(req: any, res: any) {
     }
   }
 
+  // ROUTE 7: 404 NOT FOUND
+  else {
+    pageTitle = "Page introuvable (404) | Class S";
+    pageDesc = "La page que vous recherchez n'existe pas ou a été déplacée.";
+    pageCanonical = `${baseUrl}/404`;
+    statusCode = 404;
+    isNoIndex = true;
+
+    ssrContent = `
+      <main class="max-w-3xl mx-auto px-4 py-24 text-center" style="font-family:'Jost', sans-serif; color:#0D0A18;">
+        <span class="text-xs font-bold uppercase tracking-wider text-violet-imperial block mb-3">Erreur 404</span>
+        <h1 class="text-4xl sm:text-5xl font-title font-semibold text-onyx mb-4" style="font-family:'Cormorant Garamond', Georgia, serif;">
+          Page introuvable
+        </h1>
+        <p class="text-base text-onyx/75 mb-8 max-w-lg mx-auto">
+          La page que vous recherchez n'existe pas, a été supprimée ou a changé d'adresse.
+        </p>
+        <a href="/" class="px-6 py-3 bg-[#6600CC] text-white font-semibold rounded-full inline-block">
+          Retourner à l'accueil
+        </a>
+      </main>
+    `;
+  }
+
   // 1. Inject / replace Title
   if (html.includes('<title>')) {
     html = html.replace(/<title>.*?<\/title>/i, `<title>${pageTitle}</title>`);
@@ -812,6 +972,7 @@ export default async function handler(req: any, res: any) {
     <meta name="twitter:description" content="${pageDesc.replace(/"/g, '&quot;')}" />
     <meta name="twitter:image" content="${pageImage}" />
     ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ''}
+    ${isNoIndex ? '<meta name="robots" content="noindex, nofollow" />' : ''}
   `;
 
   // Clean old tags
@@ -823,6 +984,10 @@ export default async function handler(req: any, res: any) {
     .replace(/<meta\s+property="twitter:[^>]*>/gi, '')
     .replace(/<meta\s+name="twitter:[^>]*>/gi, '');
 
+  if (isNoIndex) {
+    html = html.replace(/<meta\s+name="robots"[^>]*>/gi, '');
+  }
+
   html = html.replace('</head>', `${tagsToInject}\n</head>`);
 
   // 3. Inject SSR body inside <div id="root">
@@ -831,10 +996,17 @@ export default async function handler(req: any, res: any) {
   }
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  // Cache for 2 minutes on Edge CDN, background revalidate
-  res.setHeader(
-    'Cache-Control',
-    'public, max-age=60, s-maxage=120, stale-while-revalidate=600'
-  );
-  return res.status(200).send(html);
+  if (isNoIndex) {
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  }
+  // Cache for 2 minutes on Edge CDN, background revalidate (only for successful 200 responses)
+  if (statusCode === 200) {
+    res.setHeader(
+      'Cache-Control',
+      'public, max-age=60, s-maxage=120, stale-while-revalidate=600'
+    );
+  } else {
+    res.setHeader('Cache-Control', 'no-store, max-age=0');
+  }
+  return res.status(statusCode).send(html);
 }
