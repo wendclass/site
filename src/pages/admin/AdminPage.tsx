@@ -58,6 +58,30 @@ export const AdminPage: React.FC = () => {
   };
 
   useEffect(() => {
+    // Prevent search engines from indexing the admin interface
+    let metaTag = document.querySelector('meta[name="robots"]') as HTMLMetaElement | null;
+    let created = false;
+    if (!metaTag) {
+      metaTag = document.createElement('meta');
+      metaTag.name = 'robots';
+      document.head.appendChild(metaTag);
+      created = true;
+    }
+    const previousContent = metaTag.getAttribute('content');
+    metaTag.setAttribute('content', 'noindex, nofollow, noarchive');
+
+    return () => {
+      if (created) {
+        metaTag?.remove();
+      } else if (previousContent) {
+        metaTag?.setAttribute('content', previousContent);
+      } else {
+        metaTag?.removeAttribute('content');
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     if (session) {
       loadData();
     }

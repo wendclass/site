@@ -48,7 +48,7 @@ const clearFailedAttempts = (): void => {
 export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
   // Step 1: Google OAuth verification, Step 2: App Password verification
   const [step, setStep] = useState<1 | 2>(1);
-  const [googleEmail, setGoogleEmail] = useState(ADMIN_ALLOWED_EMAIL);
+  const [googleEmail, setGoogleEmail] = useState('');
   const [appPassword, setAppPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isFirstSetup, setIsFirstSetup] = useState(false);
@@ -274,18 +274,18 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-ivoire-violet/90 flex items-center gap-1.5 font-body">
                   <Mail className="w-3.5 h-3.5 text-amethyste" />
-                  Adresse Google autorisée
+                  Adresse email administrateur
                 </label>
                 <input
                   type="email"
                   value={googleEmail}
                   onChange={(e) => setGoogleEmail(e.target.value)}
-                  placeholder="wendclasss@gmail.com"
+                  placeholder="nom@exemple.com"
                   required
                   className="w-full px-4 py-3 rounded-2xl bg-onyx/70 border border-violet-imperial/30 text-white placeholder:text-white/30 text-sm focus:outline-none focus:border-amethyste focus:ring-1 focus:ring-amethyste transition-all font-body"
                 />
                 <p className="text-[11px] text-ivoire-violet/50 font-body">
-                  Seul le compte administrateur certifié est habilité à franchir cette étape.
+                  Compte habilité requis pour franchir cette étape.
                 </p>
               </div>
 
@@ -311,7 +311,7 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
             <form onSubmit={handleAppPasswordSubmit} className="space-y-5 animate-fadeIn">
               <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-body flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 shrink-0" />
-                <span>Compte Google vérifié : {googleEmail}</span>
+                <span>Premier facteur d'authentification validé</span>
               </div>
 
               {lockoutRemaining > 0 && (
@@ -392,6 +392,7 @@ export const AdminAuth: React.FC<AdminAuthProps> = ({ onAuthenticated }) => {
                   onClick={() => {
                     setStep(1);
                     setAppPassword('');
+                    setGoogleEmail('');
                     setErrorMsg(null);
                   }}
                   className="py-3 px-4 rounded-2xl bg-white/5 hover:bg-white/10 text-xs text-ivoire-violet/70 transition-colors font-body"

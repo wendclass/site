@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /classs
 
 Sitemap: https://wendclass.vercel.app/sitemap.xml
