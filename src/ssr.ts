@@ -816,6 +816,7 @@ export default async function handler(req: any, res: any) {
 
   // Clean old tags
   html = html
+    .replace(/<script\s+type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi, '')
     .replace(/<meta\s+name="description"[^>]*>/gi, '')
     .replace(/<link\s+rel="canonical"[^>]*>/gi, '')
     .replace(/<meta\s+property="og:[^>]*>/gi, '')

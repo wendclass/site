@@ -1303,7 +1303,7 @@ async function handler(req, res) {
     <meta name="twitter:image" content="${pageImage}" />
     ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
   `;
-  html = html.replace(/<meta\s+name="description"[^>]*>/gi, "").replace(/<link\s+rel="canonical"[^>]*>/gi, "").replace(/<meta\s+property="og:[^>]*>/gi, "").replace(/<meta\s+property="twitter:[^>]*>/gi, "").replace(/<meta\s+name="twitter:[^>]*>/gi, "");
+  html = html.replace(/<script\s+type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi, "").replace(/<meta\s+name="description"[^>]*>/gi, "").replace(/<link\s+rel="canonical"[^>]*>/gi, "").replace(/<meta\s+property="og:[^>]*>/gi, "").replace(/<meta\s+property="twitter:[^>]*>/gi, "").replace(/<meta\s+name="twitter:[^>]*>/gi, "");
   html = html.replace("</head>", `${tagsToInject}
 </head>`);
   if (ssrContent && html.includes('<div id="root"></div>')) {
