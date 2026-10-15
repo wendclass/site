@@ -212,11 +212,8 @@ export default async function handler(req: any, res: any) {
       process.env.VITE_SUPABASE_URL ||
       'https://mtinydrkpxffrlsuwpzh.supabase.co';
 
-    // Prefer secret service_role key to bypass RLS; fallback to anon key during transition
-    const supabaseKey =
-      process.env.SUPABASE_SERVICE_ROLE_KEY ||
-      process.env.VITE_SUPABASE_ANON_KEY ||
-      '';
+    // Secret service_role key is strictly required to bypass RLS on the demandes table
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
     if (!supabaseKey) {
       console.error('[Contact] Missing Supabase API key.');
