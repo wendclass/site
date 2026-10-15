@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Send,
@@ -249,6 +249,19 @@ export const ContactForm: React.FC = () => {
     setErrorMsg(null);
     setCurrentStep((prev) => Math.max(prev - 1, 1));
   };
+
+  const handleTurnstileSuccess = useCallback((token: string) => {
+    setTurnstileToken(token);
+    setErrorMsg(null);
+  }, []);
+
+  const handleTurnstileError = useCallback(() => {
+    setTurnstileToken('');
+  }, []);
+
+  const handleTurnstileExpire = useCallback(() => {
+    setTurnstileToken('');
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -999,16 +1012,9 @@ export const ContactForm: React.FC = () => {
                       {/* Cloudflare Turnstile anti-bot verification */}
                       <div className="pt-2 flex justify-center">
                         <Turnstile
-                          onSuccess={(token) => {
-                            setTurnstileToken(token);
-                            setErrorMsg(null);
-                          }}
-                          onError={() => {
-                            setTurnstileToken('');
-                          }}
-                          onExpire={() => {
-                            setTurnstileToken('');
-                          }}
+                          onSuccess={handleTurnstileSuccess}
+                          onError={handleTurnstileError}
+                          onExpire={handleTurnstileExpire}
                         />
                       </div>
                     </div>

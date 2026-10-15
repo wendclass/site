@@ -36,12 +36,29 @@ export const Turnstile: React.FC<TurnstileProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
 
+  // Keep stable callback references to prevent infinite re-render / teardown loops
+  const onSuccessRef = useRef(onSuccess);
+  const onErrorRef = useRef(onError);
+  const onExpireRef = useRef(onExpire);
+
+  useEffect(() => {
+    onSuccessRef.current = onSuccess;
+  }, [onSuccess]);
+
+  useEffect(() => {
+    onErrorRef.current = onError;
+  }, [onError]);
+
+  useEffect(() => {
+    onExpireRef.current = onExpire;
+  }, [onExpire]);
+
   const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY || '';
 
   useEffect(() => {
     // If site key is not configured, simulate token in development/transition
     if (!siteKey) {
-      onSuccess('');
+      onSuccessRef.current('');
       return;
     }
 
@@ -55,13 +72,13 @@ export const Turnstile: React.FC<TurnstileProps> = ({
         widgetIdRef.current = window.turnstile.render(containerRef.current, {
           sitekey: siteKey,
           callback: (token: string) => {
-            if (isMounted) onSuccess(token);
+            if (isMounted) onSuccessRef.current(token);
           },
           'error-callback': () => {
-            if (isMounted && onError) onError();
+            if (isMounted && onErrorRef.current) onErrorRef.current();
           },
           'expired-callback': () => {
-            if (isMounted && onExpire) onExpire();
+            if (isMounted && onExpireRef.current) onExpireRef.current();
           },
           theme: 'dark',
           size: 'normal',
@@ -90,7 +107,20 @@ export const Turnstile: React.FC<TurnstileProps> = ({
         };
         document.head.appendChild(script);
       } else {
-        script.addEventListener('load', renderWidget);
+        const handleScriptLoad = () => {
+          if (isMounted) renderWidget();
+        };
+        script.addEventListener('load', handleScriptLoad);
+        return () => {
+          isMounted = false;
+          script?.removeEventListener('load', handleScriptLoad);
+          if (widgetIdRef.current && window.turnstile) {
+            try {
+              window.turnstile.remove(widgetIdRef.current);
+            } catch {}
+            widgetIdRef.current = null;
+          }
+        };
       }
     }
 
@@ -103,7 +133,7 @@ export const Turnstile: React.FC<TurnstileProps> = ({
         widgetIdRef.current = null;
       }
     };
-  }, [siteKey, onSuccess, onError, onExpire]);
+  }, [siteKey]);
 
   if (!siteKey) {
     return null;
