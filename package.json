@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && node -e \"const fs=require('fs'); fs.copyFileSync('dist/index.html','dist/app.html'); fs.unlinkSync('dist/index.html');\" && esbuild src/ssr.ts --bundle --platform=node --format=esm --packages=external --outfile=api/ssr.js",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "images": "node scripts/optimize-images.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.2",
@@ -38,6 +39,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.3",
+    "sharp": "^0.35.5",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.7.2",
     "vite": "^6.2.0"

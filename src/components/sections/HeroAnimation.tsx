@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { Sparkles } from 'lucide-react';
+import { getOptimizedImageUrl } from '../../lib/images';
 
 interface HeroProjectSlide {
   id: string;
@@ -201,6 +202,18 @@ export const HeroAnimation: React.FC = () => {
     };
   }, []);
 
+  // Preload subsequent hero slides discreetly after initial display
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      HERO_SLIDES.slice(1).forEach((slide) => {
+        const img = new Image();
+        img.src = getOptimizedImageUrl(slide.image, 1200);
+      });
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   // Trigger construction whenever currentIndex updates
   useEffect(() => {
     animateConstruction();
@@ -272,7 +285,7 @@ export const HeroAnimation: React.FC = () => {
                   ref={(el) => (tilesRef.current[i] = el)}
                   className="relative overflow-hidden bg-cover bg-no-repeat rounded-[2px] shadow-sm transform-gpu will-change-transform"
                   style={{
-                    backgroundImage: `url("${currentSlide.image}")`,
+                    backgroundImage: `url("${getOptimizedImageUrl(currentSlide.image, 1200)}")`,
                     backgroundPosition: `${bgPosX}% ${bgPosY}%`,
                     backgroundSize: '400% 400%',
                   }}

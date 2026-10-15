@@ -3,6 +3,7 @@ import { Sparkles, Target, Compass, Trophy, MessageSquareQuote, AlertTriangle, A
 import { projectsData, Project } from '../data/projets';
 import { fetchPublicProjects } from '../lib/supabase';
 import { CtaButton } from '../components/ui/CtaButton';
+import { getOptimizedImage } from '../lib/images';
 
 export const Projets: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>(projectsData);
@@ -202,26 +203,34 @@ export const Projets: React.FC = () => {
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
-                    {project.gallery.map((img, imgIdx) => (
-                      <button
-                        type="button"
-                        key={imgIdx}
-                        onClick={() => openLightbox(project, imgIdx)}
-                        className="group relative aspect-square rounded-2xl overflow-hidden bg-onyx border border-violet-imperial/15 shadow-sm hover:shadow-md hover:border-violet-imperial/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-imperial"
-                        aria-label={`Agrandir ${img.caption}`}
-                      >
-                        <img
-                          src={img.src}
-                          alt={img.caption}
-                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-onyx/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-2 text-center">
-                          <ZoomIn className="w-5 h-5 mb-1" />
-                          <span className="text-[10px] line-clamp-2 leading-tight font-body">{img.caption}</span>
-                        </div>
-                      </button>
-                    ))}
+                    {project.gallery.map((img, imgIdx) => {
+                      const thumbOpt = getOptimizedImage(img.src, { width: 480 });
+                      return (
+                        <button
+                          type="button"
+                          key={imgIdx}
+                          onClick={() => openLightbox(project, imgIdx)}
+                          className="group relative aspect-square rounded-2xl overflow-hidden bg-onyx border border-violet-imperial/15 shadow-sm hover:shadow-md hover:border-violet-imperial/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-imperial"
+                          aria-label={`Agrandir ${img.caption}`}
+                        >
+                          <img
+                            src={thumbOpt.src}
+                            srcSet={thumbOpt.srcSet}
+                            sizes="(min-width: 1024px) 20vw, (min-width: 640px) 25vw, 50vw"
+                            alt={img.caption}
+                            width={thumbOpt.width}
+                            height={thumbOpt.height}
+                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          <div className="absolute inset-0 bg-onyx/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-2 text-center">
+                            <ZoomIn className="w-5 h-5 mb-1" />
+                            <span className="text-[10px] line-clamp-2 leading-tight font-body">{img.caption}</span>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -297,11 +306,21 @@ export const Projets: React.FC = () => {
 
             {/* Current Image */}
             <div className="relative max-h-[75vh] flex items-center justify-center overflow-hidden rounded-2xl bg-onyx shadow-2xl border border-white/20">
-              <img
-                src={activeGallery.items[activeGallery.currentIndex].src}
-                alt={activeGallery.items[activeGallery.currentIndex].caption}
-                className="max-h-[75vh] w-auto max-w-full object-contain"
-              />
+              {(() => {
+                const fullOpt = getOptimizedImage(activeGallery.items[activeGallery.currentIndex].src, { width: 1920 });
+                return (
+                  <img
+                    src={fullOpt.src}
+                    srcSet={fullOpt.srcSet}
+                    sizes="90vw"
+                    alt={activeGallery.items[activeGallery.currentIndex].caption}
+                    width={fullOpt.width}
+                    height={fullOpt.height}
+                    className="max-h-[75vh] w-auto max-w-full object-contain"
+                    decoding="async"
+                  />
+                );
+              })()}
             </div>
 
             {/* Image caption and counter */}

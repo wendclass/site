@@ -1,0 +1,1111 @@
+{
+  "/assets/about/scott-nana.png": {
+    "width": 1087,
+    "height": 1447,
+    "aspectRatio": 0.7512,
+    "hash": "1bbb2194",
+    "variants": {
+      "480": "/assets/optimized/about/scott-nana-480.1bbb2194.webp",
+      "800": "/assets/optimized/about/scott-nana-800.1bbb2194.webp"
+    },
+    "fallback": "/assets/optimized/about/scott-nana-800.1bbb2194.webp"
+  },
+  "/assets/logo/favicon.png": {
+    "width": 128,
+    "height": 128,
+    "aspectRatio": 1,
+    "hash": "2ba90915",
+    "variants": {
+      "480": "/assets/optimized/logo/favicon-480.2ba90915.webp",
+      "800": "/assets/optimized/logo/favicon-800.2ba90915.webp"
+    },
+    "fallback": "/assets/optimized/logo/favicon-800.2ba90915.webp"
+  },
+  "/assets/logo/logo-blanc.png": {
+    "width": 915,
+    "height": 403,
+    "aspectRatio": 2.2705,
+    "hash": "b5fd8087",
+    "variants": {
+      "480": "/assets/optimized/logo/logo-blanc-480.b5fd8087.webp",
+      "800": "/assets/optimized/logo/logo-blanc-800.b5fd8087.webp"
+    },
+    "fallback": "/assets/optimized/logo/logo-blanc-800.b5fd8087.webp"
+  },
+  "/assets/logo/logo-violet.png": {
+    "width": 92,
+    "height": 31,
+    "aspectRatio": 2.9677,
+    "hash": "f7af6544",
+    "variants": {
+      "480": "/assets/optimized/logo/logo-violet-480.f7af6544.webp",
+      "800": "/assets/optimized/logo/logo-violet-800.f7af6544.webp"
+    },
+    "fallback": "/assets/optimized/logo/logo-violet-800.f7af6544.webp"
+  },
+  "/assets/projets/72h-cj-2026/8 mars 72h 2026.png": {
+    "width": 3080,
+    "height": 3080,
+    "aspectRatio": 1,
+    "hash": "5a676444",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/8-mars-72h-2026-480.5a676444.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/8-mars-72h-2026-800.5a676444.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/8-mars-72h-2026-1200.5a676444.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/8-mars-72h-2026-1920.5a676444.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/8-mars-72h-2026-1200.5a676444.webp"
+  },
+  "/assets/projets/72h-cj-2026/Ambassadrice & Ambassadeur 72h 2026 v2.1.png": {
+    "width": 3080,
+    "height": 3080,
+    "aspectRatio": 1,
+    "hash": "2023b452",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/ambassadrice-ambassadeur-72h-2026-v2-1-480.2023b452.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/ambassadrice-ambassadeur-72h-2026-v2-1-800.2023b452.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/ambassadrice-ambassadeur-72h-2026-v2-1-1200.2023b452.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/ambassadrice-ambassadeur-72h-2026-v2-1-1920.2023b452.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/ambassadrice-ambassadeur-72h-2026-v2-1-1200.2023b452.webp"
+  },
+  "/assets/projets/72h-cj-2026/Appel à compétition v3.0.png": {
+    "width": 3080,
+    "height": 3080,
+    "aspectRatio": 1,
+    "hash": "d9c2dfa1",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/appel-a-competition-v3-0-480.d9c2dfa1.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/appel-a-competition-v3-0-800.d9c2dfa1.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/appel-a-competition-v3-0-1200.d9c2dfa1.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/appel-a-competition-v3-0-1920.d9c2dfa1.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/appel-a-competition-v3-0-1200.d9c2dfa1.webp"
+  },
+  "/assets/projets/72h-cj-2026/Carrousel 0 72h 2026.png": {
+    "width": 3080,
+    "height": 3080,
+    "aspectRatio": 1,
+    "hash": "80a44c88",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/carrousel-0-72h-2026-480.80a44c88.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/carrousel-0-72h-2026-800.80a44c88.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/carrousel-0-72h-2026-1200.80a44c88.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/carrousel-0-72h-2026-1920.80a44c88.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/carrousel-0-72h-2026-1200.80a44c88.webp"
+  },
+  "/assets/projets/72h-cj-2026/Carrousel 1 72h 2026.png": {
+    "width": 3080,
+    "height": 3080,
+    "aspectRatio": 1,
+    "hash": "6e2cbef2",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/carrousel-1-72h-2026-480.6e2cbef2.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/carrousel-1-72h-2026-800.6e2cbef2.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/carrousel-1-72h-2026-1200.6e2cbef2.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/carrousel-1-72h-2026-1920.6e2cbef2.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/carrousel-1-72h-2026-1200.6e2cbef2.webp"
+  },
+  "/assets/projets/72h-cj-2026/Carrousel 2 72h 2026.png": {
+    "width": 3080,
+    "height": 3080,
+    "aspectRatio": 1,
+    "hash": "7f56ab17",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/carrousel-2-72h-2026-480.7f56ab17.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/carrousel-2-72h-2026-800.7f56ab17.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/carrousel-2-72h-2026-1200.7f56ab17.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/carrousel-2-72h-2026-1920.7f56ab17.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/carrousel-2-72h-2026-1200.7f56ab17.webp"
+  },
+  "/assets/projets/72h-cj-2026/Carrousel 3 72h 2026.png": {
+    "width": 3080,
+    "height": 3080,
+    "aspectRatio": 1,
+    "hash": "ec3c2b0a",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/carrousel-3-72h-2026-480.ec3c2b0a.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/carrousel-3-72h-2026-800.ec3c2b0a.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/carrousel-3-72h-2026-1200.ec3c2b0a.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/carrousel-3-72h-2026-1920.ec3c2b0a.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/carrousel-3-72h-2026-1200.ec3c2b0a.webp"
+  },
+  "/assets/projets/72h-cj-2026/Chronogramme Jour 1 72h ed 26 PAD.png": {
+    "width": 2480,
+    "height": 3508,
+    "aspectRatio": 0.707,
+    "hash": "45d5b59a",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-1-72h-ed-26-pad-480.45d5b59a.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-1-72h-ed-26-pad-800.45d5b59a.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-1-72h-ed-26-pad-1200.45d5b59a.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-1-72h-ed-26-pad-1920.45d5b59a.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-1-72h-ed-26-pad-1200.45d5b59a.webp"
+  },
+  "/assets/projets/72h-cj-2026/Chronogramme Jour 2 72h 26 PAD.png": {
+    "width": 2480,
+    "height": 3508,
+    "aspectRatio": 0.707,
+    "hash": "68eba6fc",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-2-72h-26-pad-480.68eba6fc.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-2-72h-26-pad-800.68eba6fc.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-2-72h-26-pad-1200.68eba6fc.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-2-72h-26-pad-1920.68eba6fc.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-2-72h-26-pad-1200.68eba6fc.webp"
+  },
+  "/assets/projets/72h-cj-2026/Chronogramme Jour 3 72h 26 PAD.png": {
+    "width": 2480,
+    "height": 3508,
+    "aspectRatio": 0.707,
+    "hash": "1305cfc5",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-3-72h-26-pad-480.1305cfc5.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-3-72h-26-pad-800.1305cfc5.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-3-72h-26-pad-1200.1305cfc5.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-3-72h-26-pad-1920.1305cfc5.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/chronogramme-jour-3-72h-26-pad-1200.1305cfc5.webp"
+  },
+  "/assets/projets/72h-cj-2026/Cover Rapport d'Activités 72H 2026.png": {
+    "width": 2480,
+    "height": 3508,
+    "aspectRatio": 0.707,
+    "hash": "7a2f93e2",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/cover-rapport-d-activites-72h-2026-480.7a2f93e2.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/cover-rapport-d-activites-72h-2026-800.7a2f93e2.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/cover-rapport-d-activites-72h-2026-1200.7a2f93e2.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/cover-rapport-d-activites-72h-2026-1920.7a2f93e2.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/cover-rapport-d-activites-72h-2026-1200.7a2f93e2.webp"
+  },
+  "/assets/projets/72h-cj-2026/Final des Compétitions v1.png": {
+    "width": 3080,
+    "height": 3080,
+    "aspectRatio": 1,
+    "hash": "34490be0",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/final-des-competitions-v1-480.34490be0.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/final-des-competitions-v1-800.34490be0.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/final-des-competitions-v1-1200.34490be0.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/final-des-competitions-v1-1920.34490be0.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/final-des-competitions-v1-1200.34490be0.webp"
+  },
+  "/assets/projets/72h-cj-2026/LOGOTYPE 72H.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "0215bb03",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/logotype-72h-480.0215bb03.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/logotype-72h-800.0215bb03.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/logotype-72h-1200.0215bb03.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/logotype-72h-1920.0215bb03.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/logotype-72h-1200.0215bb03.webp"
+  },
+  "/assets/projets/72h-cj-2026/Récapitulatif Chronogramme 72heures.png": {
+    "width": 2480,
+    "height": 3508,
+    "aspectRatio": 0.707,
+    "hash": "59ed8e6c",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/recapitulatif-chronogramme-72heures-480.59ed8e6c.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/recapitulatif-chronogramme-72heures-800.59ed8e6c.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/recapitulatif-chronogramme-72heures-1200.59ed8e6c.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/recapitulatif-chronogramme-72heures-1920.59ed8e6c.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/recapitulatif-chronogramme-72heures-1200.59ed8e6c.webp"
+  },
+  "/assets/projets/72h-cj-2026/Stands disponibles 72h 2026.png": {
+    "width": 3080,
+    "height": 3080,
+    "aspectRatio": 1,
+    "hash": "c0d08bf0",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/stands-disponibles-72h-2026-480.c0d08bf0.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/stands-disponibles-72h-2026-800.c0d08bf0.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/stands-disponibles-72h-2026-1200.c0d08bf0.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/stands-disponibles-72h-2026-1920.c0d08bf0.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/stands-disponibles-72h-2026-1200.c0d08bf0.webp"
+  },
+  "/assets/projets/72h-cj-2026/Visuel Prix Pazouknam Ouedraogo v2.png": {
+    "width": 3080,
+    "height": 3080,
+    "aspectRatio": 1,
+    "hash": "275e78ab",
+    "variants": {
+      "480": "/assets/optimized/projets/72h-cj-2026/visuel-prix-pazouknam-ouedraogo-v2-480.275e78ab.webp",
+      "800": "/assets/optimized/projets/72h-cj-2026/visuel-prix-pazouknam-ouedraogo-v2-800.275e78ab.webp",
+      "1200": "/assets/optimized/projets/72h-cj-2026/visuel-prix-pazouknam-ouedraogo-v2-1200.275e78ab.webp",
+      "1920": "/assets/optimized/projets/72h-cj-2026/visuel-prix-pazouknam-ouedraogo-v2-1920.275e78ab.webp"
+    },
+    "fallback": "/assets/optimized/projets/72h-cj-2026/visuel-prix-pazouknam-ouedraogo-v2-1200.275e78ab.webp"
+  },
+  "/assets/projets/bang/App Icon bang.png": {
+    "width": 1368,
+    "height": 1058,
+    "aspectRatio": 1.293,
+    "hash": "eee88140",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/app-icon-bang-480.eee88140.webp",
+      "800": "/assets/optimized/projets/bang/app-icon-bang-800.eee88140.webp",
+      "1200": "/assets/optimized/projets/bang/app-icon-bang-1200.eee88140.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/app-icon-bang-1200.eee88140.webp"
+  },
+  "/assets/projets/bang/bang Motifs_bang.png": {
+    "width": 1080,
+    "height": 1080,
+    "aspectRatio": 1,
+    "hash": "7a0485c2",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/bang-motifs_bang-480.7a0485c2.webp",
+      "800": "/assets/optimized/projets/bang/bang-motifs_bang-800.7a0485c2.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/bang-motifs_bang-800.7a0485c2.webp"
+  },
+  "/assets/projets/bang/explain_bang.png": {
+    "width": 1080,
+    "height": 1080,
+    "aspectRatio": 1,
+    "hash": "8cf35989",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/explain_bang-480.8cf35989.webp",
+      "800": "/assets/optimized/projets/bang/explain_bang-800.8cf35989.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/explain_bang-800.8cf35989.webp"
+  },
+  "/assets/projets/bang/Horizontal_bang.png": {
+    "width": 1080,
+    "height": 1080,
+    "aspectRatio": 1,
+    "hash": "7fa7336e",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/horizontal_bang-480.7fa7336e.webp",
+      "800": "/assets/optimized/projets/bang/horizontal_bang-800.7fa7336e.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/horizontal_bang-800.7fa7336e.webp"
+  },
+  "/assets/projets/bang/Lanyard_ID_badge_bang_1.png": {
+    "width": 3500,
+    "height": 2625,
+    "aspectRatio": 1.3333,
+    "hash": "f52fb0a3",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/lanyard_id_badge_bang_1-480.f52fb0a3.webp",
+      "800": "/assets/optimized/projets/bang/lanyard_id_badge_bang_1-800.f52fb0a3.webp",
+      "1200": "/assets/optimized/projets/bang/lanyard_id_badge_bang_1-1200.f52fb0a3.webp",
+      "1920": "/assets/optimized/projets/bang/lanyard_id_badge_bang_1-1920.f52fb0a3.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/lanyard_id_badge_bang_1-1200.f52fb0a3.webp"
+  },
+  "/assets/projets/bang/Orangebang_logo.png": {
+    "width": 903,
+    "height": 427,
+    "aspectRatio": 2.1148,
+    "hash": "034d805f",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/orangebang_logo-480.034d805f.webp",
+      "800": "/assets/optimized/projets/bang/orangebang_logo-800.034d805f.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/orangebang_logo-800.034d805f.webp"
+  },
+  "/assets/projets/bang/Plan de travail 1 copie 3_bang.png": {
+    "width": 1080,
+    "height": 1080,
+    "aspectRatio": 1,
+    "hash": "cb71094f",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/plan-de-travail-1-copie-3_bang-480.cb71094f.webp",
+      "800": "/assets/optimized/projets/bang/plan-de-travail-1-copie-3_bang-800.cb71094f.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/plan-de-travail-1-copie-3_bang-800.cb71094f.webp"
+  },
+  "/assets/projets/bang/Polo Shirt on Mannequin bang koko donda sans col.png": {
+    "width": 4500,
+    "height": 3000,
+    "aspectRatio": 1.5,
+    "hash": "6c19d0f5",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/polo-shirt-on-mannequin-bang-koko-donda-sans-col-480.6c19d0f5.webp",
+      "800": "/assets/optimized/projets/bang/polo-shirt-on-mannequin-bang-koko-donda-sans-col-800.6c19d0f5.webp",
+      "1200": "/assets/optimized/projets/bang/polo-shirt-on-mannequin-bang-koko-donda-sans-col-1200.6c19d0f5.webp",
+      "1920": "/assets/optimized/projets/bang/polo-shirt-on-mannequin-bang-koko-donda-sans-col-1920.6c19d0f5.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/polo-shirt-on-mannequin-bang-koko-donda-sans-col-1200.6c19d0f5.webp"
+  },
+  "/assets/projets/bang/Présentation_bang_logo.png": {
+    "width": 596,
+    "height": 1089,
+    "aspectRatio": 0.5473,
+    "hash": "e9d60af1",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/presentation_bang_logo-480.e9d60af1.webp",
+      "800": "/assets/optimized/projets/bang/presentation_bang_logo-800.e9d60af1.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/presentation_bang_logo-800.e9d60af1.webp"
+  },
+  "/assets/projets/bang/sky billboard bang.png": {
+    "width": 4000,
+    "height": 2667,
+    "aspectRatio": 1.4998,
+    "hash": "9ac72a79",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/sky-billboard-bang-480.9ac72a79.webp",
+      "800": "/assets/optimized/projets/bang/sky-billboard-bang-800.9ac72a79.webp",
+      "1200": "/assets/optimized/projets/bang/sky-billboard-bang-1200.9ac72a79.webp",
+      "1920": "/assets/optimized/projets/bang/sky-billboard-bang-1920.9ac72a79.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/sky-billboard-bang-1200.9ac72a79.webp"
+  },
+  "/assets/projets/bang/SUBWAY LED BILLBOARD bang.png": {
+    "width": 4000,
+    "height": 3000,
+    "aspectRatio": 1.3333,
+    "hash": "2accd520",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/subway-led-billboard-bang-480.2accd520.webp",
+      "800": "/assets/optimized/projets/bang/subway-led-billboard-bang-800.2accd520.webp",
+      "1200": "/assets/optimized/projets/bang/subway-led-billboard-bang-1200.2accd520.webp",
+      "1920": "/assets/optimized/projets/bang/subway-led-billboard-bang-1920.2accd520.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/subway-led-billboard-bang-1200.2accd520.webp"
+  },
+  "/assets/projets/bang/symbol_bang.png": {
+    "width": 1080,
+    "height": 1080,
+    "aspectRatio": 1,
+    "hash": "3b702768",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/symbol_bang-480.3b702768.webp",
+      "800": "/assets/optimized/projets/bang/symbol_bang-800.3b702768.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/symbol_bang-800.3b702768.webp"
+  },
+  "/assets/projets/bang/Vertbang_logo.png": {
+    "width": 903,
+    "height": 427,
+    "aspectRatio": 2.1148,
+    "hash": "2420bcc2",
+    "variants": {
+      "480": "/assets/optimized/projets/bang/vertbang_logo-480.2420bcc2.webp",
+      "800": "/assets/optimized/projets/bang/vertbang_logo-800.2420bcc2.webp"
+    },
+    "fallback": "/assets/optimized/projets/bang/vertbang_logo-800.2420bcc2.webp"
+  },
+  "/assets/projets/cafe-inspire/01_Café Pyramide v3.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "18e19922",
+    "variants": {
+      "480": "/assets/optimized/projets/cafe-inspire/01_cafe-pyramide-v3-480.18e19922.webp",
+      "800": "/assets/optimized/projets/cafe-inspire/01_cafe-pyramide-v3-800.18e19922.webp",
+      "1200": "/assets/optimized/projets/cafe-inspire/01_cafe-pyramide-v3-1200.18e19922.webp",
+      "1920": "/assets/optimized/projets/cafe-inspire/01_cafe-pyramide-v3-1920.18e19922.webp"
+    },
+    "fallback": "/assets/optimized/projets/cafe-inspire/01_cafe-pyramide-v3-1200.18e19922.webp"
+  },
+  "/assets/projets/cafe-inspire/02_Café Pyramide v2.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "94b21267",
+    "variants": {
+      "480": "/assets/optimized/projets/cafe-inspire/02_cafe-pyramide-v2-480.94b21267.webp",
+      "800": "/assets/optimized/projets/cafe-inspire/02_cafe-pyramide-v2-800.94b21267.webp",
+      "1200": "/assets/optimized/projets/cafe-inspire/02_cafe-pyramide-v2-1200.94b21267.webp",
+      "1920": "/assets/optimized/projets/cafe-inspire/02_cafe-pyramide-v2-1920.94b21267.webp"
+    },
+    "fallback": "/assets/optimized/projets/cafe-inspire/02_cafe-pyramide-v2-1200.94b21267.webp"
+  },
+  "/assets/projets/cafe-inspire/03_Anniversaire_Café_Inspire_v2.1.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "d8a2a2ac",
+    "variants": {
+      "480": "/assets/optimized/projets/cafe-inspire/03_anniversaire_cafe_inspire_v2-1-480.d8a2a2ac.webp",
+      "800": "/assets/optimized/projets/cafe-inspire/03_anniversaire_cafe_inspire_v2-1-800.d8a2a2ac.webp",
+      "1200": "/assets/optimized/projets/cafe-inspire/03_anniversaire_cafe_inspire_v2-1-1200.d8a2a2ac.webp",
+      "1920": "/assets/optimized/projets/cafe-inspire/03_anniversaire_cafe_inspire_v2-1-1920.d8a2a2ac.webp"
+    },
+    "fallback": "/assets/optimized/projets/cafe-inspire/03_anniversaire_cafe_inspire_v2-1-1200.d8a2a2ac.webp"
+  },
+  "/assets/projets/cafe-inspire/04_Livraison_Gratuite_Mercredi_Café Inspire v2.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "88d8da16",
+    "variants": {
+      "480": "/assets/optimized/projets/cafe-inspire/04_livraison_gratuite_mercredi_cafe-inspire-v2-480.88d8da16.webp",
+      "800": "/assets/optimized/projets/cafe-inspire/04_livraison_gratuite_mercredi_cafe-inspire-v2-800.88d8da16.webp",
+      "1200": "/assets/optimized/projets/cafe-inspire/04_livraison_gratuite_mercredi_cafe-inspire-v2-1200.88d8da16.webp",
+      "1920": "/assets/optimized/projets/cafe-inspire/04_livraison_gratuite_mercredi_cafe-inspire-v2-1920.88d8da16.webp"
+    },
+    "fallback": "/assets/optimized/projets/cafe-inspire/04_livraison_gratuite_mercredi_cafe-inspire-v2-1200.88d8da16.webp"
+  },
+  "/assets/projets/cafe-inspire/05_Bon_Mois_Septembre v2.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "821d603a",
+    "variants": {
+      "480": "/assets/optimized/projets/cafe-inspire/05_bon_mois_septembre-v2-480.821d603a.webp",
+      "800": "/assets/optimized/projets/cafe-inspire/05_bon_mois_septembre-v2-800.821d603a.webp",
+      "1200": "/assets/optimized/projets/cafe-inspire/05_bon_mois_septembre-v2-1200.821d603a.webp",
+      "1920": "/assets/optimized/projets/cafe-inspire/05_bon_mois_septembre-v2-1920.821d603a.webp"
+    },
+    "fallback": "/assets/optimized/projets/cafe-inspire/05_bon_mois_septembre-v2-1200.821d603a.webp"
+  },
+  "/assets/projets/cafe-inspire/06_Tacos_Café_Inspire v2.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "e5bd0275",
+    "variants": {
+      "480": "/assets/optimized/projets/cafe-inspire/06_tacos_cafe_inspire-v2-480.e5bd0275.webp",
+      "800": "/assets/optimized/projets/cafe-inspire/06_tacos_cafe_inspire-v2-800.e5bd0275.webp",
+      "1200": "/assets/optimized/projets/cafe-inspire/06_tacos_cafe_inspire-v2-1200.e5bd0275.webp",
+      "1920": "/assets/optimized/projets/cafe-inspire/06_tacos_cafe_inspire-v2-1920.e5bd0275.webp"
+    },
+    "fallback": "/assets/optimized/projets/cafe-inspire/06_tacos_cafe_inspire-v2-1200.e5bd0275.webp"
+  },
+  "/assets/projets/cafe-inspire/07_Hiring_AideChef.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "7e1d7ceb",
+    "variants": {
+      "480": "/assets/optimized/projets/cafe-inspire/07_hiring_aidechef-480.7e1d7ceb.webp",
+      "800": "/assets/optimized/projets/cafe-inspire/07_hiring_aidechef-800.7e1d7ceb.webp",
+      "1200": "/assets/optimized/projets/cafe-inspire/07_hiring_aidechef-1200.7e1d7ceb.webp",
+      "1920": "/assets/optimized/projets/cafe-inspire/07_hiring_aidechef-1920.7e1d7ceb.webp"
+    },
+    "fallback": "/assets/optimized/projets/cafe-inspire/07_hiring_aidechef-1200.7e1d7ceb.webp"
+  },
+  "/assets/projets/cafe-inspire/08_Nouveau_Plat_Café Inspire.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "d76aeaac",
+    "variants": {
+      "480": "/assets/optimized/projets/cafe-inspire/08_nouveau_plat_cafe-inspire-480.d76aeaac.webp",
+      "800": "/assets/optimized/projets/cafe-inspire/08_nouveau_plat_cafe-inspire-800.d76aeaac.webp",
+      "1200": "/assets/optimized/projets/cafe-inspire/08_nouveau_plat_cafe-inspire-1200.d76aeaac.webp",
+      "1920": "/assets/optimized/projets/cafe-inspire/08_nouveau_plat_cafe-inspire-1920.d76aeaac.webp"
+    },
+    "fallback": "/assets/optimized/projets/cafe-inspire/08_nouveau_plat_cafe-inspire-1200.d76aeaac.webp"
+  },
+  "/assets/projets/mon-frere-parle/Certification Mockup MFP.png": {
+    "width": 3000,
+    "height": 2000,
+    "aspectRatio": 1.5,
+    "hash": "c8274bc6",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/certification-mockup-mfp-480.c8274bc6.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/certification-mockup-mfp-800.c8274bc6.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/certification-mockup-mfp-1200.c8274bc6.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/certification-mockup-mfp-1920.c8274bc6.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/certification-mockup-mfp-1200.c8274bc6.webp"
+  },
+  "/assets/projets/mon-frere-parle/instagram post mockup MFP.png": {
+    "width": 2250,
+    "height": 1530,
+    "aspectRatio": 1.4706,
+    "hash": "dce4ebe6",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/instagram-post-mockup-mfp-480.dce4ebe6.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/instagram-post-mockup-mfp-800.dce4ebe6.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/instagram-post-mockup-mfp-1200.dce4ebe6.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/instagram-post-mockup-mfp-1920.dce4ebe6.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/instagram-post-mockup-mfp-1200.dce4ebe6.webp"
+  },
+  "/assets/projets/mon-frere-parle/Logotype_v1_mon_frère_parle.png": {
+    "width": 1080,
+    "height": 1080,
+    "aspectRatio": 1,
+    "hash": "cfb5b526",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/logotype_v1_mon_frere_parle-480.cfb5b526.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/logotype_v1_mon_frere_parle-800.cfb5b526.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/logotype_v1_mon_frere_parle-800.cfb5b526.webp"
+  },
+  "/assets/projets/mon-frere-parle/MFP_HandCardMockup.png": {
+    "width": 3000,
+    "height": 3500,
+    "aspectRatio": 0.8571,
+    "hash": "25a074e9",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mfp_handcardmockup-480.25a074e9.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mfp_handcardmockup-800.25a074e9.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mfp_handcardmockup-1200.25a074e9.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mfp_handcardmockup-1920.25a074e9.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mfp_handcardmockup-1200.25a074e9.webp"
+  },
+  "/assets/projets/mon-frere-parle/MFP_OutdoorPosterMockup004.png": {
+    "width": 4608,
+    "height": 3072,
+    "aspectRatio": 1.5,
+    "hash": "12496936",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mfp_outdoorpostermockup004-480.12496936.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mfp_outdoorpostermockup004-800.12496936.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mfp_outdoorpostermockup004-1200.12496936.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mfp_outdoorpostermockup004-1920.12496936.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mfp_outdoorpostermockup004-1200.12496936.webp"
+  },
+  "/assets/projets/mon-frere-parle/MFP_PostCardMockup.png": {
+    "width": 4000,
+    "height": 2670,
+    "aspectRatio": 1.4981,
+    "hash": "f2b95ab7",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mfp_postcardmockup-480.f2b95ab7.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mfp_postcardmockup-800.f2b95ab7.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mfp_postcardmockup-1200.f2b95ab7.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mfp_postcardmockup-1920.f2b95ab7.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mfp_postcardmockup-1200.f2b95ab7.webp"
+  },
+  "/assets/projets/mon-frere-parle/Mon_Frère_Parle_Chroogramme_v2.jpg": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "6f541893",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_chroogramme_v2-480.6f541893.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_chroogramme_v2-800.6f541893.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_chroogramme_v2-1200.6f541893.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_chroogramme_v2-1920.6f541893.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_chroogramme_v2-1200.6f541893.webp"
+  },
+  "/assets/projets/mon-frere-parle/Mon_Frère_Parle_Coming_soon_0.jpg": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "9a811892",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_0-480.9a811892.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_0-800.9a811892.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_0-1200.9a811892.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_0-1920.9a811892.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_0-1200.9a811892.webp"
+  },
+  "/assets/projets/mon-frere-parle/Mon_Frère_Parle_Coming_soon_2.jpg": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "65b30e34",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_2-480.65b30e34.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_2-800.65b30e34.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_2-1200.65b30e34.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_2-1920.65b30e34.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_2-1200.65b30e34.webp"
+  },
+  "/assets/projets/mon-frere-parle/Mon_Frère_Parle_Coming_soon_3.jpg": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "c2d8f689",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_3-480.c2d8f689.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_3-800.c2d8f689.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_3-1200.c2d8f689.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_3-1920.c2d8f689.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_coming_soon_3-1200.c2d8f689.webp"
+  },
+  "/assets/projets/mon-frere-parle/Mon_Frère_Parle_Décompte.jpg": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "d38f5602",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_decompte-480.d38f5602.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_decompte-800.d38f5602.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_decompte-1200.d38f5602.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_decompte-1920.d38f5602.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_decompte-1200.d38f5602.webp"
+  },
+  "/assets/projets/mon-frere-parle/Mon_Frère_Parle_Invitation.jpg": {
+    "width": 3840,
+    "height": 2160,
+    "aspectRatio": 1.7778,
+    "hash": "d31f0d8b",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_invitation-480.d31f0d8b.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_invitation-800.d31f0d8b.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_invitation-1200.d31f0d8b.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_invitation-1920.d31f0d8b.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_invitation-1200.d31f0d8b.webp"
+  },
+  "/assets/projets/mon-frere-parle/Mon_Frère_Parle_Invité_Spécial.jpg": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "e7ffe037",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_invite_special-480.e7ffe037.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_invite_special-800.e7ffe037.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_invite_special-1200.e7ffe037.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_invite_special-1920.e7ffe037.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_invite_special-1200.e7ffe037.webp"
+  },
+  "/assets/projets/mon-frere-parle/Mon_Frère_Parle_Objectif.jpg": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "0279d3f6",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_objectif-480.0279d3f6.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_objectif-800.0279d3f6.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_objectif-1200.0279d3f6.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_objectif-1920.0279d3f6.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_objectif-1200.0279d3f6.webp"
+  },
+  "/assets/projets/mon-frere-parle/Mon_Frère_Parle_Thanks_FANKANI.jpg": {
+    "width": 3840,
+    "height": 2160,
+    "aspectRatio": 1.7778,
+    "hash": "517a9210",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_thanks_fankani-480.517a9210.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_thanks_fankani-800.517a9210.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_thanks_fankani-1200.517a9210.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_thanks_fankani-1920.517a9210.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_thanks_fankani-1200.517a9210.webp"
+  },
+  "/assets/projets/mon-frere-parle/Mon_Frère_Parle_Témoignage.jpg": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "d4414a1f",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_temoignage-480.d4414a1f.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_temoignage-800.d4414a1f.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_temoignage-1200.d4414a1f.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_temoignage-1920.d4414a1f.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_temoignage-1200.d4414a1f.webp"
+  },
+  "/assets/projets/mon-frere-parle/Mon_Frère_Parle_Visuel_Principal.jpg": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "98b7a6ff",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_visuel_principal-480.98b7a6ff.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_visuel_principal-800.98b7a6ff.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_visuel_principal-1200.98b7a6ff.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_visuel_principal-1920.98b7a6ff.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/mon_frere_parle_visuel_principal-1200.98b7a6ff.webp"
+  },
+  "/assets/projets/mon-frere-parle/Teaser Instagram Post Mockup MFP.png": {
+    "width": 4500,
+    "height": 3000,
+    "aspectRatio": 1.5,
+    "hash": "8b1cc5c1",
+    "variants": {
+      "480": "/assets/optimized/projets/mon-frere-parle/teaser-instagram-post-mockup-mfp-480.8b1cc5c1.webp",
+      "800": "/assets/optimized/projets/mon-frere-parle/teaser-instagram-post-mockup-mfp-800.8b1cc5c1.webp",
+      "1200": "/assets/optimized/projets/mon-frere-parle/teaser-instagram-post-mockup-mfp-1200.8b1cc5c1.webp",
+      "1920": "/assets/optimized/projets/mon-frere-parle/teaser-instagram-post-mockup-mfp-1920.8b1cc5c1.webp"
+    },
+    "fallback": "/assets/optimized/projets/mon-frere-parle/teaser-instagram-post-mockup-mfp-1200.8b1cc5c1.webp"
+  },
+  "/assets/projets/off-day/24 Off Day logo design.png": {
+    "width": 612,
+    "height": 408,
+    "aspectRatio": 1.5,
+    "hash": "77adcbf0",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/24-off-day-logo-design-480.77adcbf0.webp",
+      "800": "/assets/optimized/projets/off-day/24-off-day-logo-design-800.77adcbf0.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/24-off-day-logo-design-800.77adcbf0.webp"
+  },
+  "/assets/projets/off-day/Bannière_Facebook_OffDay.png": {
+    "width": 1640,
+    "height": 924,
+    "aspectRatio": 1.7749,
+    "hash": "f7e08f7a",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/banniere_facebook_offday-480.f7e08f7a.webp",
+      "800": "/assets/optimized/projets/off-day/banniere_facebook_offday-800.f7e08f7a.webp",
+      "1200": "/assets/optimized/projets/off-day/banniere_facebook_offday-1200.f7e08f7a.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/banniere_facebook_offday-1200.f7e08f7a.webp"
+  },
+  "/assets/projets/off-day/Invitation_Off_Day RECTO.png": {
+    "width": 874,
+    "height": 1240,
+    "aspectRatio": 0.7048,
+    "hash": "d339cdbf",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/invitation_off_day-recto-480.d339cdbf.webp",
+      "800": "/assets/optimized/projets/off-day/invitation_off_day-recto-800.d339cdbf.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/invitation_off_day-recto-800.d339cdbf.webp"
+  },
+  "/assets/projets/off-day/Invitation_Off_Day VERSO.png": {
+    "width": 874,
+    "height": 1240,
+    "aspectRatio": 0.7048,
+    "hash": "8a59f4c7",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/invitation_off_day-verso-480.8a59f4c7.webp",
+      "800": "/assets/optimized/projets/off-day/invitation_off_day-verso-800.8a59f4c7.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/invitation_off_day-verso-800.8a59f4c7.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Coming_Soon_2_v2.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "0d931fd4",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_coming_soon_2_v2-480.0d931fd4.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_coming_soon_2_v2-800.0d931fd4.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_coming_soon_2_v2-1200.0d931fd4.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_coming_soon_2_v2-1920.0d931fd4.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_coming_soon_2_v2-1200.0d931fd4.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Coming_Soon_3.2.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "78169996",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_coming_soon_3-2-480.78169996.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_coming_soon_3-2-800.78169996.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_coming_soon_3-2-1200.78169996.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_coming_soon_3-2-1920.78169996.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_coming_soon_3-2-1200.78169996.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Coming_Soon_v2.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "2102d44e",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_coming_soon_v2-480.2102d44e.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_coming_soon_v2-800.2102d44e.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_coming_soon_v2-1200.2102d44e.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_coming_soon_v2-1920.2102d44e.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_coming_soon_v2-1200.2102d44e.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Flyer_Recto.png": {
+    "width": 1748,
+    "height": 2480,
+    "aspectRatio": 0.7048,
+    "hash": "3c80b517",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_flyer_recto-480.3c80b517.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_flyer_recto-800.3c80b517.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_flyer_recto-1200.3c80b517.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_flyer_recto-1200.3c80b517.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Flyer_Verso.png": {
+    "width": 1748,
+    "height": 2480,
+    "aspectRatio": 0.7048,
+    "hash": "85cc01f6",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_flyer_verso-480.85cc01f6.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_flyer_verso-800.85cc01f6.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_flyer_verso-1200.85cc01f6.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_flyer_verso-1200.85cc01f6.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Invisibilité_Défi.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "688bd8be",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_invisibilite_defi-480.688bd8be.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_invisibilite_defi-800.688bd8be.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_invisibilite_defi-1200.688bd8be.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_invisibilite_defi-1920.688bd8be.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_invisibilite_defi-1200.688bd8be.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Invisibilité_Teaser.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "26e5211c",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_invisibilite_teaser-480.26e5211c.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_invisibilite_teaser-800.26e5211c.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_invisibilite_teaser-1200.26e5211c.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_invisibilite_teaser-1920.26e5211c.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_invisibilite_teaser-1200.26e5211c.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Mode_Snooz_v2.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "146c9baa",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_mode_snooz_v2-480.146c9baa.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_mode_snooz_v2-800.146c9baa.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_mode_snooz_v2-1200.146c9baa.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_mode_snooz_v2-1920.146c9baa.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_mode_snooz_v2-1200.146c9baa.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Movie_Night_14th_v2.2.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "234861cd",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_movie_night_14th_v2-2-480.234861cd.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_movie_night_14th_v2-2-800.234861cd.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_movie_night_14th_v2-2-1200.234861cd.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_movie_night_14th_v2-2-1920.234861cd.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_movie_night_14th_v2-2-1200.234861cd.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Plaidoirie_v3.6.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "1701ca9c",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_plaidoirie_v3-6-480.1701ca9c.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_plaidoirie_v3-6-800.1701ca9c.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_plaidoirie_v3-6-1200.1701ca9c.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_plaidoirie_v3-6-1920.1701ca9c.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_plaidoirie_v3-6-1200.1701ca9c.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Plaidorie_Modalités_v2.png": {
+    "width": 2160,
+    "height": 3000,
+    "aspectRatio": 0.72,
+    "hash": "71d26a7e",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_plaidorie_modalites_v2-480.71d26a7e.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_plaidorie_modalites_v2-800.71d26a7e.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_plaidorie_modalites_v2-1200.71d26a7e.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_plaidorie_modalites_v2-1920.71d26a7e.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_plaidorie_modalites_v2-1200.71d26a7e.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Quiz_Teaser.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "07c2d9eb",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_quiz_teaser-480.07c2d9eb.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_quiz_teaser-800.07c2d9eb.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_quiz_teaser-1200.07c2d9eb.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_quiz_teaser-1920.07c2d9eb.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_quiz_teaser-1200.07c2d9eb.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Soirée_Ciné.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "08fabd8c",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_soiree_cine-480.08fabd8c.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_soiree_cine-800.08fabd8c.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_soiree_cine-1200.08fabd8c.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_soiree_cine-1920.08fabd8c.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_soiree_cine-1200.08fabd8c.webp"
+  },
+  "/assets/projets/off-day/Off_Day_StayFree_00.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "32533adf",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_stayfree_00-480.32533adf.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_stayfree_00-800.32533adf.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_stayfree_00-1200.32533adf.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_stayfree_00-1920.32533adf.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_stayfree_00-1200.32533adf.webp"
+  },
+  "/assets/projets/off-day/Off_Day_StayFree_01.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "f17b4bc0",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_stayfree_01-480.f17b4bc0.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_stayfree_01-800.f17b4bc0.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_stayfree_01-1200.f17b4bc0.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_stayfree_01-1920.f17b4bc0.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_stayfree_01-1200.f17b4bc0.webp"
+  },
+  "/assets/projets/off-day/Off_Day_StayFree_02.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "2af51517",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_stayfree_02-480.2af51517.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_stayfree_02-800.2af51517.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_stayfree_02-1200.2af51517.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_stayfree_02-1920.2af51517.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_stayfree_02-1200.2af51517.webp"
+  },
+  "/assets/projets/off-day/Off_Day_StayFree_03.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "0fda0e5c",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_stayfree_03-480.0fda0e5c.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_stayfree_03-800.0fda0e5c.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_stayfree_03-1200.0fda0e5c.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_stayfree_03-1920.0fda0e5c.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_stayfree_03-1200.0fda0e5c.webp"
+  },
+  "/assets/projets/off-day/Off_Day_StayFree_04.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "5b6f90fa",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_stayfree_04-480.5b6f90fa.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_stayfree_04-800.5b6f90fa.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_stayfree_04-1200.5b6f90fa.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_stayfree_04-1920.5b6f90fa.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_stayfree_04-1200.5b6f90fa.webp"
+  },
+  "/assets/projets/off-day/Off_Day_Visual_v2.2 Corrigé.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "f86bbb9f",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/off_day_visual_v2-2-corrige-480.f86bbb9f.webp",
+      "800": "/assets/optimized/projets/off-day/off_day_visual_v2-2-corrige-800.f86bbb9f.webp",
+      "1200": "/assets/optimized/projets/off-day/off_day_visual_v2-2-corrige-1200.f86bbb9f.webp",
+      "1920": "/assets/optimized/projets/off-day/off_day_visual_v2-2-corrige-1920.f86bbb9f.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/off_day_visual_v2-2-corrige-1200.f86bbb9f.webp"
+  },
+  "/assets/projets/off-day/Profis_Quiz_OffDay_La_Consciente.png": {
+    "width": 1080,
+    "height": 1350,
+    "aspectRatio": 0.8,
+    "hash": "20855510",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/profis_quiz_offday_la_consciente-480.20855510.webp",
+      "800": "/assets/optimized/projets/off-day/profis_quiz_offday_la_consciente-800.20855510.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/profis_quiz_offday_la_consciente-800.20855510.webp"
+  },
+  "/assets/projets/off-day/Profis_Quiz_OffDay_La_Fragile.png": {
+    "width": 1080,
+    "height": 1350,
+    "aspectRatio": 0.8,
+    "hash": "7b93be5e",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/profis_quiz_offday_la_fragile-480.7b93be5e.webp",
+      "800": "/assets/optimized/projets/off-day/profis_quiz_offday_la_fragile-800.7b93be5e.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/profis_quiz_offday_la_fragile-800.7b93be5e.webp"
+  },
+  "/assets/projets/off-day/Profis_Quiz_OffDay_La_Zombie_connectee.png": {
+    "width": 1080,
+    "height": 1350,
+    "aspectRatio": 0.8,
+    "hash": "57c7da7e",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/profis_quiz_offday_la_zombie_connectee-480.57c7da7e.webp",
+      "800": "/assets/optimized/projets/off-day/profis_quiz_offday_la_zombie_connectee-800.57c7da7e.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/profis_quiz_offday_la_zombie_connectee-800.57c7da7e.webp"
+  },
+  "/assets/projets/off-day/Profis_Quiz_OffDay_Le_Conscient.png": {
+    "width": 1080,
+    "height": 1350,
+    "aspectRatio": 0.8,
+    "hash": "ab5cfc3f",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/profis_quiz_offday_le_conscient-480.ab5cfc3f.webp",
+      "800": "/assets/optimized/projets/off-day/profis_quiz_offday_le_conscient-800.ab5cfc3f.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/profis_quiz_offday_le_conscient-800.ab5cfc3f.webp"
+  },
+  "/assets/projets/off-day/Profis_Quiz_OffDay_Le_Fragile.png": {
+    "width": 1080,
+    "height": 1350,
+    "aspectRatio": 0.8,
+    "hash": "c77f0e57",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/profis_quiz_offday_le_fragile-480.c77f0e57.webp",
+      "800": "/assets/optimized/projets/off-day/profis_quiz_offday_le_fragile-800.c77f0e57.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/profis_quiz_offday_le_fragile-800.c77f0e57.webp"
+  },
+  "/assets/projets/off-day/Profis_Quiz_OffDay_Le_Zombie_connecte.png": {
+    "width": 1080,
+    "height": 1350,
+    "aspectRatio": 0.8,
+    "hash": "f1b24567",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/profis_quiz_offday_le_zombie_connecte-480.f1b24567.webp",
+      "800": "/assets/optimized/projets/off-day/profis_quiz_offday_le_zombie_connecte-800.f1b24567.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/profis_quiz_offday_le_zombie_connecte-800.f1b24567.webp"
+  },
+  "/assets/projets/off-day/Réseaux_Sociaux_Conférence_Presse_Off_Day_v2.2.png": {
+    "width": 2000,
+    "height": 2000,
+    "aspectRatio": 1,
+    "hash": "406b2102",
+    "variants": {
+      "480": "/assets/optimized/projets/off-day/reseaux_sociaux_conference_presse_off_day_v2-2-480.406b2102.webp",
+      "800": "/assets/optimized/projets/off-day/reseaux_sociaux_conference_presse_off_day_v2-2-800.406b2102.webp",
+      "1200": "/assets/optimized/projets/off-day/reseaux_sociaux_conference_presse_off_day_v2-2-1200.406b2102.webp",
+      "1920": "/assets/optimized/projets/off-day/reseaux_sociaux_conference_presse_off_day_v2-2-1920.406b2102.webp"
+    },
+    "fallback": "/assets/optimized/projets/off-day/reseaux_sociaux_conference_presse_off_day_v2-2-1200.406b2102.webp"
+  }
+}

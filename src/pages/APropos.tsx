@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Sparkles, ArrowUpRight, Compass, Heart, Lightbulb, Target } from 'lucide-react';
 import { CtaButton } from '../components/ui/CtaButton';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { getOptimizedImage } from '../lib/images';
 
 export const APropos: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
@@ -85,18 +86,29 @@ export const APropos: React.FC = () => {
                   {/* Container with overflow hidden for the curtain wipe */}
                   <div className="relative aspect-[4/5] w-full overflow-hidden">
                     {/* Photo with zoom effect */}
-                    <motion.img
-                      src="/assets/about/scott-nana.png"
-                      alt="Scott Nana — Brand & Graphic Designer, Fondateur de Class S"
-                      className="w-full h-full object-cover object-center"
-                      initial={prefersReducedMotion ? { opacity: 0 } : { scale: 1.08, opacity: 0 }}
-                      whileInView={prefersReducedMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{
-                        duration: prefersReducedMotion ? 0.3 : 0.85,
-                        ease: [0.25, 0.1, 0.25, 1],
-                      }}
-                    />
+                    {(() => {
+                      const optPortrait = getOptimizedImage('/assets/about/scott-nana.png', { width: 800 });
+                      return (
+                        <motion.img
+                          src={optPortrait.src}
+                          srcSet={optPortrait.srcSet}
+                          sizes="(min-width: 768px) 40vw, 90vw"
+                          alt="Scott Nana — Brand & Graphic Designer, Fondateur de Class S"
+                          width={optPortrait.width}
+                          height={optPortrait.height}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-full h-full object-cover object-center"
+                          initial={prefersReducedMotion ? { opacity: 0 } : { scale: 1.08, opacity: 0 }}
+                          whileInView={prefersReducedMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
+                          viewport={{ once: true, amount: 0.3 }}
+                          transition={{
+                            duration: prefersReducedMotion ? 0.3 : 0.85,
+                            ease: [0.25, 0.1, 0.25, 1],
+                          }}
+                        />
+                      );
+                    })()}
 
                     {/* Curtain / Wipe Reveal Panel */}
                     {!prefersReducedMotion && (

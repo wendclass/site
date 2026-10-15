@@ -4,6 +4,7 @@ import { ArrowRight, Sparkles, CheckCircle } from 'lucide-react';
 import { projectsData, Project } from '../../data/projets';
 import { fetchPublicProjects } from '../../lib/supabase';
 import { CtaButton } from '../ui/CtaButton';
+import { getOptimizedImage } from '../../lib/images';
 
 export const ProjectsProof: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>(projectsData.slice(0, 3));
@@ -50,23 +51,30 @@ export const ProjectsProof: React.FC = () => {
 
         {/* 3 Featured Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {featuredProjects.map((project) => (
-            <div
-              key={project.id}
-              className="bg-white rounded-3xl overflow-hidden border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group"
-            >
-              {/* Image Banner */}
-              <div className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden bg-onyx">
-                <img
-                  src={project.heroImage}
-                  alt={project.title}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
-                <div className="absolute top-3 left-3 bg-onyx/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-[11px] font-semibold text-ivoire-violet uppercase tracking-wider">
-                  {project.category}
+          {featuredProjects.map((project) => {
+            const optImg = getOptimizedImage(project.heroImage, { width: 800 });
+            return (
+              <div
+                key={project.id}
+                className="bg-white rounded-3xl overflow-hidden border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group"
+              >
+                {/* Image Banner */}
+                <div className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden bg-onyx">
+                  <img
+                    src={optImg.src}
+                    srcSet={optImg.srcSet}
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    alt={project.title}
+                    width={optImg.width}
+                    height={optImg.height}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute top-3 left-3 bg-onyx/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-[11px] font-semibold text-ivoire-violet uppercase tracking-wider">
+                    {project.category}
+                  </div>
                 </div>
-              </div>
 
               {/* Text Info */}
               <div className="p-6 flex-grow flex flex-col justify-between space-y-4">
@@ -95,7 +103,8 @@ export const ProjectsProof: React.FC = () => {
                 </div>
               </div>
             </div>
-          ))}
+          );
+        })}
         </div>
 
         {/* Bottom CTA Banner */}

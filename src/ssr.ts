@@ -4,6 +4,7 @@ import { offersData } from './data/offres';
 import { projectsData, Project } from './data/projets';
 import { FAQ_ITEMS } from './data/faq';
 import { SITE_URL, SITE_CONFIG } from './config/site';
+import { getOptimizedImage } from './lib/images';
 
 // Supabase configuration
 const supabaseUrl =
@@ -671,11 +672,14 @@ export default async function handler(req: any, res: any) {
               <div class="pt-4 border-t border-violet-imperial/10">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-onyx mb-3">Galerie des réalisations (${p.gallery.length} visuels)</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                  ${p.gallery.map((img) => `
-                    <figure class="rounded-xl overflow-hidden bg-onyx aspect-square border border-violet-imperial/10">
-                      <img src="${img.src}" alt="${img.caption || p.title}" class="w-full h-full object-cover" loading="lazy" />
-                    </figure>
-                  `).join('')}
+                  ${p.gallery.map((img) => {
+                    const opt = getOptimizedImage(img.src, { width: 480 });
+                    return `
+                      <figure class="rounded-xl overflow-hidden bg-onyx aspect-square border border-violet-imperial/10">
+                        <img src="${opt.src}" ${opt.srcSet ? `srcset="${opt.srcSet}"` : ''} alt="${img.caption || p.title}" class="w-full h-full object-cover" loading="lazy" decoding="async" width="${opt.width || 480}" height="${opt.height || 480}" />
+                      </figure>
+                    `;
+                  }).join('')}
                 </div>
               </div>
 
