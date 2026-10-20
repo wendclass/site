@@ -9,7 +9,6 @@ import {
   Copy,
   ArrowUpRight,
   Sparkles,
-  BookOpen,
 } from 'lucide-react';
 import {
   DbArticle,
@@ -17,6 +16,7 @@ import {
   fetchPublicArticles,
 } from '../lib/supabase';
 import { useSeo } from '../hooks/useSeo';
+import { NotFound } from './NotFound';
 import { CtaButton } from '../components/ui/CtaButton';
 import DOMPurify from 'dompurify';
 
@@ -131,22 +131,7 @@ export const BlogPost: React.FC = () => {
   }
 
   if (!article) {
-    return (
-      <div className="min-h-screen bg-onyx text-ivoire-violet pt-36 pb-20 max-w-2xl mx-auto px-4 text-center space-y-6 font-body">
-        <BookOpen className="w-16 h-16 text-ivoire-violet/30 mx-auto" />
-        <h1 className="text-3xl font-serif font-bold text-white">Article introuvable</h1>
-        <p className="text-sm text-ivoire-violet/70">
-          L'article que vous recherchez n'existe pas ou n'est plus en ligne.
-        </p>
-        <Link
-          to="/blog"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-violet-imperial hover:bg-violet-imperial/90 text-white text-xs font-semibold shadow-glow transition-all"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Retourner au journal</span>
-        </Link>
-      </div>
-    );
+    return <NotFound />;
   }
 
   const readTime = calculateReadingTime(article.content);

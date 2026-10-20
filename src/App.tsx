@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Layout } from './components/layout/Layout';
 import { Accueil } from './pages/Accueil';
@@ -8,6 +8,7 @@ import { Projets } from './pages/Projets';
 import { Blog } from './pages/Blog';
 import { BlogPost } from './pages/BlogPost';
 import { APropos } from './pages/APropos';
+import { NotFound } from './pages/NotFound';
 import { AdminPage } from './pages/admin/AdminPage';
 import { useReducedMotion } from './hooks/useReducedMotion';
 import { usePageTracking } from './hooks/usePageTracking';
@@ -120,7 +121,19 @@ const AnimatedPublicRoutes: React.FC = () => {
             </motion.div>
           }
         />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route
+          path="*"
+          element={
+            <motion.div
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <NotFound />
+            </motion.div>
+          }
+        />
       </Routes>
     </AnimatePresence>
   );
