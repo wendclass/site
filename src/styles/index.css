@@ -98,6 +98,19 @@
   background: #6600CC;
 }
 
+/* Global Image Protection (Anti-download & Anti-drag) */
+img,
+picture,
+[data-protected-image] {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+}
+
 /* Reduced motion adjustments */
 @media (prefers-reduced-motion: reduce) {
   *,

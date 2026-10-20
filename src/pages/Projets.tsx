@@ -220,7 +220,9 @@ export const Projets: React.FC = () => {
                             alt={img.caption}
                             width={thumbOpt.width}
                             height={thumbOpt.height}
-                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                            draggable={false}
+                            onContextMenu={(e) => e.preventDefault()}
+                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300 pointer-events-none select-none"
                             loading="lazy"
                             decoding="async"
                           />
@@ -304,8 +306,12 @@ export const Projets: React.FC = () => {
               <ChevronRight className="w-6 h-6" />
             </button>
 
-            {/* Current Image */}
-            <div className="relative max-h-[75vh] flex items-center justify-center overflow-hidden rounded-2xl bg-onyx shadow-2xl border border-white/20">
+            {/* Current Image with Anti-Download Shield */}
+            <div 
+              className="relative max-h-[75vh] flex items-center justify-center overflow-hidden rounded-2xl bg-onyx shadow-2xl border border-white/20 select-none"
+              onContextMenu={(e) => e.preventDefault()}
+              data-protected-image="true"
+            >
               {(() => {
                 const fullOpt = getOptimizedImage(activeGallery.items[activeGallery.currentIndex].src, { width: 1920 });
                 return (
@@ -316,11 +322,20 @@ export const Projets: React.FC = () => {
                     alt={activeGallery.items[activeGallery.currentIndex].caption}
                     width={fullOpt.width}
                     height={fullOpt.height}
-                    className="max-h-[75vh] w-auto max-w-full object-contain"
+                    draggable={false}
+                    onContextMenu={(e) => e.preventDefault()}
+                    className="max-h-[75vh] w-auto max-w-full object-contain pointer-events-none select-none"
                     decoding="async"
                   />
                 );
               })()}
+              {/* Invisible protective overlay shield against right-click or drag */}
+              <div
+                className="absolute inset-0 z-10 select-none cursor-default"
+                onContextMenu={(e) => e.preventDefault()}
+                onDragStart={(e) => e.preventDefault()}
+                aria-hidden="true"
+              />
             </div>
 
             {/* Image caption and counter */}

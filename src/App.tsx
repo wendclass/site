@@ -133,6 +133,28 @@ const AppRoot: React.FC = () => {
   // Safely track public pages anonymously
   usePageTracking();
 
+  // Protect all images globally from right-click save and drag-and-drop
+  React.useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === 'IMG' || target.closest('img') || target.closest('[data-protected-image]'))) {
+        e.preventDefault();
+      }
+    };
+    const handleDragStart = (e: DragEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === 'IMG' || target.closest('img') || target.closest('[data-protected-image]'))) {
+        e.preventDefault();
+      }
+    };
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('dragstart', handleDragStart);
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('dragstart', handleDragStart);
+    };
+  }, []);
+
   if (isAdminRoute) {
     return <AdminPage />;
   }

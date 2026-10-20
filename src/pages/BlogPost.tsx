@@ -237,13 +237,26 @@ export const BlogPost: React.FC = () => {
           </div>
         )}
 
-        {/* Hero Cover Image */}
+        {/* Hero Cover Image with Anti-Download Shield */}
         {article.cover_image && (
-          <div className="aspect-video w-full rounded-3xl overflow-hidden border border-white/10 shadow-soft-lg bg-black/40">
+          <div 
+            className="relative aspect-video w-full rounded-3xl overflow-hidden border border-white/10 shadow-soft-lg bg-black/40 select-none"
+            onContextMenu={(e) => e.preventDefault()}
+            data-protected-image="true"
+          >
             <img
               src={article.cover_image}
               alt={article.title}
-              className="w-full h-full object-cover"
+              draggable={false}
+              onContextMenu={(e) => e.preventDefault()}
+              className="w-full h-full object-cover pointer-events-none select-none"
+            />
+            {/* Invisible protective overlay shield */}
+            <div
+              className="absolute inset-0 z-10 select-none cursor-default"
+              onContextMenu={(e) => e.preventDefault()}
+              onDragStart={(e) => e.preventDefault()}
+              aria-hidden="true"
             />
           </div>
         )}

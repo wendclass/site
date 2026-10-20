@@ -80,11 +80,18 @@ export const APropos: React.FC = () => {
                 </div>
               </div>
 
-              {/* Photo Reveal Column with Curtain / Wipe Animation */}
+              {/* Photo Reveal Column with Curtain / Wipe Animation & Anti-Download Shield */}
               <div className="md:col-span-5">
-                <div className="relative rounded-3xl overflow-hidden shadow-soft-lg border border-violet-imperial/20 bg-onyx">
+                <div 
+                  className="relative rounded-3xl overflow-hidden shadow-soft-lg border border-violet-imperial/20 bg-onyx select-none"
+                  onContextMenu={(e) => e.preventDefault()}
+                  data-protected-image="true"
+                >
                   {/* Container with overflow hidden for the curtain wipe */}
-                  <div className="relative aspect-[4/5] w-full overflow-hidden">
+                  <div 
+                    className="relative aspect-[4/5] w-full overflow-hidden select-none"
+                    onContextMenu={(e) => e.preventDefault()}
+                  >
                     {/* Photo with zoom effect */}
                     {(() => {
                       const optPortrait = getOptimizedImage('/assets/about/scott-nana.png', { width: 800 });
@@ -98,7 +105,9 @@ export const APropos: React.FC = () => {
                           height={optPortrait.height}
                           loading="lazy"
                           decoding="async"
-                          className="w-full h-full object-cover object-center"
+                          draggable={false}
+                          onContextMenu={(e) => e.preventDefault()}
+                          className="w-full h-full object-cover object-center pointer-events-none select-none"
                           initial={prefersReducedMotion ? { opacity: 0 } : { scale: 1.08, opacity: 0 }}
                           whileInView={prefersReducedMotion ? { opacity: 1 } : { scale: 1, opacity: 1 }}
                           viewport={{ once: true, amount: 0.3 }}
@@ -109,6 +118,14 @@ export const APropos: React.FC = () => {
                         />
                       );
                     })()}
+
+                    {/* Transparent anti-download shield over the entire photo */}
+                    <div
+                      className="absolute inset-0 z-10 cursor-default select-none"
+                      onContextMenu={(e) => e.preventDefault()}
+                      onDragStart={(e) => e.preventDefault()}
+                      aria-hidden="true"
+                    />
 
                     {/* Curtain / Wipe Reveal Panel */}
                     {!prefersReducedMotion && (
@@ -126,10 +143,10 @@ export const APropos: React.FC = () => {
                     )}
 
                     {/* Subtle bottom gradient overlay for legibility */}
-                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-onyx/90 via-onyx/40 to-transparent pointer-events-none z-10" />
+                    <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-onyx/90 via-onyx/40 to-transparent pointer-events-none z-20" />
 
                     {/* Floating caption tag */}
-                    <div className="absolute bottom-3 left-3 right-3 z-10 p-3 rounded-2xl bg-onyx/75 backdrop-blur-md border border-white/15 text-white flex items-center justify-between">
+                    <div className="absolute bottom-3 left-3 right-3 z-30 p-3 rounded-2xl bg-onyx/75 backdrop-blur-md border border-white/15 text-white flex items-center justify-between pointer-events-auto">
                       <div className="space-y-0.5">
                         <span className="text-xs font-bold block font-body text-or-champagne">Scott Nana</span>
                         <span className="text-[11px] text-ivoire-violet/70 block font-body">Brand & Graphic Designer</span>

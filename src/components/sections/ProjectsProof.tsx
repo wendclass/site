@@ -58,8 +58,12 @@ export const ProjectsProof: React.FC = () => {
                 key={project.id}
                 className="bg-white rounded-3xl overflow-hidden border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group"
               >
-                {/* Image Banner */}
-                <div className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden bg-onyx">
+                {/* Image Banner with Anti-Download Shield */}
+                <div 
+                  className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden bg-onyx select-none"
+                  onContextMenu={(e) => e.preventDefault()}
+                  data-protected-image="true"
+                >
                   <img
                     src={optImg.src}
                     srcSet={optImg.srcSet}
@@ -67,11 +71,20 @@ export const ProjectsProof: React.FC = () => {
                     alt={project.title}
                     width={optImg.width}
                     height={optImg.height}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    draggable={false}
+                    onContextMenu={(e) => e.preventDefault()}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none"
                     loading="lazy"
                     decoding="async"
                   />
-                  <div className="absolute top-3 left-3 bg-onyx/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-[11px] font-semibold text-ivoire-violet uppercase tracking-wider">
+                  {/* Invisible protective overlay shield */}
+                  <div
+                    className="absolute inset-0 z-10 select-none cursor-default"
+                    onContextMenu={(e) => e.preventDefault()}
+                    onDragStart={(e) => e.preventDefault()}
+                    aria-hidden="true"
+                  />
+                  <div className="absolute top-3 left-3 z-20 bg-onyx/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-[11px] font-semibold text-ivoire-violet uppercase tracking-wider">
                     {project.category}
                   </div>
                 </div>
