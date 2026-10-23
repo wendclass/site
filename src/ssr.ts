@@ -457,7 +457,7 @@ export default async function handler(req: any, res: any) {
         <!-- FAQ -->
         <section class="py-16 max-w-4xl mx-auto px-4">
           <h2 class="text-2xl sm:text-3xl font-title font-semibold text-center mb-8" style="font-family:'Cormorant Garamond', Georgia, serif;">
-            Questions fréquentes
+            Je réponds avant même que vous ne demandiez
           </h2>
           <div class="space-y-4">
             ${FAQ_ITEMS.map((faq) => `
@@ -599,7 +599,7 @@ export default async function handler(req: any, res: any) {
         <!-- FAQ -->
         <section class="max-w-4xl mx-auto mb-16">
           <h2 class="text-2xl sm:text-3xl font-title font-semibold text-center mb-8" style="font-family:'Cormorant Garamond', Georgia, serif;">
-            Questions fréquentes sur nos prestations
+            Je réponds avant même que vous ne demandiez
           </h2>
           <div class="space-y-4">
             ${FAQ_ITEMS.map((faq) => `
