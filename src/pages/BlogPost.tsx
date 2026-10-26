@@ -17,6 +17,7 @@ import {
 } from '../lib/supabase';
 import { useSeo } from '../hooks/useSeo';
 import { NotFound } from './NotFound';
+import { SITE_CONFIG } from '../config/site';
 import { CtaButton } from '../components/ui/CtaButton';
 import DOMPurify from 'dompurify';
 
@@ -60,7 +61,7 @@ export const BlogPost: React.FC = () => {
   // SEO
   const currentUrl = `https://wendclass.vercel.app/blog/${article?.slug || slug || ''}`;
   const ogImage =
-    article?.cover_image || 'https://wendclass.vercel.app/assets/logo/logo-violet.png';
+    article?.cover_image || SITE_CONFIG.ogImageUrl;
 
   useSeo({
     title: article?.title ? article.title : 'Article de Blog',

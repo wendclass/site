@@ -264,6 +264,9 @@ export default async function handler(req: any, res: any) {
   let pageDesc = SITE_CONFIG.defaultDescription;
   let pageCanonical = `${baseUrl}/`;
   let pageImage = SITE_CONFIG.ogImageUrl;
+  let pageImageWidth = 1200;
+  let pageImageHeight = 630;
+  let pageImageAlt = "Class S — Studio d'Identité Visuelle & Brand Design par Scott Nana";
   let pageType = 'website';
   let ssrContent = '';
   let jsonLd: any = null;
@@ -870,7 +873,15 @@ export default async function handler(req: any, res: any) {
     } else if (slug && article) {
       pageTitle = `${article.title} | Class S`;
       pageDesc = article.meta_description || article.excerpt || pageDesc;
-      pageImage = article.cover_image || `${baseUrl}/assets/logo/og-image.png`;
+      if (article.cover_image && article.cover_image.trim()) {
+        pageImage = article.cover_image.startsWith('/')
+          ? `${baseUrl}${article.cover_image}`
+          : article.cover_image;
+        pageImageAlt = article.title;
+      } else {
+        pageImage = SITE_CONFIG.ogImageUrl;
+        pageImageAlt = `Class S — ${article.title}`;
+      }
       pageCanonical = `${baseUrl}/blog/${slug}`;
       pageType = 'article';
 
@@ -1000,12 +1011,16 @@ export default async function handler(req: any, res: any) {
     <meta name="description" content="${pageDesc.replace(/"/g, '&quot;')}" />
     ${pageCanonical ? `<link rel="canonical" href="${pageCanonical}" />` : ''}
     <!-- Open Graph -->
+    <meta property="og:site_name" content="Class S — Scott Nana" />
     <meta property="og:title" content="${pageTitle.replace(/"/g, '&quot;')}" />
     <meta property="og:description" content="${pageDesc.replace(/"/g, '&quot;')}" />
     <meta property="og:type" content="${pageType}" />
-    <meta property="og:url" content="${pageCanonical}" />
+    <meta property="og:url" content="${pageCanonical || baseUrl}" />
+    <meta property="og:locale" content="fr_FR" />
     <meta property="og:image" content="${pageImage}" />
-    <meta property="og:site_name" content="Class S — Scott Nana" />
+    <meta property="og:image:width" content="${pageImageWidth}" />
+    <meta property="og:image:height" content="${pageImageHeight}" />
+    <meta property="og:image:alt" content="${pageImageAlt.replace(/"/g, '&quot;')}" />
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${pageTitle.replace(/"/g, '&quot;')}" />
@@ -1043,7 +1058,7 @@ export default async function handler(req: any, res: any) {
   if (statusCode === 200) {
     res.setHeader(
       'Cache-Control',
-      'public, max-age=60, s-maxage=120, stale-while-revalidate=600'
+      'public, max-age=120, s-maxage=3600, stale-while-revalidate=86400'
     );
   } else {
     res.setHeader('Cache-Control', 'no-store, max-age=0');

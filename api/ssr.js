@@ -551,7 +551,8 @@ var SITE_CONFIG = {
   defaultTitle: "Class S \u2014 L'identit\xE9 visuelle qui vous impose | Scott Nana",
   defaultDescription: "Class S est un studio d'identit\xE9 visuelle \xE0 Ouagadougou, au service des entrepreneurs et des PME. D'une image qui existe \xE0 une image qui fait vendre.",
   logoUrl: `${SITE_URL}/assets/logo/logo-violet.png`,
-  ogImageUrl: `${SITE_URL}/assets/logo/og-image.png`,
+  // Bannière de partage officielle 1200x630 (PNG, < 300 Ko)
+  ogImageUrl: `${SITE_URL}/og/banniere-class-s.png`,
   socialLinks: {
     linkedin: "https://www.linkedin.com/in/wendclass",
     facebook: "https://web.facebook.com/wendclass",
@@ -787,6 +788,9 @@ async function handler(req, res) {
   let pageDesc = SITE_CONFIG.defaultDescription;
   let pageCanonical = `${baseUrl}/`;
   let pageImage = SITE_CONFIG.ogImageUrl;
+  let pageImageWidth = 1200;
+  let pageImageHeight = 630;
+  let pageImageAlt = "Class S \u2014 Studio d'Identit\xE9 Visuelle & Brand Design par Scott Nana";
   let pageType = "website";
   let ssrContent = "";
   let jsonLd = null;
@@ -1364,7 +1368,13 @@ async function handler(req, res) {
     } else if (slug && article) {
       pageTitle = `${article.title} | Class S`;
       pageDesc = article.meta_description || article.excerpt || pageDesc;
-      pageImage = article.cover_image || `${baseUrl}/assets/logo/og-image.png`;
+      if (article.cover_image && article.cover_image.trim()) {
+        pageImage = article.cover_image.startsWith("/") ? `${baseUrl}${article.cover_image}` : article.cover_image;
+        pageImageAlt = article.title;
+      } else {
+        pageImage = SITE_CONFIG.ogImageUrl;
+        pageImageAlt = `Class S \u2014 ${article.title}`;
+      }
       pageCanonical = `${baseUrl}/blog/${slug}`;
       pageType = "article";
       jsonLd = {
@@ -1480,12 +1490,16 @@ async function handler(req, res) {
     <meta name="description" content="${pageDesc.replace(/"/g, "&quot;")}" />
     ${pageCanonical ? `<link rel="canonical" href="${pageCanonical}" />` : ""}
     <!-- Open Graph -->
+    <meta property="og:site_name" content="Class S \u2014 Scott Nana" />
     <meta property="og:title" content="${pageTitle.replace(/"/g, "&quot;")}" />
     <meta property="og:description" content="${pageDesc.replace(/"/g, "&quot;")}" />
     <meta property="og:type" content="${pageType}" />
-    <meta property="og:url" content="${pageCanonical}" />
+    <meta property="og:url" content="${pageCanonical || baseUrl}" />
+    <meta property="og:locale" content="fr_FR" />
     <meta property="og:image" content="${pageImage}" />
-    <meta property="og:site_name" content="Class S \u2014 Scott Nana" />
+    <meta property="og:image:width" content="${pageImageWidth}" />
+    <meta property="og:image:height" content="${pageImageHeight}" />
+    <meta property="og:image:alt" content="${pageImageAlt.replace(/"/g, "&quot;")}" />
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${pageTitle.replace(/"/g, "&quot;")}" />
@@ -1510,7 +1524,7 @@ async function handler(req, res) {
   if (statusCode === 200) {
     res.setHeader(
       "Cache-Control",
-      "public, max-age=60, s-maxage=120, stale-while-revalidate=600"
+      "public, max-age=120, s-maxage=3600, stale-while-revalidate=86400"
     );
   } else {
     res.setHeader("Cache-Control", "no-store, max-age=0");
