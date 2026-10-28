@@ -180,11 +180,52 @@ async function getArticlesList(): Promise<any[]> {
   }));
 }
 
+
+function render404Content(): string {
+  return `
+    <main class="min-h-[85vh] flex flex-col justify-center py-12 md:py-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 font-body" style="font-family:'Jost', sans-serif; color:#0D0A18;">
+      <span class="sr-only">Erreur 404 : Page introuvable</span>
+
+      <div class="text-center max-w-3xl mx-auto mb-10 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider" style="background-color:rgba(102,0,204,0.1); border:1px solid rgba(102,0,204,0.2); color:#6600CC; display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:9999px;">
+          <span>Erreur 404 • Hors piste</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-title font-semibold text-onyx leading-[1.15] tracking-tight" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18; font-size:2.5rem; line-height:1.15; margin:1rem 0;">
+          Page introuvable. Votre image, elle, ne devrait jamais l’être.
+        </h1>
+
+        <p class="text-sm sm:text-base text-onyx/75 max-w-xl mx-auto leading-relaxed" style="color:rgba(13,10,24,0.75); font-size:1rem; max-width:36rem; margin:0 auto; line-height:1.6;">
+          L’adresse demandée n’existe pas ou a été déplacée. En attendant de retrouver votre chemin, esquivez les visuels sans âme pour les corriger avec l’identité Class S.
+        </p>
+      </div>
+
+      <div class="w-full max-w-4xl mx-auto mb-8 aspect-[16/6] min-h-[260px] rounded-3xl bg-onyx/5 border border-violet-imperial/10 flex flex-col items-center justify-center space-y-3" style="background-color:rgba(13,10,24,0.04); border:1px solid rgba(102,0,204,0.15); border-radius:1.5rem; min-height:260px; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+        <span class="text-xs text-onyx/60" style="color:rgba(13,10,24,0.6); font-size:0.875rem;">Chargement du jeu runner...</span>
+      </div>
+
+      <div class="text-center pt-2">
+        <a href="/" class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-onyx/70 hover:text-violet-imperial transition-colors" style="color:rgba(13,10,24,0.7); font-size:0.875rem; text-decoration:none; font-weight:600;">
+          ← Ou quitter le jeu et revenir directement à l’accueil
+        </a>
+      </div>
+    </main>
+  `;
+}
+
 export default async function handler(req: any, res: any) {
   const baseUrl = process.env.SITE_URL || process.env.VITE_SITE_URL || SITE_URL;
   const rawRoute = (req.query.route as string) || req.url?.split('?')[0] || '/';
   // Clean and normalize incoming route
   const cleanPath = (rawRoute.split('?')[0] || '/').replace(/\/+$/, '') || '/';
+
+  // Section 9.7: Missing static files return raw 404 text/plain without full page
+  if (/\.(js|css|png|jpg|jpeg|webp|svg|ico|map|woff|woff2|ttf|json|txt|xml|pdf)$/i.test(cleanPath)) {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+    res.setHeader('Cache-Control', 'no-store, max-age=0');
+    return res.status(404).send('404 Not Found');
+  }
   const slug =
     (req.query.slug as string) ||
     (cleanPath.startsWith('/blog/')
@@ -224,6 +265,9 @@ export default async function handler(req: any, res: any) {
   let pageDesc = SITE_CONFIG.defaultDescription;
   let pageCanonical = `${baseUrl}/`;
   let pageImage = SITE_CONFIG.ogImageUrl;
+  let pageImageWidth = 1200;
+  let pageImageHeight = 630;
+  let pageImageAlt = "Class S — Studio d'Identité Visuelle & Brand Design par Scott Nana";
   let pageType = 'website';
   let ssrContent = '';
   let jsonLd: any = null;
@@ -824,30 +868,24 @@ export default async function handler(req: any, res: any) {
     }
 
     if (slug && !article) {
-      pageTitle = "Article introuvable (404) | Class S";
-      pageDesc = "Cet article de blog n'existe pas ou a été supprimé.";
-      pageCanonical = `${baseUrl}/blog/${slug}`;
+      pageTitle = "Page introuvable | Class S";
+      pageDesc = "Page introuvable. Votre image, elle, ne devrait jamais l'être.";
+      pageCanonical = ""; // Section 9.4: No canonical on 404
       statusCode = 404;
       isNoIndex = true;
-
-      ssrContent = `
-        <main class="max-w-3xl mx-auto px-4 py-24 text-center" style="font-family:'Jost', sans-serif; color:#0D0A18;">
-          <span class="text-xs font-bold uppercase tracking-wider text-violet-imperial block mb-3">Erreur 404</span>
-          <h1 class="text-4xl sm:text-5xl font-title font-semibold text-onyx mb-4" style="font-family:'Cormorant Garamond', Georgia, serif;">
-            Article introuvable
-          </h1>
-          <p class="text-base text-onyx/75 mb-8 max-w-lg mx-auto">
-            L'article demandé n'existe pas ou a été supprimé.
-          </p>
-          <a href="/blog" class="px-6 py-3 bg-[#6600CC] text-white font-semibold rounded-full inline-block">
-            Retourner au Journal Class S
-          </a>
-        </main>
-      `;
+      ssrContent = render404Content();
     } else if (slug && article) {
       pageTitle = `${article.title} | Class S`;
       pageDesc = article.meta_description || article.excerpt || pageDesc;
-      pageImage = article.cover_image || `${baseUrl}/assets/logo/og-image.png`;
+      if (article.cover_image && article.cover_image.trim()) {
+        pageImage = article.cover_image.startsWith('/')
+          ? `${baseUrl}${article.cover_image}`
+          : article.cover_image;
+        pageImageAlt = article.title;
+      } else {
+        pageImage = SITE_CONFIG.ogImageUrl;
+        pageImageAlt = `Class S — ${article.title}`;
+      }
       pageCanonical = `${baseUrl}/blog/${slug}`;
       pageType = 'article';
 
@@ -957,26 +995,12 @@ export default async function handler(req: any, res: any) {
 
   // ROUTE 7: 404 NOT FOUND
   else {
-    pageTitle = "Page introuvable (404) | Class S";
-    pageDesc = "La page que vous recherchez n'existe pas ou a été déplacée.";
-    pageCanonical = `${baseUrl}/404`;
+    pageTitle = "Page introuvable | Class S";
+    pageDesc = "Page introuvable. Votre image, elle, ne devrait jamais l'être.";
+    pageCanonical = ""; // Section 9.4: No canonical on 404
     statusCode = 404;
     isNoIndex = true;
-
-    ssrContent = `
-      <main class="max-w-3xl mx-auto px-4 py-24 text-center" style="font-family:'Jost', sans-serif; color:#0D0A18;">
-        <span class="text-xs font-bold uppercase tracking-wider text-violet-imperial block mb-3">Erreur 404</span>
-        <h1 class="text-4xl sm:text-5xl font-title font-semibold text-onyx mb-4" style="font-family:'Cormorant Garamond', Georgia, serif;">
-          Page introuvable
-        </h1>
-        <p class="text-base text-onyx/75 mb-8 max-w-lg mx-auto">
-          La page que vous recherchez n'existe pas, a été supprimée ou a changé d'adresse.
-        </p>
-        <a href="/" class="px-6 py-3 bg-[#6600CC] text-white font-semibold rounded-full inline-block">
-          Retourner à l'accueil
-        </a>
-      </main>
-    `;
+    ssrContent = render404Content();
   }
 
   // 1. Inject / replace Title
@@ -989,14 +1013,18 @@ export default async function handler(req: any, res: any) {
   // 2. Prepare head tags
   const tagsToInject = `
     <meta name="description" content="${pageDesc.replace(/"/g, '&quot;')}" />
-    <link rel="canonical" href="${pageCanonical}" />
+    ${pageCanonical ? `<link rel="canonical" href="${pageCanonical}" />` : ''}
     <!-- Open Graph -->
+    <meta property="og:site_name" content="Class S — Scott Nana" />
     <meta property="og:title" content="${pageTitle.replace(/"/g, '&quot;')}" />
     <meta property="og:description" content="${pageDesc.replace(/"/g, '&quot;')}" />
     <meta property="og:type" content="${pageType}" />
-    <meta property="og:url" content="${pageCanonical}" />
+    <meta property="og:url" content="${pageCanonical || baseUrl}" />
+    <meta property="og:locale" content="fr_FR" />
     <meta property="og:image" content="${pageImage}" />
-    <meta property="og:site_name" content="Class S — Scott Nana" />
+    <meta property="og:image:width" content="${pageImageWidth}" />
+    <meta property="og:image:height" content="${pageImageHeight}" />
+    <meta property="og:image:alt" content="${pageImageAlt.replace(/"/g, '&quot;')}" />
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${pageTitle.replace(/"/g, '&quot;')}" />
@@ -1034,7 +1062,7 @@ export default async function handler(req: any, res: any) {
   if (statusCode === 200) {
     res.setHeader(
       'Cache-Control',
-      'public, max-age=60, s-maxage=120, stale-while-revalidate=600'
+      'public, max-age=120, s-maxage=3600, stale-while-revalidate=86400'
     );
   } else {
     res.setHeader('Cache-Control', 'no-store, max-age=0');

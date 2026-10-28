@@ -11,6 +11,8 @@ interface SeoProps {
   modifiedTime?: string;
   tags?: string[];
   jsonLd?: Record<string, any>;
+  noIndex?: boolean;
+  noCanonical?: boolean;
 }
 
 export const useSeo = ({
@@ -23,10 +25,12 @@ export const useSeo = ({
   modifiedTime,
   tags,
   jsonLd,
+  noIndex,
+  noCanonical,
 }: SeoProps) => {
   useEffect(() => {
     const siteTitle = SITE_CONFIG.defaultTitle;
-    const finalTitle = title ? `${title} | Class S` : siteTitle;
+    const finalTitle = title ? (title.includes('Class S') ? title : `${title} | Class S`) : siteTitle;
     const finalDescription = description || SITE_CONFIG.defaultDescription;
     const currentUrl = canonicalUrl || window.location.href;
     const finalImage = ogImage || SITE_CONFIG.logoUrl;
@@ -47,6 +51,14 @@ export const useSeo = ({
 
     // 2. Standard Meta
     setMetaTag('name', 'description', finalDescription);
+
+    // Robots noindex
+    if (noIndex) {
+      setMetaTag('name', 'robots', 'noindex, nofollow');
+    } else {
+      const robotsTag = document.querySelector('meta[name="robots"]');
+      if (robotsTag) robotsTag.remove();
+    }
 
     // 3. Open Graph
     setMetaTag('property', 'og:title', finalTitle);
@@ -77,12 +89,16 @@ export const useSeo = ({
 
     // 5. Canonical Link
     let canonicalTag = document.querySelector('link[rel="canonical"]');
-    if (!canonicalTag) {
-      canonicalTag = document.createElement('link');
-      canonicalTag.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonicalTag);
+    if (noCanonical) {
+      if (canonicalTag) canonicalTag.remove();
+    } else {
+      if (!canonicalTag) {
+        canonicalTag = document.createElement('link');
+        canonicalTag.setAttribute('rel', 'canonical');
+        document.head.appendChild(canonicalTag);
+      }
+      canonicalTag.setAttribute('href', currentUrl);
     }
-    canonicalTag.setAttribute('href', currentUrl);
 
     // 6. JSON-LD Structured Data
     const scriptId = 'class-s-jsonld';
@@ -108,5 +124,7 @@ export const useSeo = ({
     modifiedTime,
     tags,
     jsonLd,
+    noIndex,
+    noCanonical,
   ]);
 };

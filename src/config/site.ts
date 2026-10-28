@@ -13,7 +13,8 @@ export const SITE_CONFIG = {
   defaultDescription:
     "Class S est un studio d'identité visuelle à Ouagadougou, au service des entrepreneurs et des PME. D'une image qui existe à une image qui fait vendre.",
   logoUrl: `${SITE_URL}/assets/logo/logo-violet.png`,
-  ogImageUrl: `${SITE_URL}/assets/logo/og-image.png`,
+  // Bannière de partage officielle 1200x630 (PNG, < 300 Ko)
+  ogImageUrl: `${SITE_URL}/og/banniere-class-s.png`,
   socialLinks: {
     linkedin: 'https://www.linkedin.com/in/wendclass',
     facebook: 'https://web.facebook.com/wendclass',

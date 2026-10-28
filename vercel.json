@@ -28,6 +28,19 @@
       ]
     },
     {
+      "source": "/og/(.*)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "image/png"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
       "source": "/sitemap.xml",
       "headers": [
         {
@@ -127,7 +140,7 @@
       "destination": "/app.html"
     },
     {
-      "source": "/((?!api/|assets/|favicon|sitemap\\.xml|robots\\.txt|googlebea468e8e5719358\\.html|classs).*)",
+      "source": "/((?!api/|assets/|og/|favicon|sitemap\\.xml|robots\\.txt|googlebea468e8e5719358\\.html|classs).*)",
       "destination": "/api/ssr?route=/$1"
     }
   ]
