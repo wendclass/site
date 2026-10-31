@@ -46,7 +46,7 @@ const fallbackArticles: Record<string, any> = {
 <p>Le branding est plus large. C’est le processus qui définit le message et l’identité de marque que vous souhaitez transmettre au public. L’identité visuelle en est l’expression graphique.</p>
 <h2>Pourquoi un entrepreneur en a besoin</h2>
 <p>Une identité visuelle cohérente rend votre entreprise reconnaissable. Vos clients vous repèrent plus vite dans un fil d’actualité chargé. Ils vous associent à une qualité précise.</p>
-<p>La cohérence inspire aussi confiance. Une étude de Lucidpress, aujourd’hui Marq, avance qu’une présentation cohérente de la marque peut accroître les revenus jusqu’à 23 %. Ce chiffre vient d’un éditeur de logiciels de marque : lisez-le comme une tendance, pas comme une promesse.</p>
+<p>La cohérence inspire aussi confiance. Une étude de Lucidpress, aujourd’hui Marq, avance qu’une présentation cohérente de la marque peut accroître les revenus jusqu’à 33 %. Ce chiffre vient d’un éditeur de logiciels de marque : lisez-le comme une tendance, pas comme une promesse.</p>
 <p>Elle vous fait enfin gagner du temps. Avec des règles claires, chaque affiche ou publication se crée plus vite. Vous évitez de repartir de zéro à chaque fois.</p>
 <h2>Vos clients vous voient d’abord sur les réseaux sociaux</h2>
 <p>Facebook domine largement parmi les réseaux sociaux mesurés au Burkina Faso. Selon <a href="https://napoleoncat.com/stats/facebook-users-in-burkina-faso/" target="_blank" rel="noopener noreferrer">NapoleonCat</a>, le pays comptait environ 4,8 millions d’utilisateurs en septembre 2026. Cela représente un peu plus de 19 % de la population.</p>
