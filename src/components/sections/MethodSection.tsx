@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Compass, Eye, Target, ArrowRight } from 'lucide-react';
 import { CtaButton } from '../ui/CtaButton';
+import { getOptimizedImage } from '../../lib/images';
 
 interface MethodStep {
   id: number;
@@ -55,6 +56,7 @@ export const MethodSection: React.FC = () => {
   const [activeStep, setActiveStep] = useState<number>(1);
 
   const currentStepData = STEPS.find((s) => s.id === activeStep) || STEPS[0];
+  const optImg = getOptimizedImage(currentStepData.previewImage, { width: 800 });
 
   return (
     <section className="py-24 bg-white relative overflow-hidden border-b border-violet-imperial/10">
@@ -176,21 +178,37 @@ export const MethodSection: React.FC = () => {
                 </span>
               </div>
 
-              {/* Dynamic Image with Smooth Crossfade */}
-              <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-onyx/80">
+              {/* Dynamic Image with Smooth Crossfade & Anti-Download Shield */}
+              <div 
+                className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-onyx/80 select-none"
+                onContextMenu={(e) => e.preventDefault()}
+                data-protected-image="true"
+              >
                 <AnimatePresence mode="wait">
                   <motion.img
                     key={currentStepData.id}
-                    src={currentStepData.previewImage}
+                    src={optImg.src}
+                    srcSet={optImg.srcSet}
                     alt={currentStepData.title}
+                    width={optImg.width}
+                    height={optImg.height}
+                    draggable={false}
+                    onContextMenu={(e) => e.preventDefault()}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 1.05 }}
                     transition={{ duration: 0.45 }}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover pointer-events-none select-none"
                   />
                 </AnimatePresence>
-                <div className="absolute inset-0 bg-gradient-to-t from-onyx via-transparent to-transparent opacity-60" />
+                {/* Invisible protective overlay shield */}
+                <div
+                  className="absolute inset-0 z-10 select-none cursor-default"
+                  onContextMenu={(e) => e.preventDefault()}
+                  onDragStart={(e) => e.preventDefault()}
+                  aria-hidden="true"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-onyx via-transparent to-transparent opacity-60 pointer-events-none z-10" />
               </div>
 
               {/* Bottom Insight Card */}
