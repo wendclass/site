@@ -46,8 +46,8 @@ export const Blog: React.FC = () => {
     title: 'Journal & Analyses — Stratégie Visuelle, Branding & Design',
     description:
       'Analyses, décryptages et principes graphiques pour transformer l\'identité visuelle de votre entreprise en levier de conversion commerciale. Par Scott Nana.',
-    canonicalUrl: 'https://wendclass.vercel.app/blog',
-    ogImage: 'https://wendclass.vercel.app/assets/logo/logo-violet.png',
+    canonicalUrl: 'https://www.wendclass.com/blog',
+    ogImage: 'https://www.wendclass.com/assets/logo/logo-violet.png',
     ogType: 'website',
     jsonLd: {
       '@context': 'https://schema.org',
@@ -55,7 +55,7 @@ export const Blog: React.FC = () => {
       name: 'Le Journal Class S — Scott Nana',
       description:
         'Articles de référence sur le branding de luxe, la création de logos stratégiques et l\'identité visuelle.',
-      url: 'https://wendclass.vercel.app/blog',
+      url: 'https://www.wendclass.com/blog',
       author: {
         '@type': 'Person',
         name: 'Scott Nana',

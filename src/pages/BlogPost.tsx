@@ -59,7 +59,7 @@ export const BlogPost: React.FC = () => {
   }, [slug]);
 
   // SEO
-  const currentUrl = `https://wendclass.vercel.app/blog/${article?.slug || slug || ''}`;
+  const currentUrl = `https://www.wendclass.com/blog/${article?.slug || slug || ''}`;
   const ogImage =
     article?.cover_image || SITE_CONFIG.ogImageUrl;
 
@@ -85,14 +85,14 @@ export const BlogPost: React.FC = () => {
             '@type': 'Person',
             name: 'Scott Nana',
             jobTitle: 'Brand & Graphic Designer',
-            url: 'https://wendclass.vercel.app/a-propos',
+            url: 'https://www.wendclass.com/a-propos',
           },
           publisher: {
             '@type': 'Organization',
             name: 'Class S',
             logo: {
               '@type': 'ImageObject',
-              url: 'https://wendclass.vercel.app/assets/logo/logo-violet.png',
+              url: 'https://www.wendclass.com/assets/logo/logo-violet.png',
             },
           },
           mainEntityOfPage: {

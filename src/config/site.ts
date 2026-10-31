@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://wendclass.vercel.app';
+export const SITE_URL = 'https://www.wendclass.com';
 
 export const SITE_CONFIG = {
   name: 'Class S',

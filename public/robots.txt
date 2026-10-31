@@ -58,4 +58,4 @@ Disallow: /classs
 Disallow: /classs/
 Disallow: /api/
 
-Sitemap: https://wendclass.vercel.app/sitemap.xml
+Sitemap: https://www.wendclass.com/sitemap.xml

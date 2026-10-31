@@ -197,7 +197,7 @@ Deno.serve(async (req: Request) => {
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
     const RECIPIENT_EMAIL = Deno.env.get("NOTIFICATION_RECIPIENT_EMAIL") || "wendclasss@gmail.com";
     const FROM_EMAIL = Deno.env.get("RESEND_FROM_EMAIL") || "Class S Notifications <onboarding@resend.dev>";
-    const SITE_URL = Deno.env.get("SITE_URL") || "https://wendclass.vercel.app";
+    const SITE_URL = Deno.env.get("SITE_URL") || "https://www.wendclass.com";
 
     if (!RESEND_API_KEY) {
       console.error("[notify-new-demande] RESEND_API_KEY secret is missing.");

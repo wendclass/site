@@ -17,7 +17,7 @@ function fetchUrl(url, options = {}) {
 }
 
 async function run() {
-  console.log('=== VERIFICATION DE PRODUCTION SUR https://wendclass.vercel.app ===\n');
+  console.log('=== VERIFICATION DE PRODUCTION SUR https://www.wendclass.com ===\n');
 
   // Point 1: 5 routes publiques (Accueil, Offres, Projets, À Propos, Blog)
   const routes = [
@@ -30,7 +30,7 @@ async function run() {
 
   console.log('--- POINT 1 : Les 5 routes publiques (Titre, H1, Texte principal) ---');
   for (const r of routes) {
-    const res = await fetchUrl(`https://wendclass.vercel.app${r.path}`);
+    const res = await fetchUrl(`https://www.wendclass.com${r.path}`);
     const titleMatch = res.body.match(/<title>([^<]+)<\/title>/i);
     const h1Match = res.body.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
     const h1Text = h1Match ? h1Match[1].replace(/<[^>]+>/g, '').trim().replace(/\s+/g, ' ') : 'ABSENT';
@@ -53,35 +53,35 @@ async function run() {
 
   // Point 2: robots.txt, sitemap.xml, Google verification file
   console.log('--- POINT 2 : robots.txt, sitemap.xml, fichier Google ---');
-  const robots = await fetchUrl('https://wendclass.vercel.app/robots.txt');
+  const robots = await fetchUrl('https://www.wendclass.com/robots.txt');
   console.log(`robots.txt -> Statut: ${robots.status}, Content-Type: ${robots.headers['content-type']}`);
   console.log(`  Contient GPTBot: ${robots.body.includes('GPTBot')}, ClaudeBot: ${robots.body.includes('ClaudeBot')}`);
   console.log(`  Extrait: ${robots.body.slice(0, 120).replace(/\n/g, ' ')}\n`);
 
-  const sitemap = await fetchUrl('https://wendclass.vercel.app/sitemap.xml');
+  const sitemap = await fetchUrl('https://www.wendclass.com/sitemap.xml');
   console.log(`sitemap.xml -> Statut: ${sitemap.status}, Content-Type: ${sitemap.headers['content-type']}`);
   console.log(`  Est XML brut: ${sitemap.body.startsWith('<?xml')}`);
   console.log(`  Nombre d'URLs: ${(sitemap.body.match(/<loc>/g) || []).length}\n`);
 
-  const google = await fetchUrl('https://wendclass.vercel.app/googlebea468e8e5719358.html');
+  const google = await fetchUrl('https://www.wendclass.com/googlebea468e8e5719358.html');
   console.log(`Fichier Google -> Statut: ${google.status}, Contenu: "${google.body.trim()}"\n`);
 
   // Point 3: URL inexistante 404 + noindex
   console.log('--- POINT 3 : URL inexistante (404 + noindex) ---');
-  const notFound = await fetchUrl('https://wendclass.vercel.app/page-qui-nexiste-absolument-pas-404');
+  const notFound = await fetchUrl('https://www.wendclass.com/page-qui-nexiste-absolument-pas-404');
   console.log(`404 Check -> Statut: ${notFound.status}`);
   console.log(`  Meta robots noindex dans HTML: ${notFound.body.includes('noindex')}`);
   console.log(`  H1: ${notFound.body.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1]?.trim() || 'N/A'}\n`);
 
   // Point 4: /classs X-Robots-Tag noindex
   console.log('--- POINT 4 : /classs (X-Robots-Tag noindex) ---');
-  const classs = await fetchUrl('https://wendclass.vercel.app/classs');
+  const classs = await fetchUrl('https://www.wendclass.com/classs');
   console.log(`/classs -> Statut: ${classs.status}`);
   console.log(`  Header X-Robots-Tag: ${classs.headers['x-robots-tag']}\n`);
 
   // Point 5: CSP worker-src et child-src
   console.log('--- POINT 5 : En-tête Content-Security-Policy ---');
-  const csp = robots.headers['content-security-policy'] || (await fetchUrl('https://wendclass.vercel.app/')).headers['content-security-policy'];
+  const csp = robots.headers['content-security-policy'] || (await fetchUrl('https://www.wendclass.com/')).headers['content-security-policy'];
   console.log(`CSP header present: ${!!csp}`);
   if (csp) {
     const hasWorkerSrc = csp.includes('worker-src') && csp.includes('blob:') && csp.includes('https://challenges.cloudflare.com');

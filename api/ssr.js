@@ -539,7 +539,7 @@ var FAQ_ITEMS = [
 ];
 
 // src/config/site.ts
-var SITE_URL = "https://wendclass.vercel.app";
+var SITE_URL = "https://www.wendclass.com";
 var SITE_CONFIG = {
   name: "Class S",
   alternateName: "Class S Design",

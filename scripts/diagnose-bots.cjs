@@ -17,7 +17,7 @@ const ROUTES = [
   '/blog/pourquoi-un-logo-seul-ne-sauvera-pas-votre-entreprise'
 ];
 
-const BASE_URL = 'https://wendclass.vercel.app';
+const BASE_URL = 'https://www.wendclass.com';
 
 function fetchUrl(url, userAgent) {
   return new Promise((resolve) => {

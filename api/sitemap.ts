@@ -1,5 +1,5 @@
 export default async function handler(_req: any, res: any) {
-  const baseUrl = process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://wendclass.vercel.app';
+  const baseUrl = process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://www.wendclass.com';
   const supabaseUrl =
     process.env.VITE_SUPABASE_URL ||
     process.env.SUPABASE_URL ||
