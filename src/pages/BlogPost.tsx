@@ -75,7 +75,8 @@ export const BlogPost: React.FC = () => {
     jsonLd: article
       ? {
           '@context': 'https://schema.org',
-          '@type': 'BlogPosting',
+          '@type': 'Article',
+          inLanguage: 'fr',
           headline: article.title,
           description: article.meta_description || article.excerpt,
           image: [ogImage],
@@ -148,9 +149,10 @@ export const BlogPost: React.FC = () => {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
+    timeZone: 'UTC',
   });
 
-  const shareText = `${article.title} — par Scott Nana (Class S)\n${currentUrl}`;
+  const shareText = `${article.title} : par Scott Nana (Class S)\n${currentUrl}`;
 
   return (
     <article className="min-h-screen bg-onyx text-ivoire-violet pt-28 pb-20 relative overflow-hidden font-body">
@@ -200,7 +202,7 @@ export const BlogPost: React.FC = () => {
               <div>
                 <div className="text-sm font-semibold text-white">Scott Nana</div>
                 <div className="text-[11px] text-ivoire-violet/60">
-                  Brand & Graphic Designer — Class S
+                  Brand & Graphic Designer · Class S
                 </div>
               </div>
             </div>
@@ -223,8 +225,8 @@ export const BlogPost: React.FC = () => {
         {/* Excerpt / Chapô quote block */}
         {article.excerpt && (
           <div className="p-6 rounded-3xl bg-ardoise/70 border-l-4 border-or-champagne border-white/10 shadow-soft">
-            <p className="text-base sm:text-lg text-white/95 italic font-serif leading-relaxed">
-              « {article.excerpt} »
+            <p className="text-base sm:text-lg text-white/95 leading-relaxed font-body">
+              {article.excerpt}
             </p>
           </div>
         )}

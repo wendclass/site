@@ -43,7 +43,7 @@ export const Blog: React.FC = () => {
 
   // SEO configuration
   useSeo({
-    title: 'Journal & Analyses — Stratégie Visuelle, Branding & Design',
+    title: 'Journal & Analyses | Stratégie Visuelle, Branding & Design',
     description:
       'Analyses, décryptages et principes graphiques pour transformer l\'identité visuelle de votre entreprise en levier de conversion commerciale. Par Scott Nana.',
     canonicalUrl: 'https://www.wendclass.com/blog',
@@ -52,7 +52,7 @@ export const Blog: React.FC = () => {
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Blog',
-      name: 'Le Journal Class S — Scott Nana',
+      name: 'Le Journal Class S · Scott Nana',
       description:
         'Articles de référence sur le branding de luxe, la création de logos stratégiques et l\'identité visuelle.',
       url: 'https://www.wendclass.com/blog',

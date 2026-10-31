@@ -18,6 +18,50 @@ const supabaseKey =
 
 // Fallback mock articles for resilience
 const fallbackArticles: Record<string, any> = {
+  'identite-visuelle-definition-entrepreneur': {
+    title: "Identité visuelle : à quoi sert-elle à un entrepreneur ?",
+    meta_title: "Identité visuelle : à quoi sert-elle à un entrepreneur ?",
+    meta_description: "Identité visuelle : définition, éléments, différence avec la charte graphique et raisons pour lesquelles un entrepreneur en a besoin.",
+    excerpt: "Votre identité visuelle est la première chose que vos clients voient de votre entreprise. Elle ne se résume pas au logo : couleurs, typographies et images en font aussi partie. Entrepreneur au Burkina Faso, découvrez comment elle construit votre image de marque.",
+    published_at: "2026-11-03T09:00:00Z",
+    status: "publie",
+    tags: ["Identité visuelle", "Charte graphique", "Logo", "Branding", "Burkina Faso"],
+    reading_time: 4,
+    created_at: "2026-10-31T01:46:00.000Z",
+    updated_at: "2026-10-31T01:46:00.000Z",
+    content: `<p>Imaginez deux boutiques de vêtements sur Facebook. Elles vendent les mêmes articles au même prix. L’une a des couleurs, une police et un logo cohérents, l’autre change d’allure à chaque publication.</p>
+<p>Laquelle semble la plus sérieuse ? Laquelle reconnaissez-vous en un coup d’œil ? La réponse vient presque toujours sans effort.</p>
+<p>Cette différence porte un nom : l’identité visuelle. Dans cet article, vous découvrez ce qu’elle contient et pourquoi elle compte pour votre entreprise. Vous repartez avec des signes concrets pour savoir si la vôtre est à revoir.</p>
+<h2>L’identité visuelle, c’est bien plus qu’un logo</h2>
+<p>L’identité visuelle désigne l’ensemble des éléments visuels qui représentent une marque. On y trouve le logo, les couleurs, les typographies, les images et les icônes. Ensemble, ils distinguent l’entreprise de ses concurrents.</p>
+<p>Le logo n’en est que la partie la plus visible. Beaucoup d’entrepreneurs s’arrêtent à lui et oublient le reste. Un logo seul ne construit pas une marque reconnaissable.</p>
+<p>Pensez à la manière dont vous reconnaissez un ami dans une foule. Vous ne vous fiez pas seulement à son visage, mais aussi à sa silhouette, sa démarche et son parfum. Une marque se reconnaît de la même façon.</p>
+<h2>Les éléments qui composent une identité visuelle</h2>
+<p>Le logo reste le point d’entrée. Il doit rester lisible en grand comme en petit. Il doit aussi fonctionner en couleur comme en noir et blanc.</p>
+<p>La palette de couleurs donne le ton. Deux ou trois couleurs principales suffisent souvent. Une identité visuelle repose en général sur deux ou trois polices au maximum.</p>
+<p>Viennent ensuite les images, les icônes, les motifs et la mise en page. Ces éléments donnent un style propre à vos affiches, vos publications et votre site. Ils forment la signature visuelle de votre entreprise.</p>
+<h2>Identité visuelle, charte graphique, branding : quelle différence ?</h2>
+<p>Ces trois termes se confondent souvent. Pourtant, chacun désigne une chose précise. Les distinguer vous évite des malentendus avec un graphiste.</p>
+<p>L’identité visuelle est la personnalité graphique d’une marque, et la charte graphique en est le <a href="https://www.canva.com/fr_fr/decouvrir/identite-visuelle-et-charte-graphique/" target="_blank" rel="noopener noreferrer">mode d’emploi</a>. Cette charte fixe les règles d’usage du logo, des couleurs et des polices. Elle garantit que les graphistes, les imprimeurs et les responsables des réseaux sociaux appliquent l’identité de la même façon.</p>
+<p>Le branding est plus large. C’est le processus qui définit le message et l’identité de marque que vous souhaitez transmettre au public. L’identité visuelle en est l’expression graphique.</p>
+<h2>Pourquoi un entrepreneur en a besoin</h2>
+<p>Une identité visuelle cohérente rend votre entreprise reconnaissable. Vos clients vous repèrent plus vite dans un fil d’actualité chargé. Ils vous associent à une qualité précise.</p>
+<p>La cohérence inspire aussi confiance. Une étude de Lucidpress, aujourd’hui Marq, avance qu’une présentation cohérente de la marque peut accroître les revenus jusqu’à 23 %. Ce chiffre vient d’un éditeur de logiciels de marque : lisez-le comme une tendance, pas comme une promesse.</p>
+<p>Elle vous fait enfin gagner du temps. Avec des règles claires, chaque affiche ou publication se crée plus vite. Vous évitez de repartir de zéro à chaque fois.</p>
+<h2>Vos clients vous voient d’abord sur les réseaux sociaux</h2>
+<p>Facebook domine largement parmi les réseaux sociaux mesurés au Burkina Faso. Selon <a href="https://napoleoncat.com/stats/facebook-users-in-burkina-faso/" target="_blank" rel="noopener noreferrer">NapoleonCat</a>, le pays comptait environ 4,8 millions d’utilisateurs en septembre 2026. Cela représente un peu plus de 19 % de la population.</p>
+<p>À titre de comparaison, LinkedIn comptait environ 600 000 membres et Instagram environ 231 000 à la même date. Chaque plateforme n’a pas le même public. Votre identité visuelle doit pourtant rester la même partout.</p>
+<p>Votre première impression se joue donc souvent sur un écran de téléphone, en quelques instants. Votre photo de profil, votre couverture et vos visuels parlent avant vous. Un ensemble soigné donne une image sérieuse dès le premier regard.</p>
+<h2>Les signes qu’il est temps de revoir votre identité</h2>
+<p>Votre logo est flou ou illisible en petit format. Vos couleurs changent d’une publication à l’autre. Chaque support semble venir d’une entreprise différente.</p>
+<p>Vos clients vous confondent avec un concurrent. Vous hésitez à montrer votre marque à de gros clients. Votre site, vos affiches et vos réseaux n’ont aucun point commun.</p>
+<p>Un seul de ces signes mérite déjà votre attention. Plusieurs d’entre eux annoncent le moment de structurer votre identité. Mieux vaut le faire avant d’imprimer ou de publier en masse.</p>
+<h2>Par où commencer ?</h2>
+<p>Commencez par clarifier ce que votre entreprise représente et pour qui. Choisissez ensuite vos couleurs, vos typographies et votre logo. Rassemblez enfin ces règles dans une charte graphique.</p>
+<p>Vous pouvez le faire seul, mais un graphiste vous évite les erreurs de départ. Il traduit vos valeurs en éléments visuels cohérents. Il vous remet aussi un document pour garder le cap.</p>
+<p>Chez Class S, je crée des <a href="/offres">identités visuelles</a> pour entrepreneurs et startups. Si vous préparez la vôtre, parlons de votre projet. Le <a href="/contact">formulaire de contact</a> est à votre disposition.</p>`,
+  },
+
   'pourquoi-un-logo-seul-ne-sauvera-pas-votre-entreprise': {
     title: "Pourquoi un logo seul ne sauvera jamais votre entreprise (et ce qu'il vous faut vraiment)",
     excerpt: "Beaucoup d'entrepreneurs pensent qu'un joli logo suffit à attirer des clients haut de gamme. En réalité, un logo sans système d'identité visuelle est une coquille vide. Décryptage d'une erreur coûteuse.",
@@ -128,6 +172,7 @@ async function getTestimonials(): Promise<any[]> {
 
 // Fetch single article or list from Supabase
 async function getArticle(slug: string): Promise<any> {
+  let art = fallbackArticles[slug] || null;
   if (slug && supabaseUrl && supabaseKey) {
     try {
       const res = await fetch(
@@ -142,14 +187,19 @@ async function getArticle(slug: string): Promise<any> {
       if (res.ok) {
         const list = await res.json();
         if (Array.isArray(list) && list.length > 0) {
-          return list[0];
+          art = list[0];
         }
       }
     } catch (err) {
       console.warn('[SSR] Supabase article fetch fallback:', err);
     }
   }
-  return fallbackArticles[slug] || null;
+  if (!art) return null;
+  if (art.status !== 'publie') return null;
+  if (art.published_at && new Date(art.published_at).getTime() > Date.now()) {
+    return null; // Scheduled publication: not available yet -> 404
+  }
+  return art;
 }
 
 async function getArticlesList(): Promise<any[]> {
@@ -331,6 +381,10 @@ export default async function handler(req: any, res: any) {
       : '');
 
   let normalizedRoute = '/';
+  if (cleanPath === '/contact') {
+    res.setHeader('Location', `${baseUrl}/#contact`);
+    return res.status(301).end();
+  }
   if (cleanPath === '/') normalizedRoute = '/';
   else if (cleanPath === '/offres') normalizedRoute = '/offres';
   else if (cleanPath === '/projets') normalizedRoute = '/projets';
@@ -1012,9 +1066,10 @@ export default async function handler(req: any, res: any) {
 
       jsonLd = {
         '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
+        '@type': 'Article',
         headline: article.title,
         description: pageDesc,
+        inLanguage: 'fr',
         image: [pageImage],
         datePublished: article.published_at || article.created_at || new Date().toISOString(),
         dateModified: article.updated_at || article.published_at || article.created_at || new Date().toISOString(),
@@ -1054,7 +1109,7 @@ export default async function handler(req: any, res: any) {
               ${article.title}
             </h1>
             <div class="flex items-center gap-3 text-xs text-onyx/60" style="color:rgba(13,10,24,0.6);">
-              <span>Par Scott Nana — Brand & Graphic Designer</span>
+              <span>Par Scott Nana · Brand & Graphic Designer</span>
               <span>•</span>
               <span>${article.reading_time || 1} min de lecture</span>
             </div>
@@ -1069,7 +1124,7 @@ export default async function handler(req: any, res: any) {
 
           ${article.excerpt ? `
             <div class="p-6 rounded-2xl my-6 border-l-4 border-or-champagne" style="background-color:rgba(212,175,55,0.08); border-left:4px solid #D4AF37;">
-              <p class="text-base sm:text-lg italic font-serif" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18; margin:0;">« ${article.excerpt} »</p>
+              <p class="text-base sm:text-lg text-onyx/95 leading-relaxed" style="font-family:'Jost', sans-serif; color:#0D0A18; margin:0;">${article.excerpt}</p>
             </div>
           ` : ''}
 
@@ -1084,7 +1139,7 @@ export default async function handler(req: any, res: any) {
       `;
     } else {
       // Blog index
-      pageTitle = "Le Journal Class S — Stratégie Visuelle & Branding | Scott Nana";
+      pageTitle = "Le Journal Class S | Stratégie Visuelle & Branding | Scott Nana";
       pageDesc = "Analyses, décryptages et principes graphiques pour transformer l'identité visuelle de votre entreprise en levier de conversion commerciale. Par Scott Nana.";
       pageCanonical = `${baseUrl}/blog`;
       pageType = 'website';
@@ -1094,7 +1149,7 @@ export default async function handler(req: any, res: any) {
       jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Blog',
-        name: 'Le Journal Class S — Scott Nana',
+        name: 'Le Journal Class S · Scott Nana',
         description: pageDesc,
         url: pageCanonical,
         author: {
@@ -1162,7 +1217,7 @@ export default async function handler(req: any, res: any) {
     <meta name="description" content="${pageDesc.replace(/"/g, '&quot;')}" />
     ${pageCanonical ? `<link rel="canonical" href="${pageCanonical}" />` : ''}
     <!-- Open Graph -->
-    <meta property="og:site_name" content="Class S — Scott Nana" />
+    <meta property="og:site_name" content="Class S · Scott Nana" />
     <meta property="og:title" content="${pageTitle.replace(/"/g, '&quot;')}" />
     <meta property="og:description" content="${pageDesc.replace(/"/g, '&quot;')}" />
     <meta property="og:type" content="${pageType}" />

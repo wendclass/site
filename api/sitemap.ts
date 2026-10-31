@@ -11,6 +11,11 @@ export default async function handler(_req: any, res: any) {
 
   const fallbackArticles = [
     {
+      slug: 'identite-visuelle-definition-entrepreneur',
+      lastmod: '2026-11-03',
+      published_at: '2026-11-03T09:00:00Z',
+    },
+    {
       slug: 'pourquoi-un-logo-seul-ne-sauvera-pas-votre-entreprise',
       lastmod: '2026-10-09',
     },
@@ -24,7 +29,8 @@ export default async function handler(_req: any, res: any) {
     },
   ];
 
-  let articles = fallbackArticles;
+  const nowMs = Date.now();
+  let articles = fallbackArticles.filter((a: any) => !a.published_at || new Date(a.published_at).getTime() <= nowMs);
 
   try {
     if (supabaseUrl && supabaseKey) {

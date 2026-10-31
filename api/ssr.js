@@ -1715,6 +1715,49 @@ function getOptimizedImage(src, options) {
 var supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "https://mtinydrkpxffrlsuwpzh.supabase.co";
 var supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || "";
 var fallbackArticles = {
+  "identite-visuelle-definition-entrepreneur": {
+    title: "Identit\xE9 visuelle : \xE0 quoi sert-elle \xE0 un entrepreneur ?",
+    meta_title: "Identit\xE9 visuelle : \xE0 quoi sert-elle \xE0 un entrepreneur ?",
+    meta_description: "Identit\xE9 visuelle : d\xE9finition, \xE9l\xE9ments, diff\xE9rence avec la charte graphique et raisons pour lesquelles un entrepreneur en a besoin.",
+    excerpt: "Votre identit\xE9 visuelle est la premi\xE8re chose que vos clients voient de votre entreprise. Elle ne se r\xE9sume pas au logo : couleurs, typographies et images en font aussi partie. Entrepreneur au Burkina Faso, d\xE9couvrez comment elle construit votre image de marque.",
+    published_at: "2026-11-03T09:00:00Z",
+    status: "publie",
+    tags: ["Identit\xE9 visuelle", "Charte graphique", "Logo", "Branding", "Burkina Faso"],
+    reading_time: 4,
+    created_at: "2026-10-31T01:46:00.000Z",
+    updated_at: "2026-10-31T01:46:00.000Z",
+    content: `<p>Imaginez deux boutiques de v\xEAtements sur Facebook. Elles vendent les m\xEAmes articles au m\xEAme prix. L\u2019une a des couleurs, une police et un logo coh\xE9rents, l\u2019autre change d\u2019allure \xE0 chaque publication.</p>
+<p>Laquelle semble la plus s\xE9rieuse ? Laquelle reconnaissez-vous en un coup d\u2019\u0153il ? La r\xE9ponse vient presque toujours sans effort.</p>
+<p>Cette diff\xE9rence porte un nom : l\u2019identit\xE9 visuelle. Dans cet article, vous d\xE9couvrez ce qu\u2019elle contient et pourquoi elle compte pour votre entreprise. Vous repartez avec des signes concrets pour savoir si la v\xF4tre est \xE0 revoir.</p>
+<h2>L\u2019identit\xE9 visuelle, c\u2019est bien plus qu\u2019un logo</h2>
+<p>L\u2019identit\xE9 visuelle d\xE9signe l\u2019ensemble des \xE9l\xE9ments visuels qui repr\xE9sentent une marque. On y trouve le logo, les couleurs, les typographies, les images et les ic\xF4nes. Ensemble, ils distinguent l\u2019entreprise de ses concurrents.</p>
+<p>Le logo n\u2019en est que la partie la plus visible. Beaucoup d\u2019entrepreneurs s\u2019arr\xEAtent \xE0 lui et oublient le reste. Un logo seul ne construit pas une marque reconnaissable.</p>
+<p>Pensez \xE0 la mani\xE8re dont vous reconnaissez un ami dans une foule. Vous ne vous fiez pas seulement \xE0 son visage, mais aussi \xE0 sa silhouette, sa d\xE9marche et son parfum. Une marque se reconna\xEEt de la m\xEAme fa\xE7on.</p>
+<h2>Les \xE9l\xE9ments qui composent une identit\xE9 visuelle</h2>
+<p>Le logo reste le point d\u2019entr\xE9e. Il doit rester lisible en grand comme en petit. Il doit aussi fonctionner en couleur comme en noir et blanc.</p>
+<p>La palette de couleurs donne le ton. Deux ou trois couleurs principales suffisent souvent. Une identit\xE9 visuelle repose en g\xE9n\xE9ral sur deux ou trois polices au maximum.</p>
+<p>Viennent ensuite les images, les ic\xF4nes, les motifs et la mise en page. Ces \xE9l\xE9ments donnent un style propre \xE0 vos affiches, vos publications et votre site. Ils forment la signature visuelle de votre entreprise.</p>
+<h2>Identit\xE9 visuelle, charte graphique, branding : quelle diff\xE9rence ?</h2>
+<p>Ces trois termes se confondent souvent. Pourtant, chacun d\xE9signe une chose pr\xE9cise. Les distinguer vous \xE9vite des malentendus avec un graphiste.</p>
+<p>L\u2019identit\xE9 visuelle est la personnalit\xE9 graphique d\u2019une marque, et la charte graphique en est le <a href="https://www.canva.com/fr_fr/decouvrir/identite-visuelle-et-charte-graphique/" target="_blank" rel="noopener noreferrer">mode d\u2019emploi</a>. Cette charte fixe les r\xE8gles d\u2019usage du logo, des couleurs et des polices. Elle garantit que les graphistes, les imprimeurs et les responsables des r\xE9seaux sociaux appliquent l\u2019identit\xE9 de la m\xEAme fa\xE7on.</p>
+<p>Le branding est plus large. C\u2019est le processus qui d\xE9finit le message et l\u2019identit\xE9 de marque que vous souhaitez transmettre au public. L\u2019identit\xE9 visuelle en est l\u2019expression graphique.</p>
+<h2>Pourquoi un entrepreneur en a besoin</h2>
+<p>Une identit\xE9 visuelle coh\xE9rente rend votre entreprise reconnaissable. Vos clients vous rep\xE8rent plus vite dans un fil d\u2019actualit\xE9 charg\xE9. Ils vous associent \xE0 une qualit\xE9 pr\xE9cise.</p>
+<p>La coh\xE9rence inspire aussi confiance. Une \xE9tude de Lucidpress, aujourd\u2019hui Marq, avance qu\u2019une pr\xE9sentation coh\xE9rente de la marque peut accro\xEEtre les revenus jusqu\u2019\xE0 23 %. Ce chiffre vient d\u2019un \xE9diteur de logiciels de marque : lisez-le comme une tendance, pas comme une promesse.</p>
+<p>Elle vous fait enfin gagner du temps. Avec des r\xE8gles claires, chaque affiche ou publication se cr\xE9e plus vite. Vous \xE9vitez de repartir de z\xE9ro \xE0 chaque fois.</p>
+<h2>Vos clients vous voient d\u2019abord sur les r\xE9seaux sociaux</h2>
+<p>Facebook domine largement parmi les r\xE9seaux sociaux mesur\xE9s au Burkina Faso. Selon <a href="https://napoleoncat.com/stats/facebook-users-in-burkina-faso/" target="_blank" rel="noopener noreferrer">NapoleonCat</a>, le pays comptait environ 4,8 millions d\u2019utilisateurs en septembre 2026. Cela repr\xE9sente un peu plus de 19 % de la population.</p>
+<p>\xC0 titre de comparaison, LinkedIn comptait environ 600 000 membres et Instagram environ 231 000 \xE0 la m\xEAme date. Chaque plateforme n\u2019a pas le m\xEAme public. Votre identit\xE9 visuelle doit pourtant rester la m\xEAme partout.</p>
+<p>Votre premi\xE8re impression se joue donc souvent sur un \xE9cran de t\xE9l\xE9phone, en quelques instants. Votre photo de profil, votre couverture et vos visuels parlent avant vous. Un ensemble soign\xE9 donne une image s\xE9rieuse d\xE8s le premier regard.</p>
+<h2>Les signes qu\u2019il est temps de revoir votre identit\xE9</h2>
+<p>Votre logo est flou ou illisible en petit format. Vos couleurs changent d\u2019une publication \xE0 l\u2019autre. Chaque support semble venir d\u2019une entreprise diff\xE9rente.</p>
+<p>Vos clients vous confondent avec un concurrent. Vous h\xE9sitez \xE0 montrer votre marque \xE0 de gros clients. Votre site, vos affiches et vos r\xE9seaux n\u2019ont aucun point commun.</p>
+<p>Un seul de ces signes m\xE9rite d\xE9j\xE0 votre attention. Plusieurs d\u2019entre eux annoncent le moment de structurer votre identit\xE9. Mieux vaut le faire avant d\u2019imprimer ou de publier en masse.</p>
+<h2>Par o\xF9 commencer ?</h2>
+<p>Commencez par clarifier ce que votre entreprise repr\xE9sente et pour qui. Choisissez ensuite vos couleurs, vos typographies et votre logo. Rassemblez enfin ces r\xE8gles dans une charte graphique.</p>
+<p>Vous pouvez le faire seul, mais un graphiste vous \xE9vite les erreurs de d\xE9part. Il traduit vos valeurs en \xE9l\xE9ments visuels coh\xE9rents. Il vous remet aussi un document pour garder le cap.</p>
+<p>Chez Class S, je cr\xE9e des <a href="/offres">identit\xE9s visuelles</a> pour entrepreneurs et startups. Si vous pr\xE9parez la v\xF4tre, parlons de votre projet. Le <a href="/contact">formulaire de contact</a> est \xE0 votre disposition.</p>`
+  },
   "pourquoi-un-logo-seul-ne-sauvera-pas-votre-entreprise": {
     title: "Pourquoi un logo seul ne sauvera jamais votre entreprise (et ce qu'il vous faut vraiment)",
     excerpt: "Beaucoup d'entrepreneurs pensent qu'un joli logo suffit \xE0 attirer des clients haut de gamme. En r\xE9alit\xE9, un logo sans syst\xE8me d'identit\xE9 visuelle est une coquille vide. D\xE9cryptage d'une erreur co\xFBteuse.",
@@ -1817,6 +1860,7 @@ async function getTestimonials() {
   }));
 }
 async function getArticle(slug) {
+  let art = fallbackArticles[slug] || null;
   if (slug && supabaseUrl && supabaseKey) {
     try {
       const res = await fetch(
@@ -1831,14 +1875,19 @@ async function getArticle(slug) {
       if (res.ok) {
         const list = await res.json();
         if (Array.isArray(list) && list.length > 0) {
-          return list[0];
+          art = list[0];
         }
       }
     } catch (err) {
       console.warn("[SSR] Supabase article fetch fallback:", err);
     }
   }
-  return fallbackArticles[slug] || null;
+  if (!art) return null;
+  if (art.status !== "publie") return null;
+  if (art.published_at && new Date(art.published_at).getTime() > Date.now()) {
+    return null;
+  }
+  return art;
 }
 async function getArticlesList() {
   if (supabaseUrl && supabaseKey) {
@@ -1977,6 +2026,10 @@ async function handler(req, res) {
   }
   const slug = req.query.slug || (cleanPath.startsWith("/blog/") ? cleanPath.slice("/blog/".length) : "");
   let normalizedRoute = "/";
+  if (cleanPath === "/contact") {
+    res.setHeader("Location", `${baseUrl}/#contact`);
+    return res.status(301).end();
+  }
   if (cleanPath === "/") normalizedRoute = "/";
   else if (cleanPath === "/offres") normalizedRoute = "/offres";
   else if (cleanPath === "/projets") normalizedRoute = "/projets";
@@ -2614,9 +2667,10 @@ async function handler(req, res) {
       `.trim();
       jsonLd = {
         "@context": "https://schema.org",
-        "@type": "BlogPosting",
+        "@type": "Article",
         headline: article.title,
         description: pageDesc,
+        inLanguage: "fr",
         image: [pageImage],
         datePublished: article.published_at || article.created_at || (/* @__PURE__ */ new Date()).toISOString(),
         dateModified: article.updated_at || article.published_at || article.created_at || (/* @__PURE__ */ new Date()).toISOString(),
@@ -2653,7 +2707,7 @@ async function handler(req, res) {
               ${article.title}
             </h1>
             <div class="flex items-center gap-3 text-xs text-onyx/60" style="color:rgba(13,10,24,0.6);">
-              <span>Par Scott Nana \u2014 Brand & Graphic Designer</span>
+              <span>Par Scott Nana \xB7 Brand & Graphic Designer</span>
               <span>\u2022</span>
               <span>${article.reading_time || 1} min de lecture</span>
             </div>
@@ -2668,7 +2722,7 @@ async function handler(req, res) {
 
           ${article.excerpt ? `
             <div class="p-6 rounded-2xl my-6 border-l-4 border-or-champagne" style="background-color:rgba(212,175,55,0.08); border-left:4px solid #D4AF37;">
-              <p class="text-base sm:text-lg italic font-serif" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18; margin:0;">\xAB ${article.excerpt} \xBB</p>
+              <p class="text-base sm:text-lg text-onyx/95 leading-relaxed" style="font-family:'Jost', sans-serif; color:#0D0A18; margin:0;">${article.excerpt}</p>
             </div>
           ` : ""}
 
@@ -2682,7 +2736,7 @@ async function handler(req, res) {
         </article>
       `;
     } else {
-      pageTitle = "Le Journal Class S \u2014 Strat\xE9gie Visuelle & Branding | Scott Nana";
+      pageTitle = "Le Journal Class S | Strat\xE9gie Visuelle & Branding | Scott Nana";
       pageDesc = "Analyses, d\xE9cryptages et principes graphiques pour transformer l'identit\xE9 visuelle de votre entreprise en levier de conversion commerciale. Par Scott Nana.";
       pageCanonical = `${baseUrl}/blog`;
       pageType = "website";
@@ -2690,7 +2744,7 @@ async function handler(req, res) {
       jsonLd = {
         "@context": "https://schema.org",
         "@type": "Blog",
-        name: "Le Journal Class S \u2014 Scott Nana",
+        name: "Le Journal Class S \xB7 Scott Nana",
         description: pageDesc,
         url: pageCanonical,
         author: {
@@ -2750,7 +2804,7 @@ async function handler(req, res) {
     <meta name="description" content="${pageDesc.replace(/"/g, "&quot;")}" />
     ${pageCanonical ? `<link rel="canonical" href="${pageCanonical}" />` : ""}
     <!-- Open Graph -->
-    <meta property="og:site_name" content="Class S \u2014 Scott Nana" />
+    <meta property="og:site_name" content="Class S \xB7 Scott Nana" />
     <meta property="og:title" content="${pageTitle.replace(/"/g, "&quot;")}" />
     <meta property="og:description" content="${pageDesc.replace(/"/g, "&quot;")}" />
     <meta property="og:type" content="${pageType}" />

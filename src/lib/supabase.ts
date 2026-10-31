@@ -92,6 +92,7 @@ export interface DbArticle {
   content_json?: any;
   tags: string[];
   status: 'publie' | 'brouillon';
+  meta_title?: string;
   meta_description?: string;
   published_at?: string;
   created_at: string;
@@ -164,6 +165,51 @@ const getInitialTestimonials = (): DbTestimonial[] => {
 
 const getInitialArticles = (): DbArticle[] => {
   return [
+    {
+      id: 'art-identite-visuelle-definition-entrepreneur',
+      slug: 'identite-visuelle-definition-entrepreneur',
+      title: 'Identité visuelle : à quoi sert-elle à un entrepreneur ?',
+      meta_title: 'Identité visuelle : à quoi sert-elle à un entrepreneur ?',
+      meta_description: 'Identité visuelle : définition, éléments, différence avec la charte graphique et raisons pour lesquelles un entrepreneur en a besoin.',
+      excerpt: 'Votre identité visuelle est la première chose que vos clients voient de votre entreprise. Elle ne se résume pas au logo : couleurs, typographies et images en font aussi partie. Entrepreneur au Burkina Faso, découvrez comment elle construit votre image de marque.',
+      content: `<p>Imaginez deux boutiques de vêtements sur Facebook. Elles vendent les mêmes articles au même prix. L’une a des couleurs, une police et un logo cohérents, l’autre change d’allure à chaque publication.</p>
+<p>Laquelle semble la plus sérieuse ? Laquelle reconnaissez-vous en un coup d’œil ? La réponse vient presque toujours sans effort.</p>
+<p>Cette différence porte un nom : l’identité visuelle. Dans cet article, vous découvrez ce qu’elle contient et pourquoi elle compte pour votre entreprise. Vous repartez avec des signes concrets pour savoir si la vôtre est à revoir.</p>
+<h2>L’identité visuelle, c’est bien plus qu’un logo</h2>
+<p>L’identité visuelle désigne l’ensemble des éléments visuels qui représentent une marque. On y trouve le logo, les couleurs, les typographies, les images et les icônes. Ensemble, ils distinguent l’entreprise de ses concurrents.</p>
+<p>Le logo n’en est que la partie la plus visible. Beaucoup d’entrepreneurs s’arrêtent à lui et oublient le reste. Un logo seul ne construit pas une marque reconnaissable.</p>
+<p>Pensez à la manière dont vous reconnaissez un ami dans une foule. Vous ne vous fiez pas seulement à son visage, mais aussi à sa silhouette, sa démarche et son parfum. Une marque se reconnaît de la même façon.</p>
+<h2>Les éléments qui composent une identité visuelle</h2>
+<p>Le logo reste le point d’entrée. Il doit rester lisible en grand comme en petit. Il doit aussi fonctionner en couleur comme en noir et blanc.</p>
+<p>La palette de couleurs donne le ton. Deux ou trois couleurs principales suffisent souvent. Une identité visuelle repose en général sur deux ou trois polices au maximum.</p>
+<p>Viennent ensuite les images, les icônes, les motifs et la mise en page. Ces éléments donnent un style propre à vos affiches, vos publications et votre site. Ils forment la signature visuelle de votre entreprise.</p>
+<h2>Identité visuelle, charte graphique, branding : quelle différence ?</h2>
+<p>Ces trois termes se confondent souvent. Pourtant, chacun désigne une chose précise. Les distinguer vous évite des malentendus avec un graphiste.</p>
+<p>L’identité visuelle est la personnalité graphique d’une marque, et la charte graphique en est le <a href="https://www.canva.com/fr_fr/decouvrir/identite-visuelle-et-charte-graphique/" target="_blank" rel="noopener noreferrer">mode d’emploi</a>. Cette charte fixe les règles d’usage du logo, des couleurs et des polices. Elle garantit que les graphistes, les imprimeurs et les responsables des réseaux sociaux appliquent l’identité de la même façon.</p>
+<p>Le branding est plus large. C’est le processus qui définit le message et l’identité de marque que vous souhaitez transmettre au public. L’identité visuelle en est l’expression graphique.</p>
+<h2>Pourquoi un entrepreneur en a besoin</h2>
+<p>Une identité visuelle cohérente rend votre entreprise reconnaissable. Vos clients vous repèrent plus vite dans un fil d’actualité chargé. Ils vous associent à une qualité précise.</p>
+<p>La cohérence inspire aussi confiance. Une étude de Lucidpress, aujourd’hui Marq, avance qu’une présentation cohérente de la marque peut accroître les revenus jusqu’à 23 %. Ce chiffre vient d’un éditeur de logiciels de marque : lisez-le comme une tendance, pas comme une promesse.</p>
+<p>Elle vous fait enfin gagner du temps. Avec des règles claires, chaque affiche ou publication se crée plus vite. Vous évitez de repartir de zéro à chaque fois.</p>
+<h2>Vos clients vous voient d’abord sur les réseaux sociaux</h2>
+<p>Facebook domine largement parmi les réseaux sociaux mesurés au Burkina Faso. Selon <a href="https://napoleoncat.com/stats/facebook-users-in-burkina-faso/" target="_blank" rel="noopener noreferrer">NapoleonCat</a>, le pays comptait environ 4,8 millions d’utilisateurs en septembre 2026. Cela représente un peu plus de 19 % de la population.</p>
+<p>À titre de comparaison, LinkedIn comptait environ 600 000 membres et Instagram environ 231 000 à la même date. Chaque plateforme n’a pas le même public. Votre identité visuelle doit pourtant rester la même partout.</p>
+<p>Votre première impression se joue donc souvent sur un écran de téléphone, en quelques instants. Votre photo de profil, votre couverture et vos visuels parlent avant vous. Un ensemble soigné donne une image sérieuse dès le premier regard.</p>
+<h2>Les signes qu’il est temps de revoir votre identité</h2>
+<p>Votre logo est flou ou illisible en petit format. Vos couleurs changent d’une publication à l’autre. Chaque support semble venir d’une entreprise différente.</p>
+<p>Vos clients vous confondent avec un concurrent. Vous hésitez à montrer votre marque à de gros clients. Votre site, vos affiches et vos réseaux n’ont aucun point commun.</p>
+<p>Un seul de ces signes mérite déjà votre attention. Plusieurs d’entre eux annoncent le moment de structurer votre identité. Mieux vaut le faire avant d’imprimer ou de publier en masse.</p>
+<h2>Par où commencer ?</h2>
+<p>Commencez par clarifier ce que votre entreprise représente et pour qui. Choisissez ensuite vos couleurs, vos typographies et votre logo. Rassemblez enfin ces règles dans une charte graphique.</p>
+<p>Vous pouvez le faire seul, mais un graphiste vous évite les erreurs de départ. Il traduit vos valeurs en éléments visuels cohérents. Il vous remet aussi un document pour garder le cap.</p>
+<p>Chez Class S, je crée des <a href="/offres">identités visuelles</a> pour entrepreneurs et startups. Si vous préparez la vôtre, parlons de votre projet. Le <a href="/contact">formulaire de contact</a> est à votre disposition.</p>`,
+      status: 'publie',
+      published_at: '2026-11-03T09:00:00Z',
+      tags: ['Identité visuelle', 'Charte graphique', 'Logo', 'Branding', 'Burkina Faso'],
+      reading_time: 4,
+      created_at: '2026-10-31T01:46:00.000Z',
+      updated_at: '2026-10-31T01:46:00.000Z',
+    },
     {
       id: 'art-1-logo-vs-identite',
       slug: 'pourquoi-un-logo-seul-ne-sauvera-pas-votre-entreprise',
@@ -916,6 +962,7 @@ export const deleteTestimonial = async (id: string): Promise<boolean> => {
 // BLOG & ARTICLES (PUBLIC & ADMIN)
 // ==============================================================================
 export const fetchPublicArticles = async (): Promise<DbArticle[]> => {
+  const now = Date.now();
   try {
     if (isSupabaseConfigured() && supabase) {
       const { data, error } = await supabase
@@ -926,7 +973,9 @@ export const fetchPublicArticles = async (): Promise<DbArticle[]> => {
 
       if (error) throw error;
       if (data && data.length > 0) {
-        return data as DbArticle[];
+        return (data as DbArticle[]).filter(
+          (a) => a.status === 'publie' && (!a.published_at || new Date(a.published_at).getTime() <= now)
+        );
       }
     }
   } catch (err) {
@@ -936,11 +985,12 @@ export const fetchPublicArticles = async (): Promise<DbArticle[]> => {
   // Fallback to local stored articles
   const localList = getLocalStore<DbArticle[]>(STORAGE_KEYS.ARTICLES, getInitialArticles());
   return localList
-    .filter((a) => a.status === 'publie')
+    .filter((a) => a.status === 'publie' && (!a.published_at || new Date(a.published_at).getTime() <= now))
     .sort((a, b) => new Date(b.published_at || b.created_at).getTime() - new Date(a.published_at || a.created_at).getTime());
 };
 
 export const fetchPublicArticleBySlug = async (slug: string): Promise<DbArticle | null> => {
+  const now = Date.now();
   try {
     if (isSupabaseConfigured() && supabase) {
       const { data, error } = await supabase
@@ -951,7 +1001,13 @@ export const fetchPublicArticleBySlug = async (slug: string): Promise<DbArticle 
         .maybeSingle();
 
       if (error) throw error;
-      if (data) return data as DbArticle;
+      if (data) {
+        const art = data as DbArticle;
+        if (!art.published_at || new Date(art.published_at).getTime() <= now) {
+          return art;
+        }
+        return null; // Future scheduled date -> 404
+      }
     }
   } catch (err) {
     console.warn(`fetchPublicArticleBySlug(${slug}) from Supabase failed, trying local fallback:`, err);
@@ -959,7 +1015,7 @@ export const fetchPublicArticleBySlug = async (slug: string): Promise<DbArticle 
 
   // Fallback
   const localList = getLocalStore<DbArticle[]>(STORAGE_KEYS.ARTICLES, getInitialArticles());
-  const found = localList.find((a) => a.slug === slug && a.status === 'publie');
+  const found = localList.find((a) => a.slug === slug && a.status === 'publie' && (!a.published_at || new Date(a.published_at).getTime() <= now));
   return found || null;
 };
 
