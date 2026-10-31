@@ -84,12 +84,26 @@ export interface DbArticle {
   excerpt: string;
   content: string;
   cover_image?: string;
+  cover_image_alt?: string;
+  cover_image_og_jpeg?: string;
+  cover_image_srcset?: Record<string, string>;
+  reading_time?: number;
+  word_count?: number;
+  content_json?: any;
   tags: string[];
   status: 'publie' | 'brouillon';
   meta_description?: string;
   published_at?: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface DbArticleRedirect {
+  id: string;
+  old_slug: string;
+  new_slug: string;
+  article_id?: string;
+  created_at: string;
 }
 
 // ==============================================================================
@@ -100,6 +114,7 @@ const STORAGE_KEYS = {
   PROJETS: 'class_s_projets_v1',
   TEMOIGNAGES: 'class_s_temoignages_v1',
   ARTICLES: 'class_s_articles_v1',
+  ARTICLE_REDIRECTS: 'class_s_article_redirects_v1',
   ADMIN_CONFIG: 'class_s_admin_config_v1',
   ADMIN_SESSION: 'class_s_admin_session_v1',
 };
@@ -1021,6 +1036,12 @@ export const saveArticle = async (
           excerpt: article.excerpt || '',
           content: article.content || '',
           cover_image: article.cover_image,
+          cover_image_alt: article.cover_image_alt,
+          cover_image_og_jpeg: article.cover_image_og_jpeg,
+          cover_image_srcset: article.cover_image_srcset,
+          reading_time: article.reading_time || 1,
+          word_count: article.word_count || 0,
+          content_json: article.content_json,
           tags: article.tags || [],
           status: article.status || 'brouillon',
           meta_description: article.meta_description,
@@ -1046,8 +1067,89 @@ export const saveArticle = async (
   }
 };
 
-export const deleteArticle = async (id: string): Promise<boolean> => {
+// Helper to extract storage path from a public Supabase URL
+export const extractStoragePath = (url: string, bucket: string): string | null => {
+  if (!url) return null;
+  const prefix = `/storage/v1/object/public/${bucket}/`;
+  const idx = url.indexOf(prefix);
+  if (idx !== -1) {
+    return decodeURIComponent(url.slice(idx + prefix.length).split('?')[0]);
+  }
+  return null;
+};
+
+// Helper to delete associated images from Supabase storage when an article is deleted
+export const deleteArticleImagesFromStorage = async (article: DbArticle): Promise<void> => {
+  if (!isSupabaseConfigured() || !supabase) return;
+
+  const webpPathsToDelete: string[] = [];
+  const ogJpegPathsToDelete: string[] = [];
+
+  // 1. Cover images
+  if (article.cover_image) {
+    const path = extractStoragePath(article.cover_image, 'article-images');
+    if (path) webpPathsToDelete.push(path);
+  }
+  if (article.cover_image_og_jpeg) {
+    const path = extractStoragePath(article.cover_image_og_jpeg, 'article-og-images');
+    if (path) ogJpegPathsToDelete.push(path);
+  }
+
+  // Cover image srcset variants if stored
+  if (article.cover_image_srcset) {
+    Object.values(article.cover_image_srcset).forEach((src) => {
+      const path = extractStoragePath(src, 'article-images');
+      if (path && !webpPathsToDelete.includes(path)) webpPathsToDelete.push(path);
+    });
+  }
+
+  // 2. Images inside HTML body
+  if (article.content) {
+    const imgRegex = /<img[^>]+src=["']([^"']+)["']/gi;
+    let match: RegExpExecArray | null;
+    while ((match = imgRegex.exec(article.content)) !== null) {
+      const src = match[1];
+      const path = extractStoragePath(src, 'article-images');
+      if (path && !webpPathsToDelete.includes(path)) webpPathsToDelete.push(path);
+    }
+  }
+
+  // Execute deletion in buckets
+  if (webpPathsToDelete.length > 0) {
+    try {
+      await supabase.storage.from('article-images').remove(webpPathsToDelete);
+    } catch (e) {
+      console.warn('Failed to delete webp images from storage:', e);
+    }
+  }
+  if (ogJpegPathsToDelete.length > 0) {
+    try {
+      await supabase.storage.from('article-og-images').remove(ogJpegPathsToDelete);
+    } catch (e) {
+      console.warn('Failed to delete og-jpeg images from storage:', e);
+    }
+  }
+};
+
+export const deleteArticle = async (id: string, articleToDelete?: DbArticle): Promise<boolean> => {
   try {
+    // If article data is not provided, try to find it first for storage cleanup
+    let targetArticle = articleToDelete;
+    if (!targetArticle) {
+      if (isSupabaseConfigured() && supabase) {
+        const { data } = await supabase.from('articles').select('*').eq('id', id).maybeSingle();
+        if (data) targetArticle = data as DbArticle;
+      } else {
+        const current = getLocalStore<DbArticle[]>(STORAGE_KEYS.ARTICLES, getInitialArticles());
+        targetArticle = current.find((a) => a.id === id);
+      }
+    }
+
+    // Clean up images in storage
+    if (targetArticle) {
+      await deleteArticleImagesFromStorage(targetArticle);
+    }
+
     if (isSupabaseConfigured() && supabase) {
       const { error } = await supabase.from('articles').delete().eq('id', id);
       if (error) throw error;
@@ -1062,6 +1164,69 @@ export const deleteArticle = async (id: string): Promise<boolean> => {
     }
   } catch (err) {
     console.error('deleteArticle error:', err);
+    return false;
+  }
+};
+
+// ==============================================================================
+// ARTICLE REDIRECTS (301)
+// ==============================================================================
+export const fetchArticleRedirect = async (oldSlug: string): Promise<string | null> => {
+  try {
+    if (isSupabaseConfigured() && supabase) {
+      const { data, error } = await supabase
+        .from('article_redirects')
+        .select('new_slug')
+        .eq('old_slug', oldSlug)
+        .maybeSingle();
+      if (!error && data?.new_slug) {
+        return data.new_slug;
+      }
+    }
+  } catch (err) {
+    console.warn(`fetchArticleRedirect(${oldSlug}) error:`, err);
+  }
+
+  // Fallback to local store
+  const localRedirects = getLocalStore<DbArticleRedirect[]>(STORAGE_KEYS.ARTICLE_REDIRECTS, []);
+  const found = localRedirects.find((r) => r.old_slug === oldSlug);
+  return found?.new_slug || null;
+};
+
+export const recordArticleRedirect = async (
+  oldSlug: string,
+  newSlug: string,
+  articleId?: string
+): Promise<boolean> => {
+  if (!oldSlug || !newSlug || oldSlug === newSlug) return false;
+  try {
+    const payload = {
+      old_slug: oldSlug,
+      new_slug: newSlug,
+      article_id: articleId,
+      created_at: new Date().toISOString(),
+    };
+
+    if (isSupabaseConfigured() && supabase) {
+      const { error } = await supabase
+        .from('article_redirects')
+        .upsert(payload, { onConflict: 'old_slug' });
+      if (error) throw error;
+      return true;
+    } else {
+      const current = getLocalStore<DbArticleRedirect[]>(STORAGE_KEYS.ARTICLE_REDIRECTS, []);
+      const filtered = current.filter((r) => r.old_slug !== oldSlug);
+      setLocalStore(STORAGE_KEYS.ARTICLE_REDIRECTS, [
+        {
+          id: `red-${Date.now()}`,
+          ...payload,
+        },
+        ...filtered,
+      ]);
+      return true;
+    }
+  } catch (err) {
+    console.warn('recordArticleRedirect error:', err);
     return false;
   }
 };

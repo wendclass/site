@@ -61,7 +61,7 @@ export const BlogPost: React.FC = () => {
   // SEO
   const currentUrl = `https://www.wendclass.com/blog/${article?.slug || slug || ''}`;
   const ogImage =
-    article?.cover_image || SITE_CONFIG.ogImageUrl;
+    article?.cover_image_og_jpeg || article?.cover_image || SITE_CONFIG.ogImageUrl;
 
   useSeo({
     title: article?.title ? article.title : 'Article de Blog',
@@ -103,6 +103,12 @@ export const BlogPost: React.FC = () => {
       : undefined,
   });
 
+  const coverSrcset = article?.cover_image_srcset
+    ? Object.entries(article.cover_image_srcset)
+        .map(([w, url]) => `${url} ${w}w`)
+        .join(', ')
+    : undefined;
+
   const calculateReadingTime = (content: string): number => {
     const plainText = content.replace(/<[^>]*>/g, ' ');
     const wordCount = plainText.trim().split(/\s+/).length;
@@ -135,7 +141,7 @@ export const BlogPost: React.FC = () => {
     return <NotFound />;
   }
 
-  const readTime = calculateReadingTime(article.content);
+  const readTime = article.reading_time || calculateReadingTime(article.content);
   const formattedDate = new Date(
     article.published_at || article.created_at
   ).toLocaleDateString('fr-FR', {
@@ -232,7 +238,10 @@ export const BlogPost: React.FC = () => {
           >
             <img
               src={article.cover_image}
-              alt={article.title}
+              srcSet={coverSrcset}
+              sizes="(max-width: 768px) 100vw, 1200px"
+              alt={article.cover_image_alt || article.title}
+              fetchPriority="high"
               draggable={false}
               onContextMenu={(e) => e.preventDefault()}
               className="w-full h-full object-cover pointer-events-none select-none"
@@ -258,8 +267,20 @@ export const BlogPost: React.FC = () => {
             [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:mb-6 [&>ol]:space-y-2
             [&>li]:text-ivoire-violet/90
             [&>strong]:text-white [&>strong]:font-semibold
-            [&>a]:text-amethyste [&>a]:underline [&>a]:hover:text-white [&>a]:transition-colors"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(article.content) }}
+            [&>a]:text-amethyste [&>a]:underline [&>a]:hover:text-white [&>a]:transition-colors
+            [&>figure]:my-8 [&>figure]:rounded-2xl [&>figure]:overflow-hidden [&>figure>img]:rounded-2xl [&>figure>img]:w-full [&>figure>img]:border [&>figure>img]:border-white/10 [&>figure>figcaption]:text-xs [&>figure>figcaption]:text-center [&>figure>figcaption]:text-ivoire-violet/60 [&>figure>figcaption]:mt-2 [&>figure>figcaption]:italic"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(article.content, {
+              ALLOWED_TAGS: [
+                'p', 'h2', 'h3', 'strong', 'em', 'b', 'i', 'ul', 'ol', 'li',
+                'blockquote', 'hr', 'a', 'img', 'figure', 'figcaption', 'br',
+              ],
+              ALLOWED_ATTR: [
+                'href', 'target', 'rel', 'src', 'srcset', 'sizes', 'alt',
+                'width', 'height', 'loading', 'decoding', 'class', 'data-caption',
+              ],
+            }),
+          }}
         />
 
         {/* Social Share Bar */}

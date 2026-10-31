@@ -1867,6 +1867,73 @@ async function getArticlesList() {
     ...fallbackArticles[slug]
   }));
 }
+async function getArticleRedirect(slug) {
+  if (slug && supabaseUrl && supabaseKey) {
+    try {
+      const res = await fetch(
+        `${supabaseUrl}/rest/v1/article_redirects?select=new_slug&old_slug=eq.${encodeURIComponent(slug)}&limit=1`,
+        {
+          headers: {
+            apikey: supabaseKey,
+            Authorization: `Bearer ${supabaseKey}`
+          }
+        }
+      );
+      if (res.ok) {
+        const list = await res.json();
+        if (Array.isArray(list) && list.length > 0 && list[0]?.new_slug) {
+          return list[0].new_slug;
+        }
+      }
+    } catch (err) {
+      console.warn("[SSR] Supabase redirect fetch fallback:", err);
+    }
+  }
+  return null;
+}
+function sanitizeServerHtml(html) {
+  if (!html) return "";
+  let clean = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "").replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, "").replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "").replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, "").replace(/<embed\b[^>]*>/gi, "").replace(/<form\b[^<]*(?:(?!<\/form>)<[^<]*)*<\/form>/gi, "").replace(/<!--[\s\S]*?-->/gi, "");
+  clean = clean.replace(/\s+on[a-z0-9_-]+\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi, "");
+  clean = clean.replace(/\s+style\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi, "");
+  clean = clean.replace(/<h1(\b[^>]*)>/gi, "<h2$1>").replace(/<\/h1>/gi, "</h2>");
+  clean = clean.replace(/<h[4-6](\b[^>]*)>/gi, "<h3$1>").replace(/<\/h[4-6]>/gi, "</h3>");
+  clean = clean.replace(/<a\b([^>]*)>/gi, (_, attrs) => {
+    const hrefMatch = attrs.match(/href\s*=\s*(?:'([^']*)'|"([^"]*)"|([^\s>]+))/i);
+    const href = hrefMatch ? hrefMatch[1] || hrefMatch[2] || hrefMatch[3] || "" : "";
+    const lowerHref = href.toLowerCase().trim();
+    if (lowerHref.startsWith("javascript:") || lowerHref.startsWith("data:") || lowerHref.startsWith("vbscript:")) {
+      return "<span>";
+    }
+    const isExternal = lowerHref.startsWith("http://") || lowerHref.startsWith("https://");
+    let newAttrs = attrs.replace(/\s+rel\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi, "").replace(/\s+target\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi, "");
+    if (isExternal) {
+      newAttrs += ' target="_blank" rel="noopener noreferrer"';
+    }
+    return `<a ${newAttrs.trim()}>`;
+  });
+  clean = clean.replace(/<img\b([^>]*)>/gi, (_, attrs) => {
+    const getAttr = (name) => {
+      const m = attrs.match(new RegExp(`${name}\\s*=\\s*(?:'([^']*)'|"([^"]*)"|([^\\s>]+))`, "i"));
+      return m ? m[1] || m[2] || m[3] || "" : null;
+    };
+    const src = getAttr("src");
+    if (!src) return "";
+    const alt = getAttr("alt") || "";
+    const srcset = getAttr("srcset");
+    const sizes = getAttr("sizes");
+    const width = getAttr("width");
+    const height = getAttr("height");
+    let out = `<img src="${src}" alt="${alt.replace(/"/g, "&quot;")}" loading="lazy" decoding="async"`;
+    if (srcset) out += ` srcset="${srcset.replace(/"/g, "&quot;")}"`;
+    if (sizes) out += ` sizes="${sizes.replace(/"/g, "&quot;")}"`;
+    if (width) out += ` width="${width}"`;
+    if (height) out += ` height="${height}"`;
+    out += ' class="rounded-2xl w-full my-6 border border-white/10 shadow-lg object-cover" />';
+    return out;
+  });
+  return clean.trim();
+}
 function render404Content() {
   return `
     <main class="min-h-[85vh] flex flex-col justify-center py-12 md:py-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 font-body" style="font-family:'Jost', sans-serif; color:#0D0A18;">
@@ -1947,6 +2014,7 @@ async function handler(req, res) {
   let jsonLd = null;
   let statusCode = 200;
   let isNoIndex = false;
+  let extraMetaTags = "";
   if (normalizedRoute === "/") {
     pageTitle = "Class S \u2014 L'identit\xE9 visuelle qui vous impose | Scott Nana";
     pageDesc = "Class S est un studio d'identit\xE9 visuelle \xE0 Ouagadougou, au service des entrepreneurs et des PME. D'une image qui existe \xE0 une image qui fait vendre.";
@@ -2513,6 +2581,11 @@ async function handler(req, res) {
       article = await getArticle(slug);
     }
     if (slug && !article) {
+      const redirectSlug = await getArticleRedirect(slug);
+      if (redirectSlug && redirectSlug !== slug) {
+        res.setHeader("Location", `${baseUrl}/blog/${redirectSlug}`);
+        return res.status(301).end();
+      }
       pageTitle = "Page introuvable | Class S";
       pageDesc = "Page introuvable. Votre image, elle, ne devrait jamais l'\xEAtre.";
       pageCanonical = "";
@@ -2522,26 +2595,36 @@ async function handler(req, res) {
     } else if (slug && article) {
       pageTitle = `${article.title} | Class S`;
       pageDesc = article.meta_description || article.excerpt || pageDesc;
-      if (article.cover_image && article.cover_image.trim()) {
+      if (article.cover_image_og_jpeg && article.cover_image_og_jpeg.trim()) {
+        pageImage = article.cover_image_og_jpeg.startsWith("/") ? `${baseUrl}${article.cover_image_og_jpeg}` : article.cover_image_og_jpeg;
+      } else if (article.cover_image && article.cover_image.trim()) {
         pageImage = article.cover_image.startsWith("/") ? `${baseUrl}${article.cover_image}` : article.cover_image;
-        pageImageAlt = article.title;
       } else {
         pageImage = SITE_CONFIG.ogImageUrl;
-        pageImageAlt = `Class S \u2014 ${article.title}`;
       }
+      pageImageWidth = 1200;
+      pageImageHeight = 630;
+      pageImageAlt = article.cover_image_alt || article.title;
       pageCanonical = `${baseUrl}/blog/${slug}`;
       pageType = "article";
+      extraMetaTags = `
+    <meta property="article:published_time" content="${article.published_at || article.created_at}" />
+    <meta property="article:modified_time" content="${article.updated_at || article.published_at || article.created_at}" />
+    ${(article.tags || []).map((t) => `<meta property="article:tag" content="${t.replace(/"/g, "&quot;")}" />`).join("\n    ")}
+      `.trim();
       jsonLd = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
         headline: article.title,
         description: pageDesc,
         image: [pageImage],
-        datePublished: article.published_at || (/* @__PURE__ */ new Date()).toISOString(),
+        datePublished: article.published_at || article.created_at || (/* @__PURE__ */ new Date()).toISOString(),
+        dateModified: article.updated_at || article.published_at || article.created_at || (/* @__PURE__ */ new Date()).toISOString(),
         author: {
           "@type": "Person",
           name: SITE_CONFIG.founder,
-          jobTitle: SITE_CONFIG.jobTitle
+          jobTitle: SITE_CONFIG.jobTitle,
+          url: `${baseUrl}/a-propos`
         },
         publisher: {
           "@type": "Organization",
@@ -2556,75 +2639,98 @@ async function handler(req, res) {
           "@id": pageCanonical
         }
       };
+      const sanitizedContent = sanitizeServerHtml(article.content || `<p>${article.excerpt}</p>`);
       ssrContent = `
         <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
-          <div class="mb-8">
-            <a href="/blog" class="text-xs uppercase font-bold text-violet-imperial tracking-wider hover:underline">\u2190 Retour au Journal Class S</a>
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold text-onyx leading-tight mt-4 mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+          <header class="mb-8">
+            <a href="/blog" class="text-xs uppercase font-bold text-violet-imperial tracking-wider hover:underline" style="color:#6600CC;">\u2190 Retour au Journal Class S</a>
+            ${article.tags && article.tags.length > 0 ? `
+              <div class="flex flex-wrap gap-2 mt-4">
+                ${article.tags.map((t) => `<span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-violet-imperial/10 text-violet-imperial" style="background-color:rgba(102,0,204,0.1); color:#6600CC;">${t}</span>`).join("")}
+              </div>
+            ` : ""}
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold text-onyx leading-tight mt-4 mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; font-size:clamp(2rem, 4vw, 3.25rem); line-height:1.2; color:#0D0A18;">
               ${article.title}
             </h1>
-            <p class="text-xs text-onyx/60">Par Scott Nana \u2014 Brand & Graphic Designer</p>
-          </div>
+            <div class="flex items-center gap-3 text-xs text-onyx/60" style="color:rgba(13,10,24,0.6);">
+              <span>Par Scott Nana \u2014 Brand & Graphic Designer</span>
+              <span>\u2022</span>
+              <span>${article.reading_time || 1} min de lecture</span>
+            </div>
+          </header>
+
           ${article.cover_image ? `
-            <img src="${article.cover_image}" alt="${article.title}" class="w-full rounded-2xl mb-8 max-h-[480px] object-cover" />
+            <figure class="my-8 rounded-2xl overflow-hidden border border-black/10">
+              <img src="${article.cover_image}" alt="${(article.cover_image_alt || article.title).replace(/"/g, "&quot;")}" fetchpriority="high" class="w-full max-h-[520px] object-cover" />
+              ${article.cover_image_alt ? `<figcaption class="text-xs text-center text-onyx/60 mt-2 italic font-body">${article.cover_image_alt}</figcaption>` : ""}
+            </figure>
           ` : ""}
-          <div class="prose max-w-none text-base sm:text-lg leading-relaxed text-onyx/85">
-            ${article.content || `<p>${article.excerpt}</p>`}
+
+          ${article.excerpt ? `
+            <div class="p-6 rounded-2xl my-6 border-l-4 border-or-champagne" style="background-color:rgba(212,175,55,0.08); border-left:4px solid #D4AF37;">
+              <p class="text-base sm:text-lg italic font-serif" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18; margin:0;">\xAB ${article.excerpt} \xBB</p>
+            </div>
+          ` : ""}
+
+          <div class="prose max-w-none text-base sm:text-lg leading-relaxed text-onyx/90" style="line-height:1.75; max-width:70ch;">
+            ${sanitizedContent}
           </div>
-          <footer class="mt-12 pt-8 border-t border-violet-imperial/10 text-center text-xs text-onyx/70">
+
+          <footer class="mt-16 pt-8 border-t border-violet-imperial/10 text-center text-xs text-onyx/70">
             <p>${SITE_CONFIG.anchorPhrase}</p>
           </footer>
         </article>
       `;
     } else {
       pageTitle = "Le Journal Class S \u2014 Strat\xE9gie Visuelle & Branding | Scott Nana";
-      pageDesc = "Analyses, d\xE9cryptages et principes graphiques pour transformer l'identit\xE9 visuelle de votre entreprise en levier de conversion commerciale.";
+      pageDesc = "Analyses, d\xE9cryptages et principes graphiques pour transformer l'identit\xE9 visuelle de votre entreprise en levier de conversion commerciale. Par Scott Nana.";
       pageCanonical = `${baseUrl}/blog`;
+      pageType = "website";
       const articlesList = await getArticlesList();
       jsonLd = {
         "@context": "https://schema.org",
         "@type": "Blog",
-        name: "Le Journal Class S",
-        url: pageCanonical,
+        name: "Le Journal Class S \u2014 Scott Nana",
         description: pageDesc,
+        url: pageCanonical,
         author: {
           "@type": "Person",
-          name: SITE_CONFIG.founder
+          name: SITE_CONFIG.founder,
+          jobTitle: SITE_CONFIG.jobTitle
         }
       };
       ssrContent = `
-        <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
           <div class="text-center max-w-3xl mx-auto mb-12">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider mb-4">
-              <span>\xC9ditorial & Strat\xE9gie</span>
-            </div>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-title font-semibold text-onyx leading-tight mb-4" style="font-family:'Cormorant Garamond', Georgia, serif;">
+            <span class="text-xs uppercase font-bold text-violet-imperial tracking-widest" style="color:#6600CC;">Analyses & Strat\xE9gie</span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold text-onyx mt-2 mb-4" style="font-family:'Cormorant Garamond', Georgia, serif; font-size:clamp(2.25rem, 5vw, 3.5rem);">
               Le Journal Class S
             </h1>
-            <p class="text-base sm:text-lg text-onyx/75 leading-relaxed">
-              Analyses, d\xE9cryptages et principes graphiques par Scott Nana.
+            <p class="text-sm sm:text-base text-onyx/75 leading-relaxed">
+              D\xE9cryptages graphiques et principes de marque pour asseoir votre cr\xE9dibilit\xE9 et vendre plus.
             </p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             ${articlesList.map((art) => `
-              <article class="bg-white rounded-2xl overflow-hidden border border-violet-imperial/15 shadow-soft flex flex-col">
-                ${art.cover_image ? `<img src="${art.cover_image}" alt="${art.title}" class="aspect-[16/10] w-full object-cover" loading="lazy" />` : ""}
-                <div class="p-6 flex flex-col flex-grow">
-                  <h2 class="text-xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
-                    <a href="/blog/${art.slug}" class="hover:text-violet-imperial transition-colors">${art.title}</a>
+              <article class="border border-violet-imperial/10 rounded-2xl overflow-hidden bg-white/50 p-6 flex flex-col justify-between hover:shadow-lg transition-shadow">
+                <div>
+                  ${art.cover_image ? `
+                    <img src="${art.cover_image}" alt="${art.title.replace(/"/g, "&quot;")}" loading="lazy" class="w-full aspect-video object-cover rounded-xl mb-4" />
+                  ` : ""}
+                  <h2 class="text-xl font-title font-bold text-onyx leading-snug mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+                    <a href="/blog/${art.slug}" class="hover:text-violet-imperial transition-colors" style="color:#0D0A18;">${art.title}</a>
                   </h2>
-                  <p class="text-xs text-onyx/75 leading-relaxed mb-4 flex-grow">${art.excerpt}</p>
-                  <a href="/blog/${art.slug}" class="text-xs font-semibold text-violet-imperial hover:underline">Lire l'analyse \u2192</a>
+                  <p class="text-xs text-onyx/70 line-clamp-3 leading-relaxed mb-4">${art.excerpt}</p>
+                </div>
+                <div class="pt-4 border-t border-violet-imperial/10 flex items-center justify-between text-xs">
+                  <span class="text-onyx/50">${new Date(art.published_at || Date.now()).toLocaleDateString("fr-FR")}</span>
+                  <a href="/blog/${art.slug}" class="font-semibold text-violet-imperial hover:underline" style="color:#6600CC;">Lire l'analyse \u2192</a>
                 </div>
               </article>
             `).join("")}
           </div>
-
-          <footer class="py-8 border-t border-violet-imperial/10 text-center text-xs text-onyx/70">
-            <p>${SITE_CONFIG.anchorPhrase}</p>
-          </footer>
-        </main>
+        </div>
       `;
     }
   } else {
@@ -2659,10 +2765,11 @@ async function handler(req, res) {
     <meta name="twitter:title" content="${pageTitle.replace(/"/g, "&quot;")}" />
     <meta name="twitter:description" content="${pageDesc.replace(/"/g, "&quot;")}" />
     <meta name="twitter:image" content="${pageImage}" />
+    ${extraMetaTags ? extraMetaTags : ""}
     ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
     ${isNoIndex ? '<meta name="robots" content="noindex, nofollow" />' : ""}
   `;
-  html = html.replace(/<script\s+type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi, "").replace(/<meta\s+name="description"[^>]*>/gi, "").replace(/<link\s+rel="canonical"[^>]*>/gi, "").replace(/<meta\s+property="og:[^>]*>/gi, "").replace(/<meta\s+property="twitter:[^>]*>/gi, "").replace(/<meta\s+name="twitter:[^>]*>/gi, "");
+  html = html.replace(/<script\s+type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi, "").replace(/<meta\s+name="description"[^>]*>/gi, "").replace(/<link\s+rel="canonical"[^>]*>/gi, "").replace(/<meta\s+property="og:[^>]*>/gi, "").replace(/<meta\s+property="article:[^>]*>/gi, "").replace(/<meta\s+property="twitter:[^>]*>/gi, "").replace(/<meta\s+name="twitter:[^>]*>/gi, "");
   if (isNoIndex) {
     html = html.replace(/<meta\s+name="robots"[^>]*>/gi, "");
   }
