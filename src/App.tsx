@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Layout } from './components/layout/Layout';
 import { Accueil } from './pages/Accueil';
@@ -120,6 +120,10 @@ const AnimatedPublicRoutes: React.FC = () => {
               <APropos />
             </motion.div>
           }
+        />
+        <Route
+          path="/contact"
+          element={<Navigate to="/#contact" replace />}
         />
         <Route
           path="*"

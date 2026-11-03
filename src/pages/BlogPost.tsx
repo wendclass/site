@@ -61,7 +61,7 @@ export const BlogPost: React.FC = () => {
   // SEO
   const currentUrl = `https://www.wendclass.com/blog/${article?.slug || slug || ''}`;
   const ogImage =
-    article?.cover_image || SITE_CONFIG.ogImageUrl;
+    article?.cover_image_og_jpeg || article?.cover_image || SITE_CONFIG.ogImageUrl;
 
   useSeo({
     title: article?.title ? article.title : 'Article de Blog',
@@ -75,7 +75,8 @@ export const BlogPost: React.FC = () => {
     jsonLd: article
       ? {
           '@context': 'https://schema.org',
-          '@type': 'BlogPosting',
+          '@type': 'Article',
+          inLanguage: 'fr',
           headline: article.title,
           description: article.meta_description || article.excerpt,
           image: [ogImage],
@@ -102,6 +103,12 @@ export const BlogPost: React.FC = () => {
         }
       : undefined,
   });
+
+  const coverSrcset = article?.cover_image_srcset
+    ? Object.entries(article.cover_image_srcset)
+        .map(([w, url]) => `${url} ${w}w`)
+        .join(', ')
+    : undefined;
 
   const calculateReadingTime = (content: string): number => {
     const plainText = content.replace(/<[^>]*>/g, ' ');
@@ -135,16 +142,17 @@ export const BlogPost: React.FC = () => {
     return <NotFound />;
   }
 
-  const readTime = calculateReadingTime(article.content);
+  const readTime = article.reading_time || calculateReadingTime(article.content);
   const formattedDate = new Date(
     article.published_at || article.created_at
   ).toLocaleDateString('fr-FR', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
+    timeZone: 'UTC',
   });
 
-  const shareText = `${article.title} — par Scott Nana (Class S)\n${currentUrl}`;
+  const shareText = `${article.title} : par Scott Nana (Class S)\n${currentUrl}`;
 
   return (
     <article className="min-h-screen bg-onyx text-ivoire-violet pt-28 pb-20 relative overflow-hidden font-body">
@@ -194,7 +202,7 @@ export const BlogPost: React.FC = () => {
               <div>
                 <div className="text-sm font-semibold text-white">Scott Nana</div>
                 <div className="text-[11px] text-ivoire-violet/60">
-                  Brand & Graphic Designer — Class S
+                  Brand & Graphic Designer · Class S
                 </div>
               </div>
             </div>
@@ -217,8 +225,8 @@ export const BlogPost: React.FC = () => {
         {/* Excerpt / Chapô quote block */}
         {article.excerpt && (
           <div className="p-6 rounded-3xl bg-ardoise/70 border-l-4 border-or-champagne border-white/10 shadow-soft">
-            <p className="text-base sm:text-lg text-white/95 italic font-serif leading-relaxed">
-              « {article.excerpt} »
+            <p className="text-base sm:text-lg text-white/95 leading-relaxed font-body">
+              {article.excerpt}
             </p>
           </div>
         )}
@@ -232,7 +240,10 @@ export const BlogPost: React.FC = () => {
           >
             <img
               src={article.cover_image}
-              alt={article.title}
+              srcSet={coverSrcset}
+              sizes="(max-width: 768px) 100vw, 1200px"
+              alt={article.cover_image_alt || article.title}
+              fetchPriority="high"
               draggable={false}
               onContextMenu={(e) => e.preventDefault()}
               className="w-full h-full object-cover pointer-events-none select-none"
@@ -258,8 +269,20 @@ export const BlogPost: React.FC = () => {
             [&>ol]:list-decimal [&>ol]:pl-6 [&>ol]:mb-6 [&>ol]:space-y-2
             [&>li]:text-ivoire-violet/90
             [&>strong]:text-white [&>strong]:font-semibold
-            [&>a]:text-amethyste [&>a]:underline [&>a]:hover:text-white [&>a]:transition-colors"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(article.content) }}
+            [&>a]:text-amethyste [&>a]:underline [&>a]:hover:text-white [&>a]:transition-colors
+            [&>figure]:my-8 [&>figure]:rounded-2xl [&>figure]:overflow-hidden [&>figure>img]:rounded-2xl [&>figure>img]:w-full [&>figure>img]:border [&>figure>img]:border-white/10 [&>figure>figcaption]:text-xs [&>figure>figcaption]:text-center [&>figure>figcaption]:text-ivoire-violet/60 [&>figure>figcaption]:mt-2 [&>figure>figcaption]:italic"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(article.content, {
+              ALLOWED_TAGS: [
+                'p', 'h2', 'h3', 'strong', 'em', 'b', 'i', 'ul', 'ol', 'li',
+                'blockquote', 'hr', 'a', 'img', 'figure', 'figcaption', 'br',
+              ],
+              ALLOWED_ATTR: [
+                'href', 'target', 'rel', 'src', 'srcset', 'sizes', 'alt',
+                'width', 'height', 'loading', 'decoding', 'class', 'data-caption',
+              ],
+            }),
+          }}
         />
 
         {/* Social Share Bar */}

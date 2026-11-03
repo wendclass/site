@@ -18,6 +18,50 @@ const supabaseKey =
 
 // Fallback mock articles for resilience
 const fallbackArticles: Record<string, any> = {
+  'identite-visuelle-definition-entrepreneur': {
+    title: "Identité visuelle : à quoi sert-elle à un entrepreneur ?",
+    meta_title: "Identité visuelle : à quoi sert-elle à un entrepreneur ?",
+    meta_description: "Identité visuelle : définition, éléments, différence avec la charte graphique et raisons pour lesquelles un entrepreneur en a besoin.",
+    excerpt: "Votre identité visuelle est la première chose que vos clients voient de votre entreprise. Elle ne se résume pas au logo : couleurs, typographies et images en font aussi partie. Entrepreneur au Burkina Faso, découvrez comment elle construit votre image de marque.",
+    published_at: "2026-11-03T09:00:00Z",
+    status: "publie",
+    tags: ["Identité visuelle", "Charte graphique", "Logo", "Branding", "Burkina Faso"],
+    reading_time: 4,
+    created_at: "2026-10-31T01:46:00.000Z",
+    updated_at: "2026-10-31T01:46:00.000Z",
+    content: `<p>Imaginez deux boutiques de vêtements sur Facebook. Elles vendent les mêmes articles au même prix. L’une a des couleurs, une police et un logo cohérents, l’autre change d’allure à chaque publication.</p>
+<p>Laquelle semble la plus sérieuse ? Laquelle reconnaissez-vous en un coup d’œil ? La réponse vient presque toujours sans effort.</p>
+<p>Cette différence porte un nom : l’identité visuelle. Dans cet article, vous découvrez ce qu’elle contient et pourquoi elle compte pour votre entreprise. Vous repartez avec des signes concrets pour savoir si la vôtre est à revoir.</p>
+<h2>L’identité visuelle, c’est bien plus qu’un logo</h2>
+<p>L’identité visuelle désigne l’ensemble des éléments visuels qui représentent une marque. On y trouve le logo, les couleurs, les typographies, les images et les icônes. Ensemble, ils distinguent l’entreprise de ses concurrents.</p>
+<p>Le logo n’en est que la partie la plus visible. Beaucoup d’entrepreneurs s’arrêtent à lui et oublient le reste. Un logo seul ne construit pas une marque reconnaissable.</p>
+<p>Pensez à la manière dont vous reconnaissez un ami dans une foule. Vous ne vous fiez pas seulement à son visage, mais aussi à sa silhouette, sa démarche et son parfum. Une marque se reconnaît de la même façon.</p>
+<h2>Les éléments qui composent une identité visuelle</h2>
+<p>Le logo reste le point d’entrée. Il doit rester lisible en grand comme en petit. Il doit aussi fonctionner en couleur comme en noir et blanc.</p>
+<p>La palette de couleurs donne le ton. Deux ou trois couleurs principales suffisent souvent. Une identité visuelle repose en général sur deux ou trois polices au maximum.</p>
+<p>Viennent ensuite les images, les icônes, les motifs et la mise en page. Ces éléments donnent un style propre à vos affiches, vos publications et votre site. Ils forment la signature visuelle de votre entreprise.</p>
+<h2>Identité visuelle, charte graphique, branding : quelle différence ?</h2>
+<p>Ces trois termes se confondent souvent. Pourtant, chacun désigne une chose précise. Les distinguer vous évite des malentendus avec un graphiste.</p>
+<p>L’identité visuelle est la personnalité graphique d’une marque, et la charte graphique en est le <a href="https://www.canva.com/fr_fr/decouvrir/identite-visuelle-et-charte-graphique/" target="_blank" rel="noopener noreferrer">mode d’emploi</a>. Cette charte fixe les règles d’usage du logo, des couleurs et des polices. Elle garantit que les graphistes, les imprimeurs et les responsables des réseaux sociaux appliquent l’identité de la même façon.</p>
+<p>Le branding est plus large. C’est le processus qui définit le message et l’identité de marque que vous souhaitez transmettre au public. L’identité visuelle en est l’expression graphique.</p>
+<h2>Pourquoi un entrepreneur en a besoin</h2>
+<p>Une identité visuelle cohérente rend votre entreprise reconnaissable. Vos clients vous repèrent plus vite dans un fil d’actualité chargé. Ils vous associent à une qualité précise.</p>
+<p>La cohérence inspire aussi confiance. Une étude de Lucidpress, aujourd’hui Marq, avance qu’une présentation cohérente de la marque peut accroître les revenus jusqu’à 33 %. Ce chiffre vient d’un éditeur de logiciels de marque : lisez-le comme une tendance, pas comme une promesse.</p>
+<p>Elle vous fait enfin gagner du temps. Avec des règles claires, chaque affiche ou publication se crée plus vite. Vous évitez de repartir de zéro à chaque fois.</p>
+<h2>Vos clients vous voient d’abord sur les réseaux sociaux</h2>
+<p>Facebook domine largement parmi les réseaux sociaux mesurés au Burkina Faso. Selon <a href="https://napoleoncat.com/stats/facebook-users-in-burkina-faso/" target="_blank" rel="noopener noreferrer">NapoleonCat</a>, le pays comptait environ 4,8 millions d’utilisateurs en septembre 2026. Cela représente un peu plus de 19 % de la population.</p>
+<p>À titre de comparaison, LinkedIn comptait environ 600 000 membres et Instagram environ 231 000 à la même date. Chaque plateforme n’a pas le même public. Votre identité visuelle doit pourtant rester la même partout.</p>
+<p>Votre première impression se joue donc souvent sur un écran de téléphone, en quelques instants. Votre photo de profil, votre couverture et vos visuels parlent avant vous. Un ensemble soigné donne une image sérieuse dès le premier regard.</p>
+<h2>Les signes qu’il est temps de revoir votre identité</h2>
+<p>Votre logo est flou ou illisible en petit format. Vos couleurs changent d’une publication à l’autre. Chaque support semble venir d’une entreprise différente.</p>
+<p>Vos clients vous confondent avec un concurrent. Vous hésitez à montrer votre marque à de gros clients. Votre site, vos affiches et vos réseaux n’ont aucun point commun.</p>
+<p>Un seul de ces signes mérite déjà votre attention. Plusieurs d’entre eux annoncent le moment de structurer votre identité. Mieux vaut le faire avant d’imprimer ou de publier en masse.</p>
+<h2>Par où commencer ?</h2>
+<p>Commencez par clarifier ce que votre entreprise représente et pour qui. Choisissez ensuite vos couleurs, vos typographies et votre logo. Rassemblez enfin ces règles dans une charte graphique.</p>
+<p>Vous pouvez le faire seul, mais un graphiste vous évite les erreurs de départ. Il traduit vos valeurs en éléments visuels cohérents. Il vous remet aussi un document pour garder le cap.</p>
+<p>Chez Class S, je crée des <a href="/offres">identités visuelles</a> pour entrepreneurs et startups. Si vous préparez la vôtre, parlons de votre projet. Le <a href="/contact">formulaire de contact</a> est à votre disposition.</p>`,
+  },
+
   'pourquoi-un-logo-seul-ne-sauvera-pas-votre-entreprise': {
     title: "Pourquoi un logo seul ne sauvera jamais votre entreprise (et ce qu'il vous faut vraiment)",
     excerpt: "Beaucoup d'entrepreneurs pensent qu'un joli logo suffit à attirer des clients haut de gamme. En réalité, un logo sans système d'identité visuelle est une coquille vide. Décryptage d'une erreur coûteuse.",
@@ -128,6 +172,7 @@ async function getTestimonials(): Promise<any[]> {
 
 // Fetch single article or list from Supabase
 async function getArticle(slug: string): Promise<any> {
+  let art = fallbackArticles[slug] || null;
   if (slug && supabaseUrl && supabaseKey) {
     try {
       const res = await fetch(
@@ -142,14 +187,19 @@ async function getArticle(slug: string): Promise<any> {
       if (res.ok) {
         const list = await res.json();
         if (Array.isArray(list) && list.length > 0) {
-          return list[0];
+          art = list[0];
         }
       }
     } catch (err) {
       console.warn('[SSR] Supabase article fetch fallback:', err);
     }
   }
-  return fallbackArticles[slug] || null;
+  if (!art) return null;
+  if (art.status !== 'publie') return null;
+  if (art.published_at && new Date(art.published_at).getTime() > Date.now()) {
+    return null; // Scheduled publication: not available yet -> 404
+  }
+  return art;
 }
 
 async function getArticlesList(): Promise<any[]> {
@@ -180,6 +230,104 @@ async function getArticlesList(): Promise<any[]> {
   }));
 }
 
+
+
+// Fetch 301 redirect for article slugs
+async function getArticleRedirect(slug: string): Promise<string | null> {
+  if (slug && supabaseUrl && supabaseKey) {
+    try {
+      const res = await fetch(
+        `${supabaseUrl}/rest/v1/article_redirects?select=new_slug&old_slug=eq.${encodeURIComponent(slug)}&limit=1`,
+        {
+          headers: {
+            apikey: supabaseKey,
+            Authorization: `Bearer ${supabaseKey}`,
+          },
+        }
+      );
+      if (res.ok) {
+        const list = await res.json();
+        if (Array.isArray(list) && list.length > 0 && list[0]?.new_slug) {
+          return list[0].new_slug;
+        }
+      }
+    } catch (err) {
+      console.warn('[SSR] Supabase redirect fetch fallback:', err);
+    }
+  }
+  return null;
+}
+
+// Server-side strict HTML sanitizer
+function sanitizeServerHtml(html: string): string {
+  if (!html) return '';
+
+  let clean = html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+    .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '')
+    .replace(/<embed\b[^>]*>/gi, '')
+    .replace(/<form\b[^<]*(?:(?!<\/form>)<[^<]*)*<\/form>/gi, '')
+    .replace(/<!--[\s\S]*?-->/gi, '');
+
+  clean = clean.replace(/\s+on[a-z0-9_-]+\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi, '');
+  clean = clean.replace(/\s+style\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi, '');
+
+  clean = clean.replace(/<h1(\b[^>]*)>/gi, '<h2$1>').replace(/<\/h1>/gi, '</h2>');
+  clean = clean.replace(/<h[4-6](\b[^>]*)>/gi, '<h3$1>').replace(/<\/h[4-6]>/gi, '</h3>');
+
+  clean = clean.replace(/<a\b([^>]*)>/gi, (_, attrs) => {
+    const hrefMatch = attrs.match(/href\s*=\s*(?:'([^']*)'|"([^"]*)"|([^\s>]+))/i);
+    const href = hrefMatch ? (hrefMatch[1] || hrefMatch[2] || hrefMatch[3] || '') : '';
+    const lowerHref = href.toLowerCase().trim();
+
+    if (
+      lowerHref.startsWith('javascript:') ||
+      lowerHref.startsWith('data:') ||
+      lowerHref.startsWith('vbscript:')
+    ) {
+      return '<span>';
+    }
+
+    const isExternal = lowerHref.startsWith('http://') || lowerHref.startsWith('https://');
+    let newAttrs = attrs
+      .replace(/\s+rel\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi, '')
+      .replace(/\s+target\s*=\s*(?:'[^']*'|"[^"]*"|[^\s>]+)/gi, '');
+
+    if (isExternal) {
+      newAttrs += ' target="_blank" rel="noopener noreferrer"';
+    }
+
+    return `<a ${newAttrs.trim()}>`;
+  });
+
+  clean = clean.replace(/<img\b([^>]*)>/gi, (_, attrs) => {
+    const getAttr = (name: string) => {
+      const m = attrs.match(new RegExp(`${name}\\s*=\\s*(?:'([^']*)'|"([^"]*)"|([^\\s>]+))`, 'i'));
+      return m ? (m[1] || m[2] || m[3] || '') : null;
+    };
+
+    const src = getAttr('src');
+    if (!src) return '';
+
+    const alt = getAttr('alt') || '';
+    const srcset = getAttr('srcset');
+    const sizes = getAttr('sizes');
+    const width = getAttr('width');
+    const height = getAttr('height');
+
+    let out = `<img src="${src}" alt="${alt.replace(/"/g, '&quot;')}" loading="lazy" decoding="async"`;
+    if (srcset) out += ` srcset="${srcset.replace(/"/g, '&quot;')}"`;
+    if (sizes) out += ` sizes="${sizes.replace(/"/g, '&quot;')}"`;
+    if (width) out += ` width="${width}"`;
+    if (height) out += ` height="${height}"`;
+    out += ' class="rounded-2xl w-full my-6 border border-white/10 shadow-lg object-cover" />';
+    return out;
+  });
+
+  return clean.trim();
+}
 
 function render404Content(): string {
   return `
@@ -233,6 +381,10 @@ export default async function handler(req: any, res: any) {
       : '');
 
   let normalizedRoute = '/';
+  if (cleanPath === '/contact') {
+    res.setHeader('Location', `${baseUrl}/#contact`);
+    return res.status(301).end();
+  }
   if (cleanPath === '/') normalizedRoute = '/';
   else if (cleanPath === '/offres') normalizedRoute = '/offres';
   else if (cleanPath === '/projets') normalizedRoute = '/projets';
@@ -273,6 +425,7 @@ export default async function handler(req: any, res: any) {
   let jsonLd: any = null;
   let statusCode = 200;
   let isNoIndex = false;
+  let extraMetaTags = '';
 
   // ROUTE 1: ACCUEIL (/)
   if (normalizedRoute === '/') {
@@ -867,7 +1020,14 @@ export default async function handler(req: any, res: any) {
       article = await getArticle(slug);
     }
 
+    // Check 301 redirects if article is not found
     if (slug && !article) {
+      const redirectSlug = await getArticleRedirect(slug);
+      if (redirectSlug && redirectSlug !== slug) {
+        res.setHeader('Location', `${baseUrl}/blog/${redirectSlug}`);
+        return res.status(301).end();
+      }
+
       pageTitle = "Page introuvable | Class S";
       pageDesc = "Page introuvable. Votre image, elle, ne devrait jamais l'être.";
       pageCanonical = ""; // Section 9.4: No canonical on 404
@@ -877,29 +1037,47 @@ export default async function handler(req: any, res: any) {
     } else if (slug && article) {
       pageTitle = `${article.title} | Class S`;
       pageDesc = article.meta_description || article.excerpt || pageDesc;
-      if (article.cover_image && article.cover_image.trim()) {
+
+      // OG Image: Strictly the 1200x630 JPEG copy for social networks (LinkedIn/WhatsApp compatibility)
+      if (article.cover_image_og_jpeg && article.cover_image_og_jpeg.trim()) {
+        pageImage = article.cover_image_og_jpeg.startsWith('/')
+          ? `${baseUrl}${article.cover_image_og_jpeg}`
+          : article.cover_image_og_jpeg;
+      } else if (article.cover_image && article.cover_image.trim()) {
         pageImage = article.cover_image.startsWith('/')
           ? `${baseUrl}${article.cover_image}`
           : article.cover_image;
-        pageImageAlt = article.title;
       } else {
         pageImage = SITE_CONFIG.ogImageUrl;
-        pageImageAlt = `Class S — ${article.title}`;
       }
+
+      pageImageWidth = 1200;
+      pageImageHeight = 630;
+      pageImageAlt = article.cover_image_alt || article.title;
       pageCanonical = `${baseUrl}/blog/${slug}`;
       pageType = 'article';
 
+      // Extra Open Graph article tags
+      extraMetaTags = `
+    <meta property="article:published_time" content="${article.published_at || article.created_at}" />
+    <meta property="article:modified_time" content="${article.updated_at || article.published_at || article.created_at}" />
+    ${(article.tags || []).map((t: string) => `<meta property="article:tag" content="${t.replace(/"/g, '&quot;')}" />`).join('\n    ')}
+      `.trim();
+
       jsonLd = {
         '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
+        '@type': 'Article',
         headline: article.title,
         description: pageDesc,
+        inLanguage: 'fr',
         image: [pageImage],
-        datePublished: article.published_at || new Date().toISOString(),
+        datePublished: article.published_at || article.created_at || new Date().toISOString(),
+        dateModified: article.updated_at || article.published_at || article.created_at || new Date().toISOString(),
         author: {
           '@type': 'Person',
           name: SITE_CONFIG.founder,
           jobTitle: SITE_CONFIG.jobTitle,
+          url: `${baseUrl}/a-propos`,
         },
         publisher: {
           '@type': 'Organization',
@@ -915,80 +1093,104 @@ export default async function handler(req: any, res: any) {
         },
       };
 
+      const sanitizedContent = sanitizeServerHtml(article.content || `<p>${article.excerpt}</p>`);
+
+      // Fluid typography with single H1
       ssrContent = `
         <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
-          <div class="mb-8">
-            <a href="/blog" class="text-xs uppercase font-bold text-violet-imperial tracking-wider hover:underline">← Retour au Journal Class S</a>
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold text-onyx leading-tight mt-4 mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+          <header class="mb-8">
+            <a href="/blog" class="text-xs uppercase font-bold text-violet-imperial tracking-wider hover:underline" style="color:#6600CC;">← Retour au Journal Class S</a>
+            ${article.tags && article.tags.length > 0 ? `
+              <div class="flex flex-wrap gap-2 mt-4">
+                ${article.tags.map((t: string) => `<span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-violet-imperial/10 text-violet-imperial" style="background-color:rgba(102,0,204,0.1); color:#6600CC;">${t}</span>`).join('')}
+              </div>
+            ` : ''}
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold text-onyx leading-tight mt-4 mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; font-size:clamp(2rem, 4vw, 3.25rem); line-height:1.2; color:#0D0A18;">
               ${article.title}
             </h1>
-            <p class="text-xs text-onyx/60">Par Scott Nana — Brand & Graphic Designer</p>
-          </div>
+            <div class="flex items-center gap-3 text-xs text-onyx/60" style="color:rgba(13,10,24,0.6);">
+              <span>Par Scott Nana · Brand & Graphic Designer</span>
+              <span>•</span>
+              <span>${article.reading_time || 1} min de lecture</span>
+            </div>
+          </header>
+
           ${article.cover_image ? `
-            <img src="${article.cover_image}" alt="${article.title}" class="w-full rounded-2xl mb-8 max-h-[480px] object-cover" />
+            <figure class="my-8 rounded-2xl overflow-hidden border border-black/10">
+              <img src="${article.cover_image}" alt="${(article.cover_image_alt || article.title).replace(/"/g, '&quot;')}" fetchpriority="high" class="w-full max-h-[520px] object-cover" />
+              ${article.cover_image_alt ? `<figcaption class="text-xs text-center text-onyx/60 mt-2 italic font-body">${article.cover_image_alt}</figcaption>` : ''}
+            </figure>
           ` : ''}
-          <div class="prose max-w-none text-base sm:text-lg leading-relaxed text-onyx/85">
-            ${article.content || `<p>${article.excerpt}</p>`}
+
+          ${article.excerpt ? `
+            <div class="p-6 rounded-2xl my-6 border-l-4 border-or-champagne" style="background-color:rgba(212,175,55,0.08); border-left:4px solid #D4AF37;">
+              <p class="text-base sm:text-lg text-onyx/95 leading-relaxed" style="font-family:'Jost', sans-serif; color:#0D0A18; margin:0;">${article.excerpt}</p>
+            </div>
+          ` : ''}
+
+          <div class="prose max-w-none text-base sm:text-lg leading-relaxed text-onyx/90" style="line-height:1.75; max-width:70ch;">
+            ${sanitizedContent}
           </div>
-          <footer class="mt-12 pt-8 border-t border-violet-imperial/10 text-center text-xs text-onyx/70">
+
+          <footer class="mt-16 pt-8 border-t border-violet-imperial/10 text-center text-xs text-onyx/70">
             <p>${SITE_CONFIG.anchorPhrase}</p>
           </footer>
         </article>
       `;
     } else {
       // Blog index
-      pageTitle = "Le Journal Class S — Stratégie Visuelle & Branding | Scott Nana";
-      pageDesc =
-        "Analyses, décryptages et principes graphiques pour transformer l'identité visuelle de votre entreprise en levier de conversion commerciale.";
+      pageTitle = "Le Journal Class S | Stratégie Visuelle & Branding | Scott Nana";
+      pageDesc = "Analyses, décryptages et principes graphiques pour transformer l'identité visuelle de votre entreprise en levier de conversion commerciale. Par Scott Nana.";
       pageCanonical = `${baseUrl}/blog`;
+      pageType = 'website';
 
       const articlesList = await getArticlesList();
 
       jsonLd = {
         '@context': 'https://schema.org',
         '@type': 'Blog',
-        name: 'Le Journal Class S',
-        url: pageCanonical,
+        name: 'Le Journal Class S · Scott Nana',
         description: pageDesc,
+        url: pageCanonical,
         author: {
           '@type': 'Person',
           name: SITE_CONFIG.founder,
+          jobTitle: SITE_CONFIG.jobTitle,
         },
       };
 
       ssrContent = `
-        <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
           <div class="text-center max-w-3xl mx-auto mb-12">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider mb-4">
-              <span>Éditorial & Stratégie</span>
-            </div>
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-title font-semibold text-onyx leading-tight mb-4" style="font-family:'Cormorant Garamond', Georgia, serif;">
+            <span class="text-xs uppercase font-bold text-violet-imperial tracking-widest" style="color:#6600CC;">Analyses & Stratégie</span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold text-onyx mt-2 mb-4" style="font-family:'Cormorant Garamond', Georgia, serif; font-size:clamp(2.25rem, 5vw, 3.5rem);">
               Le Journal Class S
             </h1>
-            <p class="text-base sm:text-lg text-onyx/75 leading-relaxed">
-              Analyses, décryptages et principes graphiques par Scott Nana.
+            <p class="text-sm sm:text-base text-onyx/75 leading-relaxed">
+              Décryptages graphiques et principes de marque pour asseoir votre crédibilité et vendre plus.
             </p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             ${articlesList.map((art) => `
-              <article class="bg-white rounded-2xl overflow-hidden border border-violet-imperial/15 shadow-soft flex flex-col">
-                ${art.cover_image ? `<img src="${art.cover_image}" alt="${art.title}" class="aspect-[16/10] w-full object-cover" loading="lazy" />` : ''}
-                <div class="p-6 flex flex-col flex-grow">
-                  <h2 class="text-xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
-                    <a href="/blog/${art.slug}" class="hover:text-violet-imperial transition-colors">${art.title}</a>
+              <article class="border border-violet-imperial/10 rounded-2xl overflow-hidden bg-white/50 p-6 flex flex-col justify-between hover:shadow-lg transition-shadow">
+                <div>
+                  ${art.cover_image ? `
+                    <img src="${art.cover_image}" alt="${art.title.replace(/"/g, '&quot;')}" loading="lazy" class="w-full aspect-video object-cover rounded-xl mb-4" />
+                  ` : ''}
+                  <h2 class="text-xl font-title font-bold text-onyx leading-snug mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+                    <a href="/blog/${art.slug}" class="hover:text-violet-imperial transition-colors" style="color:#0D0A18;">${art.title}</a>
                   </h2>
-                  <p class="text-xs text-onyx/75 leading-relaxed mb-4 flex-grow">${art.excerpt}</p>
-                  <a href="/blog/${art.slug}" class="text-xs font-semibold text-violet-imperial hover:underline">Lire l'analyse →</a>
+                  <p class="text-xs text-onyx/70 line-clamp-3 leading-relaxed mb-4">${art.excerpt}</p>
+                </div>
+                <div class="pt-4 border-t border-violet-imperial/10 flex items-center justify-between text-xs">
+                  <span class="text-onyx/50">${new Date(art.published_at || Date.now()).toLocaleDateString('fr-FR')}</span>
+                  <a href="/blog/${art.slug}" class="font-semibold text-violet-imperial hover:underline" style="color:#6600CC;">Lire l'analyse →</a>
                 </div>
               </article>
             `).join('')}
           </div>
-
-          <footer class="py-8 border-t border-violet-imperial/10 text-center text-xs text-onyx/70">
-            <p>${SITE_CONFIG.anchorPhrase}</p>
-          </footer>
-        </main>
+        </div>
       `;
     }
   }
@@ -1015,7 +1217,7 @@ export default async function handler(req: any, res: any) {
     <meta name="description" content="${pageDesc.replace(/"/g, '&quot;')}" />
     ${pageCanonical ? `<link rel="canonical" href="${pageCanonical}" />` : ''}
     <!-- Open Graph -->
-    <meta property="og:site_name" content="Class S — Scott Nana" />
+    <meta property="og:site_name" content="Class S · Scott Nana" />
     <meta property="og:title" content="${pageTitle.replace(/"/g, '&quot;')}" />
     <meta property="og:description" content="${pageDesc.replace(/"/g, '&quot;')}" />
     <meta property="og:type" content="${pageType}" />
@@ -1030,6 +1232,7 @@ export default async function handler(req: any, res: any) {
     <meta name="twitter:title" content="${pageTitle.replace(/"/g, '&quot;')}" />
     <meta name="twitter:description" content="${pageDesc.replace(/"/g, '&quot;')}" />
     <meta name="twitter:image" content="${pageImage}" />
+    ${extraMetaTags ? extraMetaTags : ''}
     ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ''}
     ${isNoIndex ? '<meta name="robots" content="noindex, nofollow" />' : ''}
   `;
@@ -1040,6 +1243,7 @@ export default async function handler(req: any, res: any) {
     .replace(/<meta\s+name="description"[^>]*>/gi, '')
     .replace(/<link\s+rel="canonical"[^>]*>/gi, '')
     .replace(/<meta\s+property="og:[^>]*>/gi, '')
+    .replace(/<meta\s+property="article:[^>]*>/gi, '')
     .replace(/<meta\s+property="twitter:[^>]*>/gi, '')
     .replace(/<meta\s+name="twitter:[^>]*>/gi, '');
 

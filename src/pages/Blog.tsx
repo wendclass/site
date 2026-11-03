@@ -43,16 +43,16 @@ export const Blog: React.FC = () => {
 
   // SEO configuration
   useSeo({
-    title: 'Journal & Analyses — Stratégie Visuelle, Branding & Design',
+    title: 'Journal & Analyses | Stratégie Visuelle, Branding & Design',
     description:
       'Analyses, décryptages et principes graphiques pour transformer l\'identité visuelle de votre entreprise en levier de conversion commerciale. Par Scott Nana.',
     canonicalUrl: 'https://www.wendclass.com/blog',
-    ogImage: 'https://www.wendclass.com/assets/logo/logo-violet.png',
+    ogImage: 'https://www.wendclass.com/og/banniere-class-s.png',
     ogType: 'website',
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Blog',
-      name: 'Le Journal Class S — Scott Nana',
+      name: 'Le Journal Class S · Scott Nana',
       description:
         'Articles de référence sur le branding de luxe, la création de logos stratégiques et l\'identité visuelle.',
       url: 'https://www.wendclass.com/blog',
@@ -190,7 +190,7 @@ export const Blog: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredArticles.map((article) => {
-              const readTime = calculateReadingTime(article.content);
+              const readTime = article.reading_time || calculateReadingTime(article.content);
               const formattedDate = new Date(
                 article.published_at || article.created_at
               ).toLocaleDateString('fr-FR', {
@@ -211,9 +211,7 @@ export const Blog: React.FC = () => {
                       className="block aspect-video rounded-2xl overflow-hidden bg-black/40 border border-white/5 relative"
                     >
                       {article.cover_image ? (
-                        <img
-                          src={article.cover_image}
-                          alt={article.title}
+                        <img src={article.cover_image} alt={article.cover_image_alt || article.title}
                           draggable={false}
                           onContextMenu={(e) => e.preventDefault()}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none"
