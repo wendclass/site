@@ -5,6 +5,7 @@ import { projectsData, Project } from './data/projets';
 import { FAQ_ITEMS } from './data/faq';
 import { SITE_URL, SITE_CONFIG } from './config/site';
 import { getOptimizedImage } from './lib/images';
+import { getRubriqueName, inferRubriqueFromTags } from './config/rubriques';
 
 // Supabase configuration
 const supabaseUrl =
@@ -24,6 +25,7 @@ const fallbackArticles: Record<string, any> = {
     meta_description: "Identité visuelle : définition, éléments, différence avec la charte graphique et raisons pour lesquelles un entrepreneur en a besoin.",
     excerpt: "Votre identité visuelle est la première chose que vos clients voient de votre entreprise. Elle ne se résume pas au logo : couleurs, typographies et images en font aussi partie. Entrepreneur au Burkina Faso, découvrez comment elle construit votre image de marque.",
     published_at: "2026-11-03T09:00:00Z",
+    rubrique: "identite-visuelle",
     status: "publie",
     tags: ["Identité visuelle", "Charte graphique", "Logo", "Branding", "Burkina Faso"],
     reading_time: 4,
@@ -68,6 +70,7 @@ const fallbackArticles: Record<string, any> = {
     meta_description: "Découvrez pourquoi un logo seul ne suffit pas à asseoir votre crédibilité et comment un véritable système d'identité visuelle transforme la perception de votre entreprise.",
     cover_image: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80',
     published_at: '2026-10-09T10:00:00.000Z',
+    rubrique: 'strategie-de-marque',
     content: "<p>Un logo sans écosystème visuel ne crée aucune valeur perçue. Bâtissez un univers complet pour inspirer confiance et justifier des tarifs premium.</p>",
   },
   '5-erreurs-graphiques-reseaux-sociaux-credibilite': {
@@ -76,6 +79,7 @@ const fallbackArticles: Record<string, any> = {
     meta_description: "Typographies illisibles, manque de cohérence chromatique, surcharge d'informations : évitez ces 5 erreurs graphiques qui font fuir vos prospects sur les réseaux sociaux.",
     cover_image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
     published_at: '2026-10-05T10:00:00.000Z',
+    rubrique: 'reseaux-sociaux',
     content: "<p>Sur les réseaux sociaux, 1,7 seconde décide de l'attention d'un prospect. Évitez les erreurs graphiques qui ruinent votre professionnalisme.</p>",
   },
   'transformer-identite-visuelle-en-levier-de-conversion': {
@@ -84,6 +88,7 @@ const fallbackArticles: Record<string, any> = {
     meta_description: "Le design graphique n'est pas une simple dépense esthétique : c'est un investissement stratégique qui réduit les frictions de vente et justifie des tarifs élevés.",
     cover_image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=80',
     published_at: '2026-09-28T10:00:00.000Z',
+    rubrique: 'business-conversion',
     content: "<p>Le design graphique est un multiplicateur de conversion commerciale. Découvrez comment structurer votre marque pour réduire les objections de prix.</p>",
   },
 };
@@ -206,7 +211,7 @@ async function getArticlesList(): Promise<any[]> {
   if (supabaseUrl && supabaseKey) {
     try {
       const res = await fetch(
-        `${supabaseUrl}/rest/v1/articles?select=slug,title,excerpt,cover_image,published_at&status=eq.publie&order=published_at.desc`,
+        `${supabaseUrl}/rest/v1/articles?select=slug,title,excerpt,cover_image,cover_image_alt,published_at,rubrique,reading_time,tags&status=eq.publie&order=published_at.desc`,
         {
           headers: {
             apikey: supabaseKey,
@@ -425,6 +430,7 @@ export default async function handler(req: any, res: any) {
   let jsonLd: any = null;
   let statusCode = 200;
   let isNoIndex = false;
+  let isNoIndexFollow = false;
   let extraMetaTags = '';
 
   // ROUTE 1: ACCUEIL (/)
@@ -1138,13 +1144,47 @@ export default async function handler(req: any, res: any) {
         </article>
       `;
     } else {
-      // Blog index
-      pageTitle = "Le Journal Class S | Stratégie Visuelle & Branding | Scott Nana";
+      // Blog index (/blog)
+      pageTitle = "Journal & Analyses | Stratégie Visuelle, Branding & Design | Class S";
       pageDesc = "Analyses, décryptages et principes graphiques pour transformer l'identité visuelle de votre entreprise en levier de conversion commerciale. Par Scott Nana.";
       pageCanonical = `${baseUrl}/blog`;
       pageType = 'website';
 
-      const articlesList = await getArticlesList();
+      // Parse filter parameters from query
+      const urlObj = new URL(req.url || '/', 'https://www.wendclass.com');
+      const reqRubrique = ((req.query?.rubrique as string) || urlObj.searchParams.get('rubrique') || '').trim();
+      const reqQ = ((req.query?.q as string) || urlObj.searchParams.get('q') || '').trim();
+      const hasBlogFilters = Boolean(reqRubrique || reqQ);
+
+      if (hasBlogFilters) {
+        isNoIndexFollow = true;
+        // canonical stays strictly to /blog
+        pageCanonical = `${baseUrl}/blog`;
+      }
+
+      const allArticles = await getArticlesList();
+      const top3Articles = allArticles.slice(0, 3);
+      const firstHeroCard = top3Articles[0] || null;
+
+      // Filter articles for SSR grid if params requested
+      let filteredArticles = allArticles;
+      if (reqRubrique && reqRubrique !== 'tous') {
+        filteredArticles = filteredArticles.filter((art) => {
+          const rub = art.rubrique || (art.tags ? inferRubriqueFromTags(art.tags) : '');
+          return rub === reqRubrique;
+        });
+      }
+      if (reqQ) {
+        const normQ = reqQ.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        filteredArticles = filteredArticles.filter((art) => {
+          const matchTitle = (art.title || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(normQ);
+          const matchExcerpt = (art.excerpt || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(normQ);
+          const rubName = getRubriqueName(art.rubrique || (art.tags ? inferRubriqueFromTags(art.tags) : ''));
+          const matchRub = ((art.rubrique || '') + ' ' + rubName).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(normQ);
+          const matchTags = (art.tags || []).some((t: string) => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(normQ));
+          return matchTitle || matchExcerpt || matchRub || matchTags;
+        });
+      }
 
       jsonLd = {
         '@context': 'https://schema.org',
@@ -1159,36 +1199,120 @@ export default async function handler(req: any, res: any) {
         },
       };
 
+      // Server-Side HTML Rendering (Dark theme matching design system)
       ssrContent = `
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
-          <div class="text-center max-w-3xl mx-auto mb-12">
-            <span class="text-xs uppercase font-bold text-violet-imperial tracking-widest" style="color:#6600CC;">Analyses & Stratégie</span>
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold text-onyx mt-2 mb-4" style="font-family:'Cormorant Garamond', Georgia, serif; font-size:clamp(2.25rem, 5vw, 3.5rem);">
-              Le Journal Class S
-            </h1>
-            <p class="text-sm sm:text-base text-onyx/75 leading-relaxed">
-              Décryptages graphiques et principes de marque pour asseoir votre crédibilité et vendre plus.
-            </p>
-          </div>
+        <div class="min-h-screen bg-onyx text-ivoire-violet pt-24 pb-20 relative overflow-hidden" style="background-color:#0D0A18; color:#F8F5FF; font-family:'Jost', sans-serif;">
+          <!-- SSR HERO -->
+          <section aria-label="En-tête et articles à la une du Journal Class S" class="relative w-full overflow-hidden border-b border-white/5 pb-12 pt-6 lg:pb-16 lg:pt-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center" style="min-height:420px;">
+                <!-- Left Text -->
+                <div class="lg:col-span-6 flex flex-col justify-center space-y-5 text-left">
+                  <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/20 border border-violet-imperial/30 text-amethyste text-xs font-semibold uppercase tracking-widest w-fit" style="background-color:rgba(102,0,204,0.2); border:1px solid rgba(102,0,204,0.3); color:#A87FE8;">
+                    <span>Éditorial & Stratégie Visuelle</span>
+                  </div>
+                  <h1 class="font-title text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-[1.15]" style="font-family:'Cormorant Garamond', Georgia, serif; color:#FFFFFF;">
+                    Le Journal <span style="color:#C9A070;">Class S</span>
+                  </h1>
+                  <p class="text-base sm:text-lg text-ivoire-violet/75 leading-relaxed max-w-xl" style="color:rgba(248,245,255,0.75);">
+                    Analyses, retours d'expérience et conseils concrets pour bâtir une marque singulière, crédible et mémorable.
+                  </p>
+                  <div class="pt-2">
+                    <a href="#filtres-blog" class="inline-flex items-center gap-2 text-xs font-semibold text-amethyste hover:text-white transition-colors" style="color:#A87FE8;">
+                      <span>Voir tous les articles ↓</span>
+                    </a>
+                  </div>
+                </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            ${articlesList.map((art) => `
-              <article class="border border-violet-imperial/10 rounded-2xl overflow-hidden bg-white/50 p-6 flex flex-col justify-between hover:shadow-lg transition-shadow">
-                <div>
-                  ${art.cover_image ? `
-                    <img src="${art.cover_image}" alt="${art.title.replace(/"/g, '&quot;')}" loading="lazy" class="w-full aspect-video object-cover rounded-xl mb-4" />
+                <!-- Right Animated Stack (First Card SSR Pre-rendered) -->
+                <div class="lg:col-span-6 flex flex-col items-center justify-center relative w-full">
+                  ${firstHeroCard ? `
+                    <div class="relative w-full aspect-[16/10] max-h-[360px] rounded-3xl overflow-hidden border border-white/10 shadow-lg" style="background-color:#0D0A18; border:1px solid rgba(255,255,255,0.1);">
+                      <a href="/blog/${firstHeroCard.slug}" class="block relative w-full h-full">
+                        ${firstHeroCard.cover_image ? `
+                          <img src="${firstHeroCard.cover_image}" alt="${(firstHeroCard.cover_image_alt || firstHeroCard.title).replace(/"/g, '&quot;')}" fetchpriority="high" class="w-full h-full object-cover" />
+                        ` : `
+                          <div class="w-full h-full bg-gradient-to-br from-ardoise to-onyx flex items-center justify-center">
+                            <span class="text-xs uppercase text-amethyste font-bold">Class S Journal</span>
+                          </div>
+                        `}
+                        <div class="absolute top-4 left-4 z-20">
+                          <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-onyx/85 text-amethyste border border-amethyste/40" style="background-color:rgba(13,10,24,0.85); color:#A87FE8; border:1px solid rgba(168,127,232,0.4);">
+                            ${getRubriqueName(firstHeroCard.rubrique || inferRubriqueFromTags(firstHeroCard.tags))}
+                          </span>
+                        </div>
+                        <div class="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-onyx via-onyx/85 to-transparent z-10 pointer-events-none" style="background:linear-gradient(to top, #0D0A18 0%, rgba(13,10,24,0.85) 60%, transparent 100%);"></div>
+                        <div class="absolute inset-x-0 bottom-0 p-5 sm:p-6 z-20 flex flex-col justify-end space-y-2">
+                          <div class="text-xs text-ivoire-violet/75" style="color:rgba(248,245,255,0.75);">
+                            <span>${new Date(firstHeroCard.published_at || Date.now()).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}</span> • <span>${firstHeroCard.reading_time || 1} min de lecture</span>
+                          </div>
+                          <span class="block font-bold text-white text-base sm:text-lg lg:text-xl leading-snug" style="color:#FFFFFF;">
+                            ${firstHeroCard.title}
+                          </span>
+                        </div>
+                      </a>
+                    </div>
+                    <!-- Pre-render crawlable links to the other top 3 featured articles -->
+                    <nav aria-label="Autres articles récents" class="flex items-center gap-3 mt-3 text-xs" style="color:rgba(248,245,255,0.6);">
+                      <span>Également récents :</span>
+                      ${top3Articles.slice(1).map((art) => `
+                        <a href="/blog/${art.slug}" class="text-amethyste hover:underline" style="color:#A87FE8;">${art.title}</a>
+                      `).join(' • ')}
+                    </nav>
                   ` : ''}
-                  <h2 class="text-xl font-title font-bold text-onyx leading-snug mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
-                    <a href="/blog/${art.slug}" class="hover:text-violet-imperial transition-colors" style="color:#0D0A18;">${art.title}</a>
-                  </h2>
-                  <p class="text-xs text-onyx/70 line-clamp-3 leading-relaxed mb-4">${art.excerpt}</p>
                 </div>
-                <div class="pt-4 border-t border-violet-imperial/10 flex items-center justify-between text-xs">
-                  <span class="text-onyx/50">${new Date(art.published_at || Date.now()).toLocaleDateString('fr-FR')}</span>
-                  <a href="/blog/${art.slug}" class="font-semibold text-violet-imperial hover:underline" style="color:#6600CC;">Lire l'analyse →</a>
-                </div>
-              </article>
-            `).join('')}
+              </div>
+            </div>
+          </section>
+
+          <!-- SSR FILTER & ARTICLES GRID -->
+          <div id="filtres-blog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 space-y-8">
+            <div class="flex items-center justify-between text-xs text-ivoire-violet/60 border-b border-white/5 pb-3">
+              <span class="font-semibold text-ivoire-violet/90">${filteredArticles.length} ${filteredArticles.length > 1 ? 'articles' : 'article'}</span>
+              <div class="flex items-center gap-2">
+                <a href="/blog" class="hover:text-amethyste transition-colors" style="color:#A87FE8;">Tous les articles</a>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              ${filteredArticles.map((art) => {
+                const rubName = getRubriqueName(art.rubrique || inferRubriqueFromTags(art.tags));
+                const formattedDate = new Date(art.published_at || Date.now()).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+                return `
+                  <article class="rounded-3xl bg-ardoise/60 border border-white/10 p-5 flex flex-col justify-between" style="background-color:rgba(58,47,92,0.6); border:1px solid rgba(255,255,255,0.1);">
+                    <div class="space-y-4">
+                      <a href="/blog/${art.slug}" class="block aspect-video rounded-2xl overflow-hidden bg-black/40 border border-white/5 relative">
+                        ${art.cover_image ? `
+                          <img src="${art.cover_image}" alt="${(art.cover_image_alt || art.title).replace(/"/g, '&quot;')}" loading="lazy" class="w-full h-full object-cover" />
+                        ` : ''}
+                        <div class="absolute top-3 left-3">
+                          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-onyx/85 text-amethyste border border-amethyste/30" style="background-color:rgba(13,10,24,0.85); color:#A87FE8;">
+                            ${rubName}
+                          </span>
+                        </div>
+                      </a>
+                      <div class="flex items-center gap-3 text-xs text-ivoire-violet/50" style="color:rgba(248,245,255,0.5);">
+                        <span>${formattedDate}</span>
+                        <span>•</span>
+                        <span>${art.reading_time || 1} min de lecture</span>
+                      </div>
+                      <h2 class="text-xl font-title font-bold text-white line-clamp-2 leading-snug" style="font-family:'Cormorant Garamond', Georgia, serif; color:#FFFFFF;">
+                        <a href="/blog/${art.slug}" style="color:#FFFFFF;">${art.title}</a>
+                      </h2>
+                      <p class="text-xs sm:text-sm text-ivoire-violet/70 line-clamp-3 leading-relaxed" style="color:rgba(248,245,255,0.7);">
+                        ${art.excerpt}
+                      </p>
+                    </div>
+                    <div class="pt-5 mt-4 border-t border-white/5 flex items-center justify-between text-xs">
+                      <span class="text-ivoire-violet/50" style="color:rgba(248,245,255,0.5);">Par Scott Nana</span>
+                      <a href="/blog/${art.slug}" class="font-semibold text-or-champagne hover:text-amethyste transition-colors" style="color:#C9A070;">
+                        <span>Lire l'article →</span>
+                      </a>
+                    </div>
+                  </article>
+                `;
+              }).join('')}
+            </div>
           </div>
         </div>
       `;
@@ -1234,7 +1358,7 @@ export default async function handler(req: any, res: any) {
     <meta name="twitter:image" content="${pageImage}" />
     ${extraMetaTags ? extraMetaTags : ''}
     ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ''}
-    ${isNoIndex ? '<meta name="robots" content="noindex, nofollow" />' : ''}
+    ${isNoIndexFollow ? '<meta name="robots" content="noindex, follow" />' : isNoIndex ? '<meta name="robots" content="noindex, nofollow" />' : ''}
   `;
 
   // Clean old tags
@@ -1259,7 +1383,9 @@ export default async function handler(req: any, res: any) {
   }
 
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
-  if (isNoIndex) {
+  if (isNoIndexFollow) {
+    res.setHeader('X-Robots-Tag', 'noindex, follow');
+  } else if (isNoIndex) {
     res.setHeader('X-Robots-Tag', 'noindex, nofollow');
   }
   // Cache for 2 minutes on Edge CDN, background revalidate (only for successful 200 responses)

@@ -35,6 +35,7 @@ import {
   uploadProcessedImageToStorage,
 } from '../../lib/imageProcessing';
 import DOMPurify from 'dompurify';
+import { RUBRIQUES, getRubriqueName } from '../../config/rubriques';
 
 interface AdminArticlesProps {
   articles: DbArticle[];
@@ -150,6 +151,9 @@ export const AdminArticles: React.FC<AdminArticlesProps> = ({
     if (!editingArticle.title?.trim()) {
       blockers.push('Le titre de l\'article est obligatoire.');
     }
+    if (!editingArticle.rubrique?.trim()) {
+      blockers.push('La rubrique principale est obligatoire pour la publication.');
+    }
     if (!editingArticle.slug?.trim()) {
       blockers.push('L\'adresse URL (slug) est obligatoire.');
     } else if (slugValidation.isDuplicate) {
@@ -240,6 +244,7 @@ export const AdminArticles: React.FC<AdminArticlesProps> = ({
     const initial: Partial<DbArticle> = {
       title: '',
       slug: '',
+      rubrique: 'identite-visuelle',
       excerpt: '',
       content: '<p>Commencez à rédiger votre analyse ici...</p>',
       cover_image: '',
@@ -623,12 +628,17 @@ export const AdminArticles: React.FC<AdminArticlesProps> = ({
                 {/* Body */}
                 <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                   <div className="space-y-2">
-                    {article.tags && article.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5">
-                        {article.tags.slice(0, 2).map((t, idx) => (
+                    {(article.rubrique || (article.tags && article.tags.length > 0)) && (
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        {article.rubrique && (
+                          <span className="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-amethyste/20 text-amethyste border border-amethyste/30">
+                            {getRubriqueName(article.rubrique)}
+                          </span>
+                        )}
+                        {article.tags && article.tags.slice(0, 2).map((t, idx) => (
                           <span
                             key={idx}
-                            className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/5 text-amethyste border border-white/5"
+                            className="px-2 py-0.5 rounded-md text-[10px] font-medium bg-white/5 text-ivoire-violet/70 border border-white/5"
                           >
                             {t}
                           </span>
@@ -826,6 +836,36 @@ export const AdminArticles: React.FC<AdminArticlesProps> = ({
                       <p className="text-[11px] text-ivoire-violet/50 mt-1 flex items-center gap-1">
                         <Info className="w-3 h-3 text-amethyste" />
                         <span>C'est le seul H1 de la page publique. Ne le répétez jamais dans le corps du texte.</span>
+                      </p>
+                    </div>
+
+                    {/* Rubrique Principale */}
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="text-xs font-semibold text-ivoire-violet/90 flex items-center gap-1">
+                          <span>Rubrique principale</span>
+                          <span className="text-red-400">*</span>
+                        </label>
+                        <span className="text-[11px] text-amethyste font-medium">Filtre maîtrisé du blog</span>
+                      </div>
+                      <select
+                        value={editingArticle.rubrique || ''}
+                        onChange={(e) => {
+                          setEditingArticle((prev) => (prev ? { ...prev, rubrique: e.target.value } : null));
+                          setIsDirty(true);
+                        }}
+                        className="w-full px-4 py-3 rounded-2xl bg-black/60 border border-white/15 text-sm sm:text-base text-white focus:outline-none focus:border-violet-imperial shadow-inner"
+                      >
+                        <option value="" disabled>-- Sélectionner une rubrique --</option>
+                        {RUBRIQUES.map((rub) => (
+                          <option key={rub.slug} value={rub.slug} className="bg-onyx text-white">
+                            {rub.name}
+                          </option>
+                        ))}
+                      </select>
+                      <p className="text-[11px] text-ivoire-violet/50 mt-1 flex items-center gap-1">
+                        <Info className="w-3 h-3 text-amethyste" />
+                        <span>La rubrique régit le filtre sur la page /blog. Les étiquettes (tags) restent libres.</span>
                       </p>
                     </div>
 

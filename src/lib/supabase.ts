@@ -90,6 +90,7 @@ export interface DbArticle {
   reading_time?: number;
   word_count?: number;
   content_json?: any;
+  rubrique?: string;
   tags: string[];
   status: 'publie' | 'brouillon';
   meta_title?: string;
@@ -205,6 +206,7 @@ const getInitialArticles = (): DbArticle[] => {
 <p>Chez Class S, je crée des <a href="/offres">identités visuelles</a> pour entrepreneurs et startups. Si vous préparez la vôtre, parlons de votre projet. Le <a href="/contact">formulaire de contact</a> est à votre disposition.</p>`,
       status: 'publie',
       published_at: '2026-11-03T09:00:00Z',
+      rubrique: 'identite-visuelle',
       tags: ['Identité visuelle', 'Charte graphique', 'Logo', 'Branding', 'Burkina Faso'],
       reading_time: 4,
       created_at: '2026-10-31T01:46:00.000Z',
@@ -234,6 +236,7 @@ const getInitialArticles = (): DbArticle[] => {
       `,
       cover_image: 'https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80',
       tags: ['Identité Visuelle', 'Stratégie de Marque', 'Branding'],
+      rubrique: 'strategie-de-marque',
       status: 'publie',
       meta_description: 'Découvrez pourquoi un logo seul ne suffit pas à asseoir votre crédibilité et comment un véritable système d\'identité visuelle transforme la perception de votre entreprise.',
       published_at: new Date(Date.now() - 3 * 86400000).toISOString(),
@@ -260,6 +263,7 @@ const getInitialArticles = (): DbArticle[] => {
       `,
       cover_image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
       tags: ['Réseaux Sociaux', 'Design Graphique', 'Visibilité'],
+      rubrique: 'reseaux-sociaux',
       status: 'publie',
       meta_description: 'Typographies illisibles, manque de cohérence chromatique, surcharge d\'informations : évitez ces 5 erreurs graphiques qui font fuir vos prospects sur les réseaux sociaux.',
       published_at: new Date(Date.now() - 7 * 86400000).toISOString(),
@@ -283,6 +287,7 @@ const getInitialArticles = (): DbArticle[] => {
       `,
       cover_image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=80',
       tags: ['Business', 'Conversion', 'Branding Premium'],
+      rubrique: 'business-conversion',
       status: 'publie',
       meta_description: 'Le design graphique n\'est pas une simple dépense esthétique : c\'est un investissement stratégique qui réduit les frictions de vente et justifie des tarifs élevés.',
       published_at: new Date(Date.now() - 14 * 86400000).toISOString(),
@@ -1100,7 +1105,9 @@ export const saveArticle = async (
           content_json: article.content_json,
           tags: article.tags || [],
           status: article.status || 'brouillon',
+          meta_title: article.meta_title,
           meta_description: article.meta_description,
+          rubrique: article.rubrique,
           published_at: publishedAt,
           created_at: now,
           updated_at: now,

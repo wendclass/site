@@ -12,6 +12,7 @@ interface SeoProps {
   tags?: string[];
   jsonLd?: Record<string, any>;
   noIndex?: boolean;
+  noIndexFollow?: boolean;
   noCanonical?: boolean;
 }
 
@@ -26,6 +27,7 @@ export const useSeo = ({
   tags,
   jsonLd,
   noIndex,
+  noIndexFollow,
   noCanonical,
 }: SeoProps) => {
   useEffect(() => {
@@ -52,8 +54,10 @@ export const useSeo = ({
     // 2. Standard Meta
     setMetaTag('name', 'description', finalDescription);
 
-    // Robots noindex
-    if (noIndex) {
+    // Robots
+    if (noIndexFollow) {
+      setMetaTag('name', 'robots', 'noindex, follow');
+    } else if (noIndex) {
       setMetaTag('name', 'robots', 'noindex, nofollow');
     } else {
       const robotsTag = document.querySelector('meta[name="robots"]');
@@ -125,6 +129,7 @@ export const useSeo = ({
     tags,
     jsonLd,
     noIndex,
+    noIndexFollow,
     noCanonical,
   ]);
 };

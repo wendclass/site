@@ -19,6 +19,7 @@ import { useSeo } from '../hooks/useSeo';
 import { NotFound } from './NotFound';
 import { SITE_CONFIG } from '../config/site';
 import { CtaButton } from '../components/ui/CtaButton';
+import { getRubriqueName } from '../config/rubriques';
 import DOMPurify from 'dompurify';
 
 export const BlogPost: React.FC = () => {
@@ -173,19 +174,28 @@ export const BlogPost: React.FC = () => {
 
         {/* Article Header & Metadata */}
         <header className="space-y-6">
-          {/* Tags list */}
-          {article.tags && article.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {article.tags.map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="px-3 py-1 rounded-full text-xs font-semibold bg-violet-imperial/20 text-amethyste border border-violet-imperial/30 tracking-wide uppercase"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
+          {/* Rubrique & Tags list */}
+          <div className="flex flex-wrap items-center gap-2">
+            {article.rubrique && (
+              <Link
+                to={`/blog?rubrique=${article.rubrique}`}
+                className="px-3 py-1 rounded-full text-xs font-bold bg-amethyste text-onyx shadow-sm hover:brightness-110 transition-all tracking-wide uppercase"
+                title={`Voir tous les articles de la rubrique ${getRubriqueName(article.rubrique)}`}
+              >
+                {getRubriqueName(article.rubrique)}
+              </Link>
+            )}
+            {article.tags && article.tags.map((tag, idx) => (
+              <Link
+                key={idx}
+                to={`/blog?q=${encodeURIComponent(tag)}`}
+                className="px-3 py-1 rounded-full text-xs font-semibold bg-violet-imperial/20 text-amethyste border border-violet-imperial/30 hover:border-amethyste/60 hover:text-white transition-colors tracking-wide uppercase"
+                title={`Rechercher « ${tag} » sur le blog`}
+              >
+                {tag}
+              </Link>
+            ))}
+          </div>
 
           {/* Main Title */}
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white tracking-tight leading-[1.15]">

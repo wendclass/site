@@ -1711,6 +1711,95 @@ function getOptimizedImage(src, options) {
   };
 }
 
+// src/config/rubriques.ts
+var RUBRIQUES = [
+  {
+    slug: "identite-visuelle",
+    name: "Identit\xE9 visuelle",
+    description: "Logos, univers graphiques et signatures visuelles de marque.",
+    order: 1
+  },
+  {
+    slug: "strategie-de-marque",
+    name: "Strat\xE9gie de marque",
+    description: "Positionnement, coh\xE9rence de marque et architecture d\u2019image.",
+    order: 2
+  },
+  {
+    slug: "reseaux-sociaux",
+    name: "R\xE9seaux sociaux",
+    description: "Visuels d\u2019impact pour Facebook, Instagram, LinkedIn et engagement.",
+    order: 3
+  },
+  {
+    slug: "design-graphique",
+    name: "Design graphique",
+    description: "Principes de composition, typographie, affiches et supports.",
+    order: 4
+  },
+  {
+    slug: "business-conversion",
+    name: "Business & conversion",
+    description: "Impact commercial, tarification premium et transformation de prospects.",
+    order: 5
+  }
+];
+var getRubriqueBySlug = (slug) => {
+  if (!slug) return void 0;
+  return RUBRIQUES.find((r) => r.slug === slug);
+};
+var getRubriqueName = (slug) => {
+  if (!slug) return "";
+  const found = getRubriqueBySlug(slug);
+  return found ? found.name : slug;
+};
+var TAG_TO_RUBRIQUE_MAP = {
+  // 1. Identité visuelle
+  "identite visuelle": "identite-visuelle",
+  "identit\xE9 visuelle": "identite-visuelle",
+  "charte graphique": "identite-visuelle",
+  "logo": "identite-visuelle",
+  "logotype": "identite-visuelle",
+  // 2. Stratégie de marque
+  "strategie de marque": "strategie-de-marque",
+  "strat\xE9gie de marque": "strategie-de-marque",
+  "branding": "strategie-de-marque",
+  "brand": "strategie-de-marque",
+  "image de marque": "strategie-de-marque",
+  "coh\xE9rence visuelle": "strategie-de-marque",
+  "coherence visuelle": "strategie-de-marque",
+  "branding premium": "strategie-de-marque",
+  // 3. Réseaux sociaux
+  "reseaux sociaux": "reseaux-sociaux",
+  "r\xE9seaux sociaux": "reseaux-sociaux",
+  "facebook": "reseaux-sociaux",
+  "instagram": "reseaux-sociaux",
+  "linkedin": "reseaux-sociaux",
+  "visibilite": "reseaux-sociaux",
+  "visibilit\xE9": "reseaux-sociaux",
+  // 4. Design graphique
+  "design graphique": "design-graphique",
+  "typographie": "design-graphique",
+  "graphisme": "design-graphique",
+  "affiche": "design-graphique",
+  // 5. Business & conversion
+  "business": "business-conversion",
+  "conversion": "business-conversion",
+  "tarifs": "business-conversion",
+  "startup": "business-conversion",
+  "entrepreneur": "business-conversion"
+};
+var inferRubriqueFromTags = (tags) => {
+  if (!tags || tags.length === 0) return "identite-visuelle";
+  for (const tag of tags) {
+    const normalized = tag.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (TAG_TO_RUBRIQUE_MAP[normalized]) {
+      return TAG_TO_RUBRIQUE_MAP[normalized];
+    }
+  }
+  return "identite-visuelle";
+};
+
 // src/ssr.ts
 var supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || "https://mtinydrkpxffrlsuwpzh.supabase.co";
 var supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || "";
@@ -1721,6 +1810,7 @@ var fallbackArticles = {
     meta_description: "Identit\xE9 visuelle : d\xE9finition, \xE9l\xE9ments, diff\xE9rence avec la charte graphique et raisons pour lesquelles un entrepreneur en a besoin.",
     excerpt: "Votre identit\xE9 visuelle est la premi\xE8re chose que vos clients voient de votre entreprise. Elle ne se r\xE9sume pas au logo : couleurs, typographies et images en font aussi partie. Entrepreneur au Burkina Faso, d\xE9couvrez comment elle construit votre image de marque.",
     published_at: "2026-11-03T09:00:00Z",
+    rubrique: "identite-visuelle",
     status: "publie",
     tags: ["Identit\xE9 visuelle", "Charte graphique", "Logo", "Branding", "Burkina Faso"],
     reading_time: 4,
@@ -1764,6 +1854,7 @@ var fallbackArticles = {
     meta_description: "D\xE9couvrez pourquoi un logo seul ne suffit pas \xE0 asseoir votre cr\xE9dibilit\xE9 et comment un v\xE9ritable syst\xE8me d'identit\xE9 visuelle transforme la perception de votre entreprise.",
     cover_image: "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80",
     published_at: "2026-10-09T10:00:00.000Z",
+    rubrique: "strategie-de-marque",
     content: "<p>Un logo sans \xE9cosyst\xE8me visuel ne cr\xE9e aucune valeur per\xE7ue. B\xE2tissez un univers complet pour inspirer confiance et justifier des tarifs premium.</p>"
   },
   "5-erreurs-graphiques-reseaux-sociaux-credibilite": {
@@ -1772,6 +1863,7 @@ var fallbackArticles = {
     meta_description: "Typographies illisibles, manque de coh\xE9rence chromatique, surcharge d'informations : \xE9vitez ces 5 erreurs graphiques qui font fuir vos prospects sur les r\xE9seaux sociaux.",
     cover_image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
     published_at: "2026-10-05T10:00:00.000Z",
+    rubrique: "reseaux-sociaux",
     content: "<p>Sur les r\xE9seaux sociaux, 1,7 seconde d\xE9cide de l'attention d'un prospect. \xC9vitez les erreurs graphiques qui ruinent votre professionnalisme.</p>"
   },
   "transformer-identite-visuelle-en-levier-de-conversion": {
@@ -1780,6 +1872,7 @@ var fallbackArticles = {
     meta_description: "Le design graphique n'est pas une simple d\xE9pense esth\xE9tique : c'est un investissement strat\xE9gique qui r\xE9duit les frictions de vente et justifie des tarifs \xE9lev\xE9s.",
     cover_image: "https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=80",
     published_at: "2026-09-28T10:00:00.000Z",
+    rubrique: "business-conversion",
     content: "<p>Le design graphique est un multiplicateur de conversion commerciale. D\xE9couvrez comment structurer votre marque pour r\xE9duire les objections de prix.</p>"
   }
 };
@@ -1893,7 +1986,7 @@ async function getArticlesList() {
   if (supabaseUrl && supabaseKey) {
     try {
       const res = await fetch(
-        `${supabaseUrl}/rest/v1/articles?select=slug,title,excerpt,cover_image,published_at&status=eq.publie&order=published_at.desc`,
+        `${supabaseUrl}/rest/v1/articles?select=slug,title,excerpt,cover_image,cover_image_alt,published_at,rubrique,reading_time,tags&status=eq.publie&order=published_at.desc`,
         {
           headers: {
             apikey: supabaseKey,
@@ -2067,6 +2160,7 @@ async function handler(req, res) {
   let jsonLd = null;
   let statusCode = 200;
   let isNoIndex = false;
+  let isNoIndexFollow = false;
   let extraMetaTags = "";
   if (normalizedRoute === "/") {
     pageTitle = "Class S \u2014 L'identit\xE9 visuelle qui vous impose | Scott Nana";
@@ -2736,11 +2830,39 @@ async function handler(req, res) {
         </article>
       `;
     } else {
-      pageTitle = "Le Journal Class S | Strat\xE9gie Visuelle & Branding | Scott Nana";
+      pageTitle = "Journal & Analyses | Strat\xE9gie Visuelle, Branding & Design | Class S";
       pageDesc = "Analyses, d\xE9cryptages et principes graphiques pour transformer l'identit\xE9 visuelle de votre entreprise en levier de conversion commerciale. Par Scott Nana.";
       pageCanonical = `${baseUrl}/blog`;
       pageType = "website";
-      const articlesList = await getArticlesList();
+      const urlObj = new URL(req.url || "/", "https://www.wendclass.com");
+      const reqRubrique = (req.query?.rubrique || urlObj.searchParams.get("rubrique") || "").trim();
+      const reqQ = (req.query?.q || urlObj.searchParams.get("q") || "").trim();
+      const hasBlogFilters = Boolean(reqRubrique || reqQ);
+      if (hasBlogFilters) {
+        isNoIndexFollow = true;
+        pageCanonical = `${baseUrl}/blog`;
+      }
+      const allArticles = await getArticlesList();
+      const top3Articles = allArticles.slice(0, 3);
+      const firstHeroCard = top3Articles[0] || null;
+      let filteredArticles = allArticles;
+      if (reqRubrique && reqRubrique !== "tous") {
+        filteredArticles = filteredArticles.filter((art) => {
+          const rub = art.rubrique || (art.tags ? inferRubriqueFromTags(art.tags) : "");
+          return rub === reqRubrique;
+        });
+      }
+      if (reqQ) {
+        const normQ = reqQ.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        filteredArticles = filteredArticles.filter((art) => {
+          const matchTitle = (art.title || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(normQ);
+          const matchExcerpt = (art.excerpt || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(normQ);
+          const rubName = getRubriqueName(art.rubrique || (art.tags ? inferRubriqueFromTags(art.tags) : ""));
+          const matchRub = ((art.rubrique || "") + " " + rubName).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(normQ);
+          const matchTags = (art.tags || []).some((t) => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(normQ));
+          return matchTitle || matchExcerpt || matchRub || matchTags;
+        });
+      }
       jsonLd = {
         "@context": "https://schema.org",
         "@type": "Blog",
@@ -2754,35 +2876,118 @@ async function handler(req, res) {
         }
       };
       ssrContent = `
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
-          <div class="text-center max-w-3xl mx-auto mb-12">
-            <span class="text-xs uppercase font-bold text-violet-imperial tracking-widest" style="color:#6600CC;">Analyses & Strat\xE9gie</span>
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold text-onyx mt-2 mb-4" style="font-family:'Cormorant Garamond', Georgia, serif; font-size:clamp(2.25rem, 5vw, 3.5rem);">
-              Le Journal Class S
-            </h1>
-            <p class="text-sm sm:text-base text-onyx/75 leading-relaxed">
-              D\xE9cryptages graphiques et principes de marque pour asseoir votre cr\xE9dibilit\xE9 et vendre plus.
-            </p>
-          </div>
+        <div class="min-h-screen bg-onyx text-ivoire-violet pt-24 pb-20 relative overflow-hidden" style="background-color:#0D0A18; color:#F8F5FF; font-family:'Jost', sans-serif;">
+          <!-- SSR HERO -->
+          <section aria-label="En-t\xEAte et articles \xE0 la une du Journal Class S" class="relative w-full overflow-hidden border-b border-white/5 pb-12 pt-6 lg:pb-16 lg:pt-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center" style="min-height:420px;">
+                <!-- Left Text -->
+                <div class="lg:col-span-6 flex flex-col justify-center space-y-5 text-left">
+                  <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/20 border border-violet-imperial/30 text-amethyste text-xs font-semibold uppercase tracking-widest w-fit" style="background-color:rgba(102,0,204,0.2); border:1px solid rgba(102,0,204,0.3); color:#A87FE8;">
+                    <span>\xC9ditorial & Strat\xE9gie Visuelle</span>
+                  </div>
+                  <h1 class="font-title text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-[1.15]" style="font-family:'Cormorant Garamond', Georgia, serif; color:#FFFFFF;">
+                    Le Journal <span style="color:#C9A070;">Class S</span>
+                  </h1>
+                  <p class="text-base sm:text-lg text-ivoire-violet/75 leading-relaxed max-w-xl" style="color:rgba(248,245,255,0.75);">
+                    Analyses, retours d'exp\xE9rience et conseils concrets pour b\xE2tir une marque singuli\xE8re, cr\xE9dible et m\xE9morable.
+                  </p>
+                  <div class="pt-2">
+                    <a href="#filtres-blog" class="inline-flex items-center gap-2 text-xs font-semibold text-amethyste hover:text-white transition-colors" style="color:#A87FE8;">
+                      <span>Voir tous les articles \u2193</span>
+                    </a>
+                  </div>
+                </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            ${articlesList.map((art) => `
-              <article class="border border-violet-imperial/10 rounded-2xl overflow-hidden bg-white/50 p-6 flex flex-col justify-between hover:shadow-lg transition-shadow">
-                <div>
-                  ${art.cover_image ? `
-                    <img src="${art.cover_image}" alt="${art.title.replace(/"/g, "&quot;")}" loading="lazy" class="w-full aspect-video object-cover rounded-xl mb-4" />
+                <!-- Right Animated Stack (First Card SSR Pre-rendered) -->
+                <div class="lg:col-span-6 flex flex-col items-center justify-center relative w-full">
+                  ${firstHeroCard ? `
+                    <div class="relative w-full aspect-[16/10] max-h-[360px] rounded-3xl overflow-hidden border border-white/10 shadow-lg" style="background-color:#0D0A18; border:1px solid rgba(255,255,255,0.1);">
+                      <a href="/blog/${firstHeroCard.slug}" class="block relative w-full h-full">
+                        ${firstHeroCard.cover_image ? `
+                          <img src="${firstHeroCard.cover_image}" alt="${(firstHeroCard.cover_image_alt || firstHeroCard.title).replace(/"/g, "&quot;")}" fetchpriority="high" class="w-full h-full object-cover" />
+                        ` : `
+                          <div class="w-full h-full bg-gradient-to-br from-ardoise to-onyx flex items-center justify-center">
+                            <span class="text-xs uppercase text-amethyste font-bold">Class S Journal</span>
+                          </div>
+                        `}
+                        <div class="absolute top-4 left-4 z-20">
+                          <span class="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-onyx/85 text-amethyste border border-amethyste/40" style="background-color:rgba(13,10,24,0.85); color:#A87FE8; border:1px solid rgba(168,127,232,0.4);">
+                            ${getRubriqueName(firstHeroCard.rubrique || inferRubriqueFromTags(firstHeroCard.tags))}
+                          </span>
+                        </div>
+                        <div class="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-onyx via-onyx/85 to-transparent z-10 pointer-events-none" style="background:linear-gradient(to top, #0D0A18 0%, rgba(13,10,24,0.85) 60%, transparent 100%);"></div>
+                        <div class="absolute inset-x-0 bottom-0 p-5 sm:p-6 z-20 flex flex-col justify-end space-y-2">
+                          <div class="text-xs text-ivoire-violet/75" style="color:rgba(248,245,255,0.75);">
+                            <span>${new Date(firstHeroCard.published_at || Date.now()).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}</span> \u2022 <span>${firstHeroCard.reading_time || 1} min de lecture</span>
+                          </div>
+                          <span class="block font-bold text-white text-base sm:text-lg lg:text-xl leading-snug" style="color:#FFFFFF;">
+                            ${firstHeroCard.title}
+                          </span>
+                        </div>
+                      </a>
+                    </div>
+                    <!-- Pre-render crawlable links to the other top 3 featured articles -->
+                    <nav aria-label="Autres articles r\xE9cents" class="flex items-center gap-3 mt-3 text-xs" style="color:rgba(248,245,255,0.6);">
+                      <span>\xC9galement r\xE9cents :</span>
+                      ${top3Articles.slice(1).map((art) => `
+                        <a href="/blog/${art.slug}" class="text-amethyste hover:underline" style="color:#A87FE8;">${art.title}</a>
+                      `).join(" \u2022 ")}
+                    </nav>
                   ` : ""}
-                  <h2 class="text-xl font-title font-bold text-onyx leading-snug mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
-                    <a href="/blog/${art.slug}" class="hover:text-violet-imperial transition-colors" style="color:#0D0A18;">${art.title}</a>
-                  </h2>
-                  <p class="text-xs text-onyx/70 line-clamp-3 leading-relaxed mb-4">${art.excerpt}</p>
                 </div>
-                <div class="pt-4 border-t border-violet-imperial/10 flex items-center justify-between text-xs">
-                  <span class="text-onyx/50">${new Date(art.published_at || Date.now()).toLocaleDateString("fr-FR")}</span>
-                  <a href="/blog/${art.slug}" class="font-semibold text-violet-imperial hover:underline" style="color:#6600CC;">Lire l'analyse \u2192</a>
-                </div>
-              </article>
-            `).join("")}
+              </div>
+            </div>
+          </section>
+
+          <!-- SSR FILTER & ARTICLES GRID -->
+          <div id="filtres-blog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 space-y-8">
+            <div class="flex items-center justify-between text-xs text-ivoire-violet/60 border-b border-white/5 pb-3">
+              <span class="font-semibold text-ivoire-violet/90">${filteredArticles.length} ${filteredArticles.length > 1 ? "articles" : "article"}</span>
+              <div class="flex items-center gap-2">
+                <a href="/blog" class="hover:text-amethyste transition-colors" style="color:#A87FE8;">Tous les articles</a>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              ${filteredArticles.map((art) => {
+        const rubName = getRubriqueName(art.rubrique || inferRubriqueFromTags(art.tags));
+        const formattedDate = new Date(art.published_at || Date.now()).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" });
+        return `
+                  <article class="rounded-3xl bg-ardoise/60 border border-white/10 p-5 flex flex-col justify-between" style="background-color:rgba(58,47,92,0.6); border:1px solid rgba(255,255,255,0.1);">
+                    <div class="space-y-4">
+                      <a href="/blog/${art.slug}" class="block aspect-video rounded-2xl overflow-hidden bg-black/40 border border-white/5 relative">
+                        ${art.cover_image ? `
+                          <img src="${art.cover_image}" alt="${(art.cover_image_alt || art.title).replace(/"/g, "&quot;")}" loading="lazy" class="w-full h-full object-cover" />
+                        ` : ""}
+                        <div class="absolute top-3 left-3">
+                          <span class="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-onyx/85 text-amethyste border border-amethyste/30" style="background-color:rgba(13,10,24,0.85); color:#A87FE8;">
+                            ${rubName}
+                          </span>
+                        </div>
+                      </a>
+                      <div class="flex items-center gap-3 text-xs text-ivoire-violet/50" style="color:rgba(248,245,255,0.5);">
+                        <span>${formattedDate}</span>
+                        <span>\u2022</span>
+                        <span>${art.reading_time || 1} min de lecture</span>
+                      </div>
+                      <h2 class="text-xl font-title font-bold text-white line-clamp-2 leading-snug" style="font-family:'Cormorant Garamond', Georgia, serif; color:#FFFFFF;">
+                        <a href="/blog/${art.slug}" style="color:#FFFFFF;">${art.title}</a>
+                      </h2>
+                      <p class="text-xs sm:text-sm text-ivoire-violet/70 line-clamp-3 leading-relaxed" style="color:rgba(248,245,255,0.7);">
+                        ${art.excerpt}
+                      </p>
+                    </div>
+                    <div class="pt-5 mt-4 border-t border-white/5 flex items-center justify-between text-xs">
+                      <span class="text-ivoire-violet/50" style="color:rgba(248,245,255,0.5);">Par Scott Nana</span>
+                      <a href="/blog/${art.slug}" class="font-semibold text-or-champagne hover:text-amethyste transition-colors" style="color:#C9A070;">
+                        <span>Lire l'article \u2192</span>
+                      </a>
+                    </div>
+                  </article>
+                `;
+      }).join("")}
+            </div>
           </div>
         </div>
       `;
@@ -2821,7 +3026,7 @@ async function handler(req, res) {
     <meta name="twitter:image" content="${pageImage}" />
     ${extraMetaTags ? extraMetaTags : ""}
     ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
-    ${isNoIndex ? '<meta name="robots" content="noindex, nofollow" />' : ""}
+    ${isNoIndexFollow ? '<meta name="robots" content="noindex, follow" />' : isNoIndex ? '<meta name="robots" content="noindex, nofollow" />' : ""}
   `;
   html = html.replace(/<script\s+type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi, "").replace(/<meta\s+name="description"[^>]*>/gi, "").replace(/<link\s+rel="canonical"[^>]*>/gi, "").replace(/<meta\s+property="og:[^>]*>/gi, "").replace(/<meta\s+property="article:[^>]*>/gi, "").replace(/<meta\s+property="twitter:[^>]*>/gi, "").replace(/<meta\s+name="twitter:[^>]*>/gi, "");
   if (isNoIndex) {
@@ -2833,7 +3038,9 @@ async function handler(req, res) {
     html = html.replace('<div id="root"></div>', `<div id="root">${ssrContent}</div>`);
   }
   res.setHeader("Content-Type", "text/html; charset=utf-8");
-  if (isNoIndex) {
+  if (isNoIndexFollow) {
+    res.setHeader("X-Robots-Tag", "noindex, follow");
+  } else if (isNoIndex) {
     res.setHeader("X-Robots-Tag", "noindex, nofollow");
   }
   if (statusCode === 200) {
