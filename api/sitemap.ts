@@ -29,28 +29,58 @@ export default async function handler(_req: any, res: any) {
     },
   ];
 
+  const fallbackProjects = [
+    { slug: '72-heures-cj-2026', lastmod: '2026-11-04' },
+    { slug: 'mon-frere-parle', lastmod: '2026-11-04' },
+    { slug: 'off-day', lastmod: '2026-11-04' },
+    { slug: 'cafe-inspire', lastmod: '2026-11-04' },
+    { slug: 'bang', lastmod: '2026-11-04' },
+  ];
+
   const nowMs = Date.now();
   let articles = fallbackArticles.filter((a: any) => !a.published_at || new Date(a.published_at).getTime() <= nowMs);
+  let projects = fallbackProjects;
 
   try {
     if (supabaseUrl && supabaseKey) {
       try {
-        const response = await fetch(
-          `${supabaseUrl}/rest/v1/articles?select=slug,published_at,updated_at&status=eq.publie`,
-          {
-            headers: {
-              apikey: supabaseKey,
-              Authorization: `Bearer ${supabaseKey}`,
-            },
-          }
-        );
+        const [artRes, projRes] = await Promise.all([
+          fetch(
+            `${supabaseUrl}/rest/v1/articles?select=slug,published_at,updated_at&status=eq.publie`,
+            {
+              headers: {
+                apikey: supabaseKey,
+                Authorization: `Bearer ${supabaseKey}`,
+              },
+            }
+          ),
+          fetch(
+            `${supabaseUrl}/rest/v1/projets?select=slug,updated_at&status=eq.publie`,
+            {
+              headers: {
+                apikey: supabaseKey,
+                Authorization: `Bearer ${supabaseKey}`,
+              },
+            }
+          ),
+        ]);
 
-        if (response.ok) {
-          const data = await response.json();
+        if (artRes.ok) {
+          const data = await artRes.json();
           if (Array.isArray(data) && data.length > 0) {
             articles = data.map((item: any) => ({
               slug: item.slug,
               lastmod: (item.updated_at || item.published_at || new Date().toISOString()).split('T')[0],
+            }));
+          }
+        }
+
+        if (projRes.ok) {
+          const data = await projRes.json();
+          if (Array.isArray(data) && data.length > 0) {
+            projects = data.map((item: any) => ({
+              slug: item.slug,
+              lastmod: (item.updated_at || new Date().toISOString()).split('T')[0],
             }));
           }
         }
@@ -76,6 +106,14 @@ export default async function handler(_req: any, res: any) {
     <lastmod>${now}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority}</priority>
+  </url>`
+      ),
+      ...projects.map(
+        (p) => `  <url>
+    <loc>${baseUrl}/projets/${p.slug}</loc>
+    <lastmod>${(p.lastmod || now).split('T')[0]}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>`
       ),
       ...articles.map(

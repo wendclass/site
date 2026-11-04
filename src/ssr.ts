@@ -6,6 +6,7 @@ import { FAQ_ITEMS } from './data/faq';
 import { SITE_URL, SITE_CONFIG } from './config/site';
 import { getOptimizedImage } from './lib/images';
 import { getRubriqueName, inferRubriqueFromTags } from './config/rubriques';
+import { getProjectAccroche } from './lib/projectHelpers';
 
 // Supabase configuration
 const supabaseUrl =
@@ -120,6 +121,7 @@ async function getProjects(): Promise<Project[]> {
               title: p.title,
               category: p.category,
               tagline: p.tagline,
+              accroche: p.accroche,
               clientGoal: p.client_goal,
               designedSolution: p.designed_solution,
               result: p.result,
@@ -236,6 +238,33 @@ async function getArticlesList(): Promise<any[]> {
 }
 
 
+
+// Fetch 301 redirect for project slugs
+async function getProjectRedirect(slug: string): Promise<string | null> {
+  if (slug === '72h-cj-2026') return '72-heures-cj-2026';
+  if (slug && supabaseUrl && supabaseKey) {
+    try {
+      const res = await fetch(
+        `${supabaseUrl}/rest/v1/projet_redirects?select=new_slug&old_slug=eq.${encodeURIComponent(slug)}&limit=1`,
+        {
+          headers: {
+            apikey: supabaseKey,
+            Authorization: `Bearer ${supabaseKey}`,
+          },
+        }
+      );
+      if (res.ok) {
+        const list = await res.json();
+        if (Array.isArray(list) && list.length > 0 && list[0]?.new_slug) {
+          return list[0].new_slug;
+        }
+      }
+    } catch (err) {
+      console.warn('[SSR] Supabase project redirect fetch fallback:', err);
+    }
+  }
+  return null;
+}
 
 // Fetch 301 redirect for article slugs
 async function getArticleRedirect(slug: string): Promise<string | null> {
@@ -380,9 +409,12 @@ export default async function handler(req: any, res: any) {
     return res.status(404).send('404 Not Found');
   }
   const slug =
-    (req.query.slug as string) ||
     (cleanPath.startsWith('/blog/')
       ? cleanPath.slice('/blog/'.length)
+      : (req.query.slug as string) || '');
+  const projectSlug =
+    (cleanPath.startsWith('/projets/')
+      ? cleanPath.slice('/projets/'.length)
       : '');
 
   let normalizedRoute = '/';
@@ -393,6 +425,7 @@ export default async function handler(req: any, res: any) {
   if (cleanPath === '/') normalizedRoute = '/';
   else if (cleanPath === '/offres') normalizedRoute = '/offres';
   else if (cleanPath === '/projets') normalizedRoute = '/projets';
+  else if (cleanPath.startsWith('/projets/')) normalizedRoute = '/projets/:slug';
   else if (cleanPath === '/a-propos') normalizedRoute = '/a-propos';
   else if (cleanPath.startsWith('/blog/')) normalizedRoute = '/blog/:slug';
   else if (cleanPath === '/blog') normalizedRoute = '/blog';
@@ -811,7 +844,8 @@ export default async function handler(req: any, res: any) {
           item: {
             '@type': 'CreativeWork',
             name: proj.title,
-            description: proj.tagline || proj.category,
+            description: getProjectAccroche(proj),
+            url: `${baseUrl}/projets/${proj.slug}`,
             creator: {
               '@type': 'Person',
               name: SITE_CONFIG.founder,
@@ -821,78 +855,109 @@ export default async function handler(req: any, res: any) {
       },
     };
 
+    const featuredProject = projects[0];
+    const otherProjects = projects.slice(1);
+    const featuredOpt = featuredProject ? getOptimizedImage(featuredProject.heroImage, { width: 1200 }) : { src: '' };
+
     ssrContent = `
       <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
         <!-- Header -->
-        <div class="text-center max-w-3xl mx-auto mb-12">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider mb-4">
-            <span>Réalisations & Études de cas</span>
+        <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider mb-4" style="background-color:rgba(102,0,204,0.1); border:1px solid rgba(102,0,204,0.2); color:#6600CC; display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:9999px;">
+            <span>RÉALISATIONS &amp; ÉTUDES DE CAS</span>
           </div>
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-title font-semibold text-onyx leading-tight mb-4" style="font-family:'Cormorant Garamond', Georgia, serif;">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-title font-semibold text-onyx leading-tight mb-4" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18;">
             Chaque visuel a une mission commerciale
           </h1>
-          <p class="text-base sm:text-lg text-onyx/75 leading-relaxed">
+          <p class="text-base sm:text-lg text-onyx/75 leading-relaxed" style="color:rgba(13,10,24,0.75);">
             Découvrez l’intégralité des visuels et dispositifs conçus pour chaque projet, avec leur intention stratégique et leur impact.
           </p>
         </div>
 
-        <!-- Projects Deep Dives -->
-        <div class="space-y-12 mb-16">
-          ${projects.map((p, idx) => `
-            <article id="${p.slug}" class="bg-white rounded-3xl p-6 sm:p-10 border border-violet-imperial/15 shadow-soft">
-              <div class="flex items-center gap-3 mb-2">
-                <span class="text-xs font-bold text-[#C9A070] uppercase">Projet 0${idx + 1}</span>
-                <span class="px-3 py-0.5 rounded-full bg-violet-imperial/10 text-violet-imperial text-xs font-semibold uppercase">${p.category}</span>
+        ${featuredProject ? `
+          <!-- Featured Project Card (Full Width) -->
+          <article class="mb-10 group bg-white rounded-3xl overflow-hidden border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg transition-all duration-300">
+            <a href="/projets/${featuredProject.slug}" class="block grid grid-cols-1 lg:grid-cols-12 gap-0 text-inherit" style="text-decoration:none; color:inherit;">
+              <div class="lg:col-span-7 relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto overflow-hidden bg-onyx">
+                <img
+                  src="${featuredOpt.src}"
+                  ${featuredOpt.srcSet ? `srcset="${featuredOpt.srcSet}"` : ''}
+                  sizes="(min-width: 1024px) 58vw, 100vw"
+                  alt="${featuredProject.title}"
+                  width="${featuredOpt.width || 1200}"
+                  height="${featuredOpt.height || 675}"
+                  class="w-full h-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                />
               </div>
-              <h2 class="text-2xl sm:text-3xl font-title font-semibold text-onyx mb-1" style="font-family:'Cormorant Garamond', Georgia, serif;">
-                ${p.title}
-              </h2>
-              <p class="text-sm italic text-onyx/75 mb-6">${p.tagline}</p>
-
-              <!-- 3-Part Case Study Grid (But -> Solution -> Résultat) -->
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div class="bg-ivoire-violet/70 rounded-2xl p-4 border border-violet-imperial/10">
-                  <h3 class="text-xs font-bold uppercase tracking-wider text-violet-imperial mb-2">1. But du client</h3>
-                  <p class="text-sm text-onyx/85 leading-relaxed">${p.clientGoal}</p>
+              <div class="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2.5 mb-3">
+                    <span class="px-3 py-1 rounded-full bg-violet-imperial text-white text-[11px] font-semibold uppercase tracking-wider" style="background-color:#6600CC; color:#ffffff; padding:4px 12px; border-radius:9999px;">
+                      Projet vedette
+                    </span>
+                    <span class="text-xs uppercase font-semibold text-[#C9A070] tracking-wider" style="color:#C9A070;">
+                      ${featuredProject.category}
+                    </span>
+                  </div>
+                  <h2 class="text-2xl sm:text-3xl lg:text-4xl font-title font-semibold text-onyx mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18;">
+                    ${featuredProject.title}
+                  </h2>
+                  <p class="text-sm sm:text-base text-onyx/75 leading-relaxed mb-6" style="color:rgba(13,10,24,0.75);">
+                    ${getProjectAccroche(featuredProject)}
+                  </p>
                 </div>
-                <div class="bg-ivoire-violet/70 rounded-2xl p-4 border border-violet-imperial/10">
-                  <h3 class="text-xs font-bold uppercase tracking-wider text-violet-imperial mb-2">2. Ce qui a été conçu</h3>
-                  <p class="text-sm text-onyx/85 leading-relaxed">${p.designedSolution}</p>
-                </div>
-                <div class="bg-ivoire-violet/70 rounded-2xl p-4 border border-violet-imperial/10">
-                  <h3 class="text-xs font-bold uppercase tracking-wider text-violet-imperial mb-2">3. Résultat obtenu</h3>
-                  <p class="text-sm text-onyx/85 leading-relaxed">${p.result}</p>
-                </div>
-              </div>
-
-              ${p.disclaimer ? `
-                <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs mb-6">
-                  ⚠️ ${p.disclaimer}
-                </div>
-              ` : ''}
-
-              <!-- Galerie de visuels -->
-              <div class="pt-4 border-t border-violet-imperial/10">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-onyx mb-3">Galerie des réalisations (${p.gallery.length} visuels)</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                  ${p.gallery.map((img) => {
-                    const opt = getOptimizedImage(img.src, { width: 480 });
-                    return `
-                      <figure class="rounded-xl overflow-hidden bg-onyx aspect-square border border-violet-imperial/10">
-                        <img src="${opt.src}" ${opt.srcSet ? `srcset="${opt.srcSet}"` : ''} alt="${img.caption || p.title}" class="w-full h-full object-cover" loading="lazy" decoding="async" width="${opt.width || 480}" height="${opt.height || 480}" />
-                      </figure>
-                    `;
-                  }).join('')}
+                <div class="pt-4 border-t border-violet-imperial/10 flex items-center justify-between text-xs sm:text-sm font-semibold text-violet-imperial" style="color:#6600CC;">
+                  <span class="text-onyx/60" style="color:rgba(13,10,24,0.6);">${featuredProject.gallery.length} visuels</span>
+                  <span>Voir l’étude complète →</span>
                 </div>
               </div>
+            </a>
+          </article>
+        ` : ''}
 
-              ${p.testimonialPlaceholder ? `
-                <div class="mt-6 p-4 rounded-xl bg-violet-imperial/5 border border-violet-imperial/10 text-xs italic text-onyx/80">
-                  💬 « ${p.testimonialPlaceholder} »
-                </div>
-              ` : ''}
-            </article>
-          `).join('')}
+        <!-- 2-Column Grid for Remaining Projects -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          ${otherProjects.map((p) => {
+            const opt = getOptimizedImage(p.heroImage, { width: 800 });
+            return `
+              <article class="group bg-white rounded-3xl overflow-hidden border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col">
+                <a href="/projets/${p.slug}" class="block text-inherit flex-grow flex flex-col" style="text-decoration:none; color:inherit;">
+                  <div class="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden bg-onyx">
+                    <img
+                      src="${opt.src}"
+                      ${opt.srcSet ? `srcset="${opt.srcSet}"` : ''}
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      alt="${p.title}"
+                      width="${opt.width || 800}"
+                      height="${opt.height || 550}"
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div class="absolute top-3 left-3 bg-onyx/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-[11px] font-semibold text-white uppercase tracking-wider" style="position:absolute; top:12px; left:12px; background:rgba(13,10,24,0.8); padding:4px 12px; border-radius:9999px; color:#fff;">
+                      ${p.category}
+                    </div>
+                  </div>
+                  <div class="p-6 sm:p-7 flex-grow flex flex-col justify-between">
+                    <div>
+                      <h2 class="text-xl sm:text-2xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18;">
+                        ${p.title}
+                      </h2>
+                      <p class="text-xs sm:text-sm text-onyx/75 leading-relaxed mb-4" style="color:rgba(13,10,24,0.75);">
+                        ${getProjectAccroche(p)}
+                      </p>
+                    </div>
+                    <div class="pt-4 border-t border-violet-imperial/10 flex items-center justify-between text-xs font-semibold text-violet-imperial" style="color:#6600CC;">
+                      <span class="text-onyx/60" style="color:rgba(13,10,24,0.6);">${p.gallery.length} visuels</span>
+                      <span>Voir le projet →</span>
+                    </div>
+                  </div>
+                </a>
+              </article>
+            `;
+          }).join('')}
         </div>
 
         <footer class="py-8 border-t border-violet-imperial/10 text-center text-xs text-onyx/70">
@@ -900,6 +965,269 @@ export default async function handler(req: any, res: any) {
         </footer>
       </main>
     `;
+  }
+
+  // ROUTE 3B: PROJET DETAIL (/projets/:slug)
+  else if (normalizedRoute === '/projets/:slug') {
+    // 1. Check 301 redirects first
+    const redirectSlug = await getProjectRedirect(projectSlug);
+    if (redirectSlug && redirectSlug !== projectSlug) {
+      res.setHeader('Location', `${baseUrl}/projets/${redirectSlug}`);
+      return res.status(301).end();
+    }
+
+    const projects = await getProjects();
+    const project = projects.find(
+      (p) => p.slug === projectSlug || p.id === projectSlug
+    );
+
+    if (!project) {
+      pageTitle = "Page introuvable | Class S";
+      pageDesc = "Page introuvable. Votre image, elle, ne devrait jamais l'être.";
+      pageCanonical = "";
+      statusCode = 404;
+      isNoIndex = true;
+      ssrContent = render404Content();
+    } else {
+      const accroche = getProjectAccroche(project);
+      pageTitle = `${project.title} | Class S`;
+      pageDesc = accroche;
+      pageCanonical = `${baseUrl}/projets/${project.slug}`;
+
+      // OpenGraph Image: strictly 1200x630 JPEG (never WebP for social networks)
+      pageImage = `${baseUrl}/og/projets/${project.slug}.jpg`;
+      pageImageWidth = 1200;
+      pageImageHeight = 630;
+      pageImageAlt = project.title;
+      pageType = 'article';
+
+      const testimonials = await getTestimonials();
+      const testimonial = testimonials.find(
+        (t) => t.projet_id === project.id || t.projet_id === project.slug
+      ) || (project.testimonialPlaceholder ? {
+        author_name: project.title.includes('72') ? 'Comité 72h CJ' : project.title.includes('Bang') ? 'Fondateur' : 'Client',
+        author_role_company: project.title,
+        content: project.testimonialPlaceholder,
+      } : null);
+
+      // JSON-LD CreativeWork & BreadcrumbList
+      jsonLd = {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'CreativeWork',
+            '@id': `${pageCanonical}#work`,
+            name: project.title,
+            description: accroche,
+            image: pageImage,
+            url: pageCanonical,
+            genre: project.category,
+            inLanguage: 'fr',
+            creator: {
+              '@type': 'Person',
+              name: SITE_CONFIG.founder,
+              jobTitle: SITE_CONFIG.jobTitle,
+              url: baseUrl,
+            },
+            provider: {
+              '@type': 'ProfessionalService',
+              name: SITE_CONFIG.name,
+              url: baseUrl,
+            },
+          },
+          {
+            '@type': 'BreadcrumbList',
+            '@id': `${pageCanonical}#breadcrumb`,
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Accueil',
+                item: `${baseUrl}/`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Projets',
+                item: `${baseUrl}/projets`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: project.title,
+                item: pageCanonical,
+              },
+            ],
+          },
+        ],
+      };
+
+      const heroOpt = getOptimizedImage(project.heroImage, { width: 1200 });
+
+      // Prev / Next looping navigation
+      const currentIndex = projects.findIndex(
+        (p) => p.id === project.id || p.slug === project.slug
+      );
+      const prevProject =
+        projects[(currentIndex - 1 + projects.length) % projects.length];
+      const nextProject = projects[(currentIndex + 1) % projects.length];
+
+      ssrContent = `
+        <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16" style="font-family:'Jost', sans-serif; color:#0D0A18;">
+          <!-- Breadcrumb -->
+          <nav class="mb-6 sm:mb-8 text-xs font-medium text-onyx/60" aria-label="Fil d'Ariane" style="font-size:0.75rem; color:rgba(13,10,24,0.6);">
+            <ol class="flex items-center flex-wrap gap-2" style="display:flex; align-items:center; flex-wrap:wrap; gap:8px; list-style:none; padding:0; margin:0;">
+              <li><a href="/" class="hover:text-violet-imperial transition-colors" style="color:inherit; text-decoration:none;">Accueil</a></li>
+              <li aria-hidden="true">›</li>
+              <li><a href="/projets" class="hover:text-violet-imperial transition-colors" style="color:inherit; text-decoration:none;">Projets</a></li>
+              <li aria-hidden="true">›</li>
+              <li class="text-violet-imperial font-semibold" aria-current="page" style="color:#6600CC; font-weight:600;">${project.title}</li>
+            </ol>
+          </nav>
+
+          <!-- Project Header -->
+          <header class="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider mb-3" style="background-color:rgba(102,0,204,0.1); border:1px solid rgba(102,0,204,0.2); color:#6600CC; display:inline-flex; align-items:center; gap:8px; padding:4px 12px; border-radius:9999px;">
+              <span>${project.category}</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-title font-semibold text-onyx leading-tight mb-4" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18;">
+              ${project.title}
+            </h1>
+            <p class="text-base sm:text-lg md:text-xl text-onyx/75 leading-relaxed font-body" style="color:rgba(13,10,24,0.75);">
+              ${accroche}
+            </p>
+          </header>
+
+          <!-- Hero Image -->
+          <div class="w-full aspect-[16/10] sm:aspect-[16/9] max-h-[560px] rounded-3xl overflow-hidden bg-onyx shadow-soft mb-12 sm:mb-16 border border-violet-imperial/10" style="border-radius:1.5rem; overflow:hidden; border:1px solid rgba(102,0,204,0.1);">
+            <img
+              src="${heroOpt.src}"
+              ${heroOpt.srcSet ? `srcset="${heroOpt.srcSet}"` : ''}
+              sizes="(min-width: 1152px) 1152px, 100vw"
+              alt="${project.title}"
+              width="${heroOpt.width || 1200}"
+              height="${heroOpt.height || 675}"
+              class="w-full h-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+
+          <!-- Narrative Grid (3 Blocks) -->
+          <section class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12" aria-label="Étude de cas détaillée">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-violet-imperial/15 shadow-soft">
+              <span class="text-xs font-bold uppercase tracking-wider text-[#C9A070] block mb-2" style="color:#C9A070;">01. But du client</span>
+              <h2 class="text-xl font-title font-semibold text-onyx mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18;">L’objectif visé</h2>
+              <p class="text-sm sm:text-base text-onyx/80 leading-relaxed font-body" style="color:rgba(13,10,24,0.8); font-size:0.95rem; line-height:1.6;">${project.clientGoal}</p>
+            </div>
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-violet-imperial/15 shadow-soft">
+              <span class="text-xs font-bold uppercase tracking-wider text-violet-imperial block mb-2" style="color:#6600CC;">02. Ce qui a été conçu</span>
+              <h2 class="text-xl font-title font-semibold text-onyx mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18;">La réponse graphique</h2>
+              <p class="text-sm sm:text-base text-onyx/80 leading-relaxed font-body" style="color:rgba(13,10,24,0.8); font-size:0.95rem; line-height:1.6;">${project.designedSolution}</p>
+            </div>
+            <div class="bg-white rounded-3xl p-6 sm:p-8 border border-violet-imperial/15 shadow-soft">
+              <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 block mb-2" style="color:#059669;">03. Résultat</span>
+              <h2 class="text-xl font-title font-semibold text-onyx mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18;">L’impact constaté</h2>
+              <p class="text-sm sm:text-base text-onyx/80 leading-relaxed font-body" style="color:rgba(13,10,24,0.8); font-size:0.95rem; line-height:1.6;">${project.result}</p>
+            </div>
+          </section>
+
+          <!-- Précision (Disclaimer) if present -->
+          ${project.disclaimer ? `
+            <aside class="mb-12 p-5 sm:p-6 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-onyx/85" style="background-color:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.25); border-radius:1rem; padding:1.25rem;">
+              <div class="flex items-start gap-3" style="display:flex; align-items:flex-start; gap:12px;">
+                <span class="text-amber-600 text-lg" style="color:#d97706; font-size:1.25rem;">⚠️</span>
+                <div class="text-xs sm:text-sm leading-relaxed" style="font-size:0.875rem; line-height:1.6;">
+                  <strong class="font-semibold block text-onyx mb-1" style="color:#0D0A18; font-weight:600; display:block; margin-bottom:4px;">Précision de paternité graphique</strong>
+                  ${project.disclaimer}
+                </div>
+              </div>
+            </aside>
+          ` : ''}
+
+          <!-- Testimonial if present -->
+          ${testimonial ? `
+            <section class="mb-16 bg-gradient-to-br from-violet-imperial/10 via-white to-or-champagne/10 rounded-3xl p-6 sm:p-10 border border-violet-imperial/20 shadow-soft" style="background:linear-gradient(135deg, rgba(102,0,204,0.08), #ffffff, rgba(201,160,112,0.08)); border-radius:1.5rem; border:1px solid rgba(102,0,204,0.2); padding:2rem;">
+              <div class="max-w-2xl mx-auto text-center space-y-4">
+                <span class="text-xs font-semibold uppercase tracking-wider text-violet-imperial block" style="color:#6600CC; font-size:0.75rem; letter-spacing:0.05em;">Retour client</span>
+                <blockquote class="text-lg sm:text-xl font-title italic text-onyx" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18; font-style:italic;">
+                  « ${testimonial.content} »
+                </blockquote>
+                <footer class="text-xs text-onyx/60 font-medium" style="color:rgba(13,10,24,0.6); font-size:0.75rem;">
+                  <strong class="text-onyx block text-sm" style="color:#0D0A18; font-size:0.875rem;">${testimonial.author_name}</strong>
+                  ${testimonial.author_role_company || 'Client Class S'}
+                </footer>
+              </div>
+            </section>
+          ` : ''}
+
+          <!-- Full Masonry Gallery -->
+          <section class="mb-16" aria-label="Galerie complète des réalisations">
+            <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+              <span class="text-xs font-semibold uppercase tracking-wider text-[#C9A070] block mb-2" style="color:#C9A070; font-size:0.75rem; letter-spacing:0.05em;">Galerie intégrale</span>
+              <h2 class="text-2xl sm:text-3xl md:text-4xl font-title font-semibold text-onyx" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18;">
+                L'ensemble des réalisations (${project.gallery.length} visuels)
+              </h2>
+              <p class="text-xs sm:text-sm text-onyx/65 mt-2" style="color:rgba(13,10,24,0.65);">
+                Toutes les pièces graphiques conçues pour ce projet, dans leur format original.
+              </p>
+            </div>
+
+            <div class="columns-2 md:columns-2 lg:columns-3 gap-4 sm:gap-6 space-y-4 sm:space-y-6">
+              ${project.gallery.map((img, idx) => {
+                const opt = getOptimizedImage(img.src, { width: 1200 });
+                return `
+                  <figure class="break-inside-avoid rounded-2xl overflow-hidden bg-onyx border border-violet-imperial/15 shadow-soft mb-4 sm:mb-6" style="border-radius:1rem; overflow:hidden; border:1px solid rgba(102,0,204,0.15); page-break-inside:avoid; break-inside:avoid; margin-bottom:1.25rem;">
+                    <img
+                      src="${opt.src}"
+                      ${opt.srcSet ? `srcset="${opt.srcSet}"` : ''}
+                      sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 50vw"
+                      alt="${img.caption || `${project.title} - visuel ${idx + 1}`}"
+                      width="${opt.width || 800}"
+                      height="${opt.height || 600}"
+                      class="w-full h-auto block"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </figure>
+                `;
+              }).join('')}
+            </div>
+          </section>
+
+          <!-- Prev / Next Navigation -->
+          <nav class="pt-8 border-t border-violet-imperial/15 mb-16" aria-label="Navigation entre projets" style="border-top:1px solid rgba(102,0,204,0.15); padding-top:2rem; margin-bottom:4rem;">
+            <div class="flex items-center justify-between gap-4" style="display:flex; justify-content:space-between; align-items:center;">
+              <a href="/projets/${prevProject.slug}" class="group text-left p-3 rounded-2xl hover:bg-white/80 transition-all" style="text-decoration:none; color:inherit; text-align:left;">
+                <span class="text-xs text-onyx/50 block mb-1" style="display:block; font-size:0.75rem; color:rgba(13,10,24,0.5);">← Projet précédent</span>
+                <span class="text-base sm:text-lg font-title font-semibold text-onyx group-hover:text-violet-imperial transition-colors" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18;">
+                  ${prevProject.title}
+                </span>
+              </a>
+              <a href="/projets/${nextProject.slug}" class="group text-right p-3 rounded-2xl hover:bg-white/80 transition-all" style="text-decoration:none; color:inherit; text-align:right;">
+                <span class="text-xs text-onyx/50 block mb-1" style="display:block; font-size:0.75rem; color:rgba(13,10,24,0.5);">Projet suivant →</span>
+                <span class="text-base sm:text-lg font-title font-semibold text-onyx group-hover:text-violet-imperial transition-colors" style="font-family:'Cormorant Garamond', Georgia, serif; color:#0D0A18;">
+                  ${nextProject.title}
+                </span>
+              </a>
+            </div>
+          </nav>
+
+          <!-- CTA Banner -->
+          <section class="text-center py-12 px-6 rounded-3xl bg-[#0D0A18] text-white" style="background-color:#0D0A18; color:#ffffff; border-radius:1.5rem; padding:3rem 1.5rem; text-align:center;">
+            <h2 class="text-2xl sm:text-3xl font-title font-semibold mb-3 text-white" style="font-family:'Cormorant Garamond', Georgia, serif; color:#ffffff;">
+              Prêt à confier votre identité visuelle à Scott ?
+            </h2>
+            <p class="text-sm sm:text-base text-white/75 max-w-lg mx-auto mb-6" style="color:rgba(255,255,255,0.75); max-width:32rem; margin:0 auto 1.5rem auto;">
+              Discutons de vos objectifs et créons ensemble les visuels qui feront grandir votre marque.
+            </p>
+            <a href="/#contact" class="inline-block px-7 py-3.5 bg-white text-[#0D0A18] font-semibold text-sm rounded-full hover:bg-white/90 transition-all" style="display:inline-block; background:#ffffff; color:#0D0A18; font-weight:600; padding:12px 28px; border-radius:9999px; text-decoration:none;">
+              Démarrer mon projet
+            </a>
+          </section>
+        </main>
+      `;
+    }
   }
 
   // ROUTE 4: À PROPOS (/a-propos)

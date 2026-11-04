@@ -4,6 +4,7 @@ import { Star, MessageSquareQuote, CheckCircle2, ArrowUpRight } from 'lucide-rea
 import { fetchPublicTestimonials, DbTestimonial } from '../../lib/supabase';
 import { CtaButton } from '../ui/CtaButton';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { mapLegacyAnchorToSlug } from '../../lib/projectHelpers';
 
 export const SocialProofWall: React.FC = () => {
   const prefersReducedMotion = useReducedMotion();
@@ -100,60 +101,63 @@ export const SocialProofWall: React.FC = () => {
             viewport={{ once: true, amount: 0.2 }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {testimonials.map((testim) => (
-              <motion.div
-                key={testim.id}
-                variants={cardVariants}
-                className="bg-white rounded-3xl p-6 sm:p-8 border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col justify-between"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1 text-or-champagne">
-                      {Array.from({ length: testim.rating || 5 }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-or-champagne text-or-champagne" />
-                      ))}
+            {testimonials.map((testim) => {
+              const projectSlug = testim.projet_id ? mapLegacyAnchorToSlug(testim.projet_id) : '';
+              return (
+                <motion.div
+                  key={testim.id}
+                  variants={cardVariants}
+                  className="bg-white rounded-3xl p-6 sm:p-8 border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg transition-all duration-300 flex flex-col justify-between"
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1 text-or-champagne">
+                        {Array.from({ length: testim.rating || 5 }).map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-or-champagne text-or-champagne" />
+                        ))}
+                      </div>
+                      {testim.category && (
+                        <span className="text-[11px] uppercase tracking-wider font-semibold text-violet-imperial bg-violet-imperial/10 px-2.5 py-0.5 rounded-full font-body">
+                          {testim.category}
+                        </span>
+                      )}
                     </div>
-                    {testim.category && (
-                      <span className="text-[11px] uppercase tracking-wider font-semibold text-violet-imperial bg-violet-imperial/10 px-2.5 py-0.5 rounded-full font-body">
-                        {testim.category}
-                      </span>
+
+                    <div className="relative pt-2">
+                      <MessageSquareQuote className="w-8 h-8 text-violet-imperial/15 absolute -top-1 -left-2" />
+                      <p className="text-sm sm:text-base text-onyx/85 italic font-body relative z-10 leading-relaxed pl-3">
+                        {testim.content}
+                      </p>
+                    </div>
+
+                    {testim.impact_result && (
+                      <div className="pt-2 flex items-start gap-2 text-xs text-onyx/70 font-body">
+                        <CheckCircle2 className="w-4 h-4 text-violet-imperial shrink-0 mt-0.5" />
+                        <span><strong>Impact constaté :</strong> {testim.impact_result}</span>
+                      </div>
                     )}
                   </div>
 
-                  <div className="relative pt-2">
-                    <MessageSquareQuote className="w-8 h-8 text-violet-imperial/15 absolute -top-1 -left-2" />
-                    <p className="text-sm sm:text-base text-onyx/85 italic font-body relative z-10 leading-relaxed pl-3">
-                      {testim.content}
-                    </p>
-                  </div>
-
-                  {testim.impact_result && (
-                    <div className="pt-2 flex items-start gap-2 text-xs text-onyx/70 font-body">
-                      <CheckCircle2 className="w-4 h-4 text-violet-imperial shrink-0 mt-0.5" />
-                      <span><strong>Impact constaté :</strong> {testim.impact_result}</span>
+                  <div className="mt-6 pt-4 border-t border-violet-imperial/10 flex items-center justify-between">
+                    <div>
+                      <span className="text-xs font-bold text-onyx block font-body">{testim.author_name}</span>
+                      <span className="text-[11px] text-onyx/50 font-body">{testim.author_role_company || 'Client Class S'}</span>
                     </div>
-                  )}
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-violet-imperial/10 flex items-center justify-between">
-                  <div>
-                    <span className="text-xs font-bold text-onyx block font-body">{testim.author_name}</span>
-                    <span className="text-[11px] text-onyx/50 font-body">{testim.author_role_company || 'Client Class S'}</span>
+                    {projectSlug && (
+                      <CtaButton
+                        to={`/projets/${projectSlug}`}
+                        variant="ghost"
+                        size="sm"
+                        className="!px-2 !py-1 !text-xs text-violet-imperial"
+                        icon={<ArrowUpRight className="w-3.5 h-3.5" />}
+                      >
+                        Étude
+                      </CtaButton>
+                    )}
                   </div>
-                  {testim.projet_id && (
-                    <CtaButton
-                      to={`/projets#${testim.projet_id}`}
-                      variant="ghost"
-                      size="sm"
-                      className="!px-2 !py-1 !text-xs text-violet-imperial"
-                      icon={<ArrowUpRight className="w-3.5 h-3.5" />}
-                    >
-                      Étude
-                    </CtaButton>
-                  )}
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
           </motion.div>
         </div>
       ) : (
@@ -180,63 +184,66 @@ export const SocialProofWall: React.FC = () => {
               willChange: 'transform',
             }}
           >
-            {marqueeItems.map((testim, idx) => (
-              <div
-                key={`${testim.id}-${idx}`}
-                className="w-[320px] sm:w-[380px] md:w-[420px] shrink-0 bg-white rounded-3xl p-6 sm:p-8 border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between select-none"
-              >
-                <div className="space-y-4">
-                  {/* Rating stars and category */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1 text-or-champagne">
-                      {Array.from({ length: testim.rating || 5 }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-or-champagne text-or-champagne" />
-                      ))}
+            {marqueeItems.map((testim, idx) => {
+              const projectSlug = testim.projet_id ? mapLegacyAnchorToSlug(testim.projet_id) : '';
+              return (
+                <div
+                  key={`${testim.id}-${idx}`}
+                  className="w-[320px] sm:w-[380px] md:w-[420px] shrink-0 bg-white rounded-3xl p-6 sm:p-8 border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between select-none"
+                >
+                  <div className="space-y-4">
+                    {/* Rating stars and category */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1 text-or-champagne">
+                        {Array.from({ length: testim.rating || 5 }).map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-or-champagne text-or-champagne" />
+                        ))}
+                      </div>
+                      {testim.category && (
+                        <span className="text-[11px] uppercase tracking-wider font-semibold text-violet-imperial bg-violet-imperial/10 px-2.5 py-0.5 rounded-full font-body">
+                          {testim.category}
+                        </span>
+                      )}
                     </div>
-                    {testim.category && (
-                      <span className="text-[11px] uppercase tracking-wider font-semibold text-violet-imperial bg-violet-imperial/10 px-2.5 py-0.5 rounded-full font-body">
-                        {testim.category}
-                      </span>
+
+                    {/* Testimonial Quote */}
+                    <div className="relative pt-2">
+                      <MessageSquareQuote className="w-8 h-8 text-violet-imperial/15 absolute -top-1 -left-2" />
+                      <p className="text-sm sm:text-base text-onyx/85 italic font-body relative z-10 leading-relaxed pl-3 line-clamp-3">
+                        {testim.content}
+                      </p>
+                    </div>
+
+                    {/* Result Tag */}
+                    {testim.impact_result && (
+                      <div className="pt-2 flex items-start gap-2 text-xs text-onyx/70 font-body">
+                        <CheckCircle2 className="w-4 h-4 text-violet-imperial shrink-0 mt-0.5" />
+                        <span className="line-clamp-2"><strong>Impact constaté :</strong> {testim.impact_result}</span>
+                      </div>
                     )}
                   </div>
 
-                  {/* Testimonial Quote */}
-                  <div className="relative pt-2">
-                    <MessageSquareQuote className="w-8 h-8 text-violet-imperial/15 absolute -top-1 -left-2" />
-                    <p className="text-sm sm:text-base text-onyx/85 italic font-body relative z-10 leading-relaxed pl-3 line-clamp-3">
-                      {testim.content}
-                    </p>
-                  </div>
-
-                  {/* Result Tag */}
-                  {testim.impact_result && (
-                    <div className="pt-2 flex items-start gap-2 text-xs text-onyx/70 font-body">
-                      <CheckCircle2 className="w-4 h-4 text-violet-imperial shrink-0 mt-0.5" />
-                      <span className="line-clamp-2"><strong>Impact constaté :</strong> {testim.impact_result}</span>
+                  {/* Bottom Project Link */}
+                  <div className="mt-6 pt-4 border-t border-violet-imperial/10 flex items-center justify-between">
+                    <div className="max-w-[200px]">
+                      <span className="text-xs font-bold text-onyx block font-body truncate">{testim.author_name}</span>
+                      <span className="text-[11px] text-onyx/50 font-body">{testim.author_role_company || 'Client Class S'}</span>
                     </div>
-                  )}
-                </div>
-
-                {/* Bottom Project Link */}
-                <div className="mt-6 pt-4 border-t border-violet-imperial/10 flex items-center justify-between">
-                  <div className="max-w-[200px]">
-                    <span className="text-xs font-bold text-onyx block font-body truncate">{testim.author_name}</span>
-                    <span className="text-[11px] text-onyx/50 font-body">{testim.author_role_company || 'Client Class S'}</span>
+                    {projectSlug && (
+                      <CtaButton
+                        to={`/projets/${projectSlug}`}
+                        variant="ghost"
+                        size="sm"
+                        className="!px-2 !py-1 !text-xs text-violet-imperial shrink-0"
+                        icon={<ArrowUpRight className="w-3.5 h-3.5" />}
+                      >
+                        Étude
+                      </CtaButton>
+                    )}
                   </div>
-                  {testim.projet_id && (
-                    <CtaButton
-                      to={`/projets#${testim.projet_id}`}
-                      variant="ghost"
-                      size="sm"
-                      className="!px-2 !py-1 !text-xs text-violet-imperial shrink-0"
-                      icon={<ArrowUpRight className="w-3.5 h-3.5" />}
-                    >
-                      Étude
-                    </CtaButton>
-                  )}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="text-center mt-2">

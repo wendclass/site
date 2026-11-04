@@ -1,96 +1,95 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Target, Compass, Trophy, MessageSquareQuote, AlertTriangle, ArrowUpRight, X, ZoomIn, ChevronLeft, ChevronRight, Layers } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  Sparkles,
+  ArrowRight,
+  ArrowUpRight,
+  Layers,
+  FolderOpen,
+} from 'lucide-react';
 import { projectsData, Project } from '../data/projets';
 import { fetchPublicProjects } from '../lib/supabase';
 import { CtaButton } from '../components/ui/CtaButton';
 import { getOptimizedImage } from '../lib/images';
+import { useSeo } from '../hooks/useSeo';
+import {
+  getProjectAccroche,
+  mapLegacyAnchorToSlug,
+} from '../lib/projectHelpers';
 
 export const Projets: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>(projectsData);
-  const [activeGallery, setActiveGallery] = useState<{
-    projectTitle: string;
-    items: { src: string; caption: string }[];
-    currentIndex: number;
-  } | null>(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
+  // 1. Redirect legacy anchor hash (e.g. /projets#off-day) to /projets/:slug
+  useEffect(() => {
+    if (window.location.hash) {
+      const mappedSlug = mapLegacyAnchorToSlug(window.location.hash);
+      if (mappedSlug) {
+        navigate(`/projets/${mappedSlug}`, { replace: true });
+      }
+    }
+  }, [navigate]);
+
+  // 2. Fetch published projects and restore scroll position
   useEffect(() => {
     let isMounted = true;
     fetchPublicProjects().then((data) => {
-      if (isMounted && data.length > 0) {
-        setProjects(data);
+      if (isMounted) {
+        if (data && data.length > 0) {
+          setProjects(data);
+        }
+        setLoading(false);
+
+        // Restore scroll position when returning from detail page
+        const savedPos = sessionStorage.getItem('class_s_projets_scroll');
+        if (savedPos) {
+          setTimeout(() => {
+            window.scrollTo({
+              top: parseInt(savedPos, 10),
+              behavior: 'instant',
+            });
+            sessionStorage.removeItem('class_s_projets_scroll');
+          }, 50);
+        }
       }
     });
+
     return () => {
       isMounted = false;
     };
   }, []);
 
-  // Keyboard navigation for lightbox
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!activeGallery) return;
-      if (e.key === 'Escape') setActiveGallery(null);
-      if (e.key === 'ArrowRight') {
-        setActiveGallery((prev) =>
-          prev
-            ? {
-                ...prev,
-                currentIndex: (prev.currentIndex + 1) % prev.items.length,
-              }
-            : null
-        );
-      }
-      if (e.key === 'ArrowLeft') {
-        setActiveGallery((prev) =>
-          prev
-            ? {
-                ...prev,
-                currentIndex:
-                  (prev.currentIndex - 1 + prev.items.length) % prev.items.length,
-              }
-            : null
-        );
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeGallery]);
-
-  const openLightbox = (project: Project, index: number) => {
-    setActiveGallery({
-      projectTitle: project.title,
-      items: project.gallery,
-      currentIndex: index,
-    });
+  // Save scroll position when clicking a project card
+  const handleProjectClick = () => {
+    sessionStorage.setItem(
+      'class_s_projets_scroll',
+      window.scrollY.toString()
+    );
   };
 
-  const nextImage = () => {
-    if (!activeGallery) return;
-    setActiveGallery({
-      ...activeGallery,
-      currentIndex: (activeGallery.currentIndex + 1) % activeGallery.items.length,
-    });
-  };
+  // SEO configuration
+  useSeo({
+    title: 'Réalisations & Études de Cas | Class S',
+    description:
+      'Explorez nos réalisations et études de cas de marques à Ouagadougou : objectifs clients, conception graphique stratégique et résultats commerciaux obtenus.',
+    canonicalUrl: 'https://www.wendclass.com/projets',
+    ogImage: 'https://www.wendclass.com/og/banniere-class-s.png',
+    ogType: 'website',
+  });
 
-  const prevImage = () => {
-    if (!activeGallery) return;
-    setActiveGallery({
-      ...activeGallery,
-      currentIndex:
-        (activeGallery.currentIndex - 1 + activeGallery.items.length) %
-        activeGallery.items.length,
-    });
-  };
+  const featuredProject = projects[0] || null;
+  const subsequentProjects = projects.slice(1);
 
   return (
-    <div className="py-12 md:py-20">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        {/* Page Header */}
+    <div className="py-12 md:py-20 font-body">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 md:space-y-16">
+        {/* Page Header (Textes d'origine conservés mot pour mot) */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider font-body">
             <Sparkles className="w-3.5 h-3.5 text-violet-imperial" />
-            Réalisations & Études de cas
+            <span>Réalisations & Études de cas</span>
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-title font-semibold text-onyx leading-tight">
@@ -98,258 +97,275 @@ export const Projets: React.FC = () => {
           </h1>
 
           <p className="text-base sm:text-lg text-onyx/75 font-body leading-relaxed">
-            Découvrez l’intégralité des visuels et dispositifs conçus pour chaque projet, avec leur intention stratégique et leur impact.
+            Découvrez l’intégralité des visuels et dispositifs conçus pour chaque
+            projet, avec leur intention stratégique et leur impact.
           </p>
         </div>
 
-        {/* The Project Deep Dives */}
-        <div className="space-y-16">
-          {projects.map((project: Project, index: number) => (
-            <article
-              id={project.slug}
-              key={project.id}
-              className="bg-white rounded-3xl p-6 sm:p-10 border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg transition-all duration-300 scroll-mt-28"
-            >
-              <div className="space-y-8">
-                {/* Project Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-violet-imperial/10">
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs font-bold text-or-champagne tracking-widest uppercase font-body">
-                        Projet 0{index + 1}
-                      </span>
-                      <span className="px-3 py-0.5 rounded-full bg-violet-imperial/10 text-violet-imperial text-xs font-semibold uppercase tracking-wider font-body">
-                        {project.category}
-                      </span>
-                    </div>
-
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-title font-semibold text-onyx">
-                      {project.title}
-                    </h2>
-
-                    <p className="text-sm sm:text-base text-onyx/75 font-body italic">
-                      {project.tagline}
-                    </p>
-                  </div>
-
-                  <CtaButton
-                    to="/#contact"
-                    variant="secondary"
-                    size="sm"
-                    icon={<ArrowUpRight className="w-4 h-4" />}
-                  >
-                    Projet similaire ?
-                  </CtaButton>
-                </div>
-
-                {/* 3-Part Case Study Grid (But -> Conception -> Résultat) */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {/* 1. But */}
-                  <div className="bg-ivoire-violet/70 rounded-2xl p-5 border border-violet-imperial/10 space-y-2">
-                    <div className="flex items-center gap-2 text-violet-imperial font-semibold text-xs uppercase tracking-wider font-body">
-                      <Target className="w-4 h-4" />
-                      <span>1. But du client</span>
-                    </div>
-                    <p className="text-sm text-onyx/85 font-body leading-relaxed">
-                      {project.clientGoal}
-                    </p>
-                  </div>
-
-                  {/* 2. Conception */}
-                  <div className="bg-ivoire-violet/70 rounded-2xl p-5 border border-violet-imperial/10 space-y-2">
-                    <div className="flex items-center gap-2 text-violet-imperial font-semibold text-xs uppercase tracking-wider font-body">
-                      <Compass className="w-4 h-4" />
-                      <span>2. Ce qui a été conçu</span>
-                    </div>
-                    <p className="text-sm text-onyx/85 font-body leading-relaxed">
-                      {project.designedSolution}
-                    </p>
-                  </div>
-
-                  {/* 3. Résultat */}
-                  <div className="bg-ivoire-violet/70 rounded-2xl p-5 border border-violet-imperial/10 space-y-2">
-                    <div className="flex items-center gap-2 text-violet-imperial font-semibold text-xs uppercase tracking-wider font-body">
-                      <Trophy className="w-4 h-4" />
-                      <span>3. Résultat obtenu</span>
-                    </div>
-                    <p className="text-sm text-onyx/85 font-body leading-relaxed">
-                      {project.result}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Mandatory Disclaimer for Off Day */}
-                {project.disclaimer && (
-                  <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm font-body flex items-start gap-3">
-                    <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-                    <div>
-                      <p className="leading-relaxed font-medium">
-                        {project.disclaimer}
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {/* Visual Gallery Grid - All Works */}
-                <div className="space-y-4 pt-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-onyx/80 font-body">
-                      <Layers className="w-4 h-4 text-violet-imperial" />
-                      <span>Galerie complète des réalisations ({project.gallery.length} visuels)</span>
-                    </div>
-                    <span className="text-[11px] text-onyx/50 font-body hidden sm:inline">
-                      Cliquez pour afficher en plein écran
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
-                    {project.gallery.map((img, imgIdx) => {
-                      const thumbOpt = getOptimizedImage(img.src, { width: 480 });
-                      return (
-                        <button
-                          type="button"
-                          key={imgIdx}
-                          onClick={() => openLightbox(project, imgIdx)}
-                          className="group relative aspect-square rounded-2xl overflow-hidden bg-onyx border border-violet-imperial/15 shadow-sm hover:shadow-md hover:border-violet-imperial/40 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-imperial"
-                          aria-label={`Agrandir ${img.caption}`}
-                        >
+        {/* Loading Skeleton */}
+        {loading && projects.length === 0 ? (
+          <div className="space-y-6">
+            <div className="aspect-[21/9] rounded-3xl bg-slate-100 animate-pulse" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="aspect-[16/10] rounded-3xl bg-slate-100 animate-pulse" />
+              <div className="aspect-[16/10] rounded-3xl bg-slate-100 animate-pulse" />
+            </div>
+          </div>
+        ) : projects.length === 0 ? (
+          /* Empty state */
+          <div className="text-center py-16 px-6 rounded-3xl bg-white border border-violet-imperial/10 shadow-soft max-w-md mx-auto space-y-4">
+            <FolderOpen className="w-12 h-12 text-violet-imperial/40 mx-auto" />
+            <h2 className="text-xl font-title font-semibold text-onyx">
+              Les premiers projets arrivent bientôt
+            </h2>
+            <p className="text-sm text-onyx/70 leading-relaxed font-body">
+              Nos nouvelles études de cas complètes seront bientôt publiées. En
+              attendant, explorez nos offres ou prenez directement contact.
+            </p>
+            <div className="pt-2">
+              <CtaButton to="/" variant="secondary" size="sm">
+                Retour à l'Accueil
+              </CtaButton>
+            </div>
+          </div>
+        ) : (
+          /* COMPACT PROJECTS GRID (1 + 2 + 2 layout) */
+          <div className="space-y-6 md:space-y-8">
+            {/* 1. FEATURED PROJECT (Grand format pleine largeur sur Desktop, standard sur Tablette/Mobile) */}
+            {featuredProject && (
+              <div className="hidden lg:block">
+                <Link
+                  to={`/projets/${featuredProject.slug}`}
+                  onClick={handleProjectClick}
+                  className="group block relative bg-white rounded-3xl border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg hover:border-violet-imperial/35 transition-all duration-300 overflow-hidden"
+                >
+                  <div className="grid grid-cols-12 items-center">
+                    {/* Visual Media */}
+                    <div className="col-span-7 relative aspect-[16/10] overflow-hidden bg-onyx">
+                      {(() => {
+                        const heroImg =
+                          featuredProject.heroImage ||
+                          featuredProject.gallery?.[0]?.src;
+                        if (!heroImg) {
+                          return (
+                            <div className="w-full h-full bg-gradient-to-br from-ardoise to-onyx flex items-center justify-center">
+                              <img
+                                src="/assets/logo/logo-blanc.png"
+                                alt=""
+                                aria-hidden="true"
+                                className="w-16 h-16 opacity-20 object-contain"
+                              />
+                            </div>
+                          );
+                        }
+                        const opt = getOptimizedImage(heroImg, { width: 1200 });
+                        return (
                           <img
-                            src={thumbOpt.src}
-                            srcSet={thumbOpt.srcSet}
-                            sizes="(min-width: 1024px) 20vw, (min-width: 640px) 25vw, 50vw"
-                            alt={img.caption}
-                            width={thumbOpt.width}
-                            height={thumbOpt.height}
+                            src={opt.src}
+                            srcSet={opt.srcSet}
+                            sizes="(min-width: 1024px) 60vw, 100vw"
+                            alt={featuredProject.title}
+                            width={opt.width}
+                            height={opt.height}
+                            loading="eager"
+                            fetchPriority="high"
                             draggable={false}
-                            onContextMenu={(e) => e.preventDefault()}
-                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300 pointer-events-none select-none"
-                            loading="lazy"
-                            decoding="async"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none"
                           />
-                          <div className="absolute inset-0 bg-onyx/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-2 text-center">
-                            <ZoomIn className="w-5 h-5 mb-1" />
-                            <span className="text-[10px] line-clamp-2 leading-tight font-body">{img.caption}</span>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
+                        );
+                      })()}
 
-                {/* Testimonial Quote Block */}
-                {project.testimonialPlaceholder && (
-                  <div className="p-5 rounded-2xl bg-gradient-to-r from-violet-imperial/5 via-white to-or-champagne/5 border border-violet-imperial/10 flex items-start gap-3">
-                    <MessageSquareQuote className="w-5 h-5 text-or-champagne shrink-0 mt-1" />
-                    <p className="text-xs sm:text-sm text-onyx/80 italic font-body leading-relaxed">
-                      {project.testimonialPlaceholder}
-                    </p>
+                      {/* Visuals count pill over image */}
+                      <div className="absolute bottom-4 left-4 z-10">
+                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-onyx/85 backdrop-blur-md text-white border border-white/10 flex items-center gap-1.5 shadow-sm font-body">
+                          <Layers className="w-3.5 h-3.5 text-amethyste" />
+                          <span>
+                            {featuredProject.gallery?.length || 0} visuels
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Content text */}
+                    <div className="col-span-5 p-8 lg:p-10 flex flex-col justify-between space-y-6">
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2.5">
+                          <span className="text-xs font-bold text-or-champagne tracking-widest uppercase font-body">
+                            Projet 01 • En vedette
+                          </span>
+                          <span className="px-3 py-0.5 rounded-full bg-violet-imperial/10 text-violet-imperial text-xs font-semibold uppercase tracking-wider font-body">
+                            {featuredProject.category}
+                          </span>
+                        </div>
+
+                        <h2 className="text-2xl lg:text-3xl font-title font-semibold text-onyx leading-snug group-hover:text-violet-imperial transition-colors">
+                          {featuredProject.title}
+                        </h2>
+
+                        <p className="text-sm lg:text-base text-onyx/75 font-body leading-relaxed line-clamp-2">
+                          {getProjectAccroche(featuredProject)}
+                        </p>
+                      </div>
+
+                      {/* Footer link */}
+                      <div className="pt-4 border-t border-violet-imperial/10 flex items-center justify-between">
+                        <span className="text-xs font-semibold text-violet-imperial group-hover:text-amethyste transition-colors inline-flex items-center gap-1.5 font-body">
+                          <span>Voir le projet complet</span>
+                          <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+                        </span>
+                        <span className="text-xs text-onyx/40 font-body">
+                          Récit & Galerie complète →
+                        </span>
+                      </div>
+                    </div>
                   </div>
+                </Link>
+              </div>
+            )}
+
+            {/* 2. SUBSEQUENT PROJECTS (2 Columns on Desktop & Tablet, 1 Column on Mobile) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+              {/* On Tablet & Mobile: render the first project as a standard grid card too */}
+              <div className="block lg:hidden">
+                {featuredProject && (
+                  <ProjectCard
+                    project={featuredProject}
+                    index={0}
+                    onClick={handleProjectClick}
+                    priorityImage={true}
+                  />
                 )}
               </div>
-            </article>
-          ))}
-        </div>
 
-        {/* Global CTA Section */}
+              {subsequentProjects.map((project, idx) => (
+                <ProjectCard
+                  key={project.id || project.slug}
+                  project={project}
+                  index={idx + 1}
+                  onClick={handleProjectClick}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Global CTA Section (Conservée à l'identique) */}
         <div className="text-center bg-white p-8 sm:p-12 rounded-3xl border border-violet-imperial/15 shadow-soft space-y-6 max-w-4xl mx-auto">
           <h3 className="text-2xl sm:text-3xl font-title font-semibold text-onyx">
             Votre activité mérite elle aussi une image qui fait vendre
           </h3>
           <p className="text-base text-onyx/75 font-body max-w-xl mx-auto">
-            Discutons ensemble de vos besoins et définissons le dispositif visuel adapté pour vous imposer sur votre marché.
+            Discutons ensemble de vos besoins et définissons le dispositif visuel
+            adapté pour vous imposer sur votre marché.
           </p>
           <div>
-            <CtaButton to="/#contact" variant="primary" size="lg" icon={<ArrowUpRight className="w-5 h-5" />}>
+            <CtaButton
+              to="/#contact"
+              variant="primary"
+              size="lg"
+              icon={<ArrowUpRight className="w-5 h-5" />}
+            >
               Prendre contact pour mon projet
             </CtaButton>
           </div>
         </div>
       </div>
+    </div>
+  );
+};
 
-      {/* Lightbox Modal with Full Navigation */}
-      {activeGallery && (
-        <div
-          className="fixed inset-0 z-50 bg-onyx/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 select-none"
-          onClick={() => setActiveGallery(null)}
-        >
-          <div
-            className="relative max-w-5xl w-full max-h-[92vh] flex flex-col items-center justify-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close button */}
-            <button
-              type="button"
-              onClick={() => setActiveGallery(null)}
-              className="absolute -top-12 right-0 p-2 text-white/80 hover:text-white rounded-full bg-white/10 hover:bg-white/20 transition-colors focus:outline-none"
-              aria-label="Fermer la vue plein écran"
-            >
-              <X className="w-6 h-6" />
-            </button>
+// Sub-component for individual project card in the compact grid
+interface ProjectCardProps {
+  project: Project;
+  index: number;
+  onClick: () => void;
+  priorityImage?: boolean;
+}
 
-            {/* Prev button */}
-            <button
-              type="button"
-              onClick={prevImage}
-              className="absolute left-2 sm:-left-14 top-1/2 -translate-y-1/2 p-3 text-white/80 hover:text-white rounded-full bg-white/10 hover:bg-white/25 transition-all focus:outline-none"
-              aria-label="Image précédente"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
+const ProjectCard: React.FC<ProjectCardProps> = ({
+  project,
+  index,
+  onClick,
+  priorityImage = false,
+}) => {
+  const heroImg = project.heroImage || project.gallery?.[0]?.src;
+  const opt = heroImg ? getOptimizedImage(heroImg, { width: 800 }) : null;
 
-            {/* Next button */}
-            <button
-              type="button"
-              onClick={nextImage}
-              className="absolute right-2 sm:-right-14 top-1/2 -translate-y-1/2 p-3 text-white/80 hover:text-white rounded-full bg-white/10 hover:bg-white/25 transition-all focus:outline-none"
-              aria-label="Image suivante"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-
-            {/* Current Image with Anti-Download Shield */}
-            <div 
-              className="relative max-h-[75vh] flex items-center justify-center overflow-hidden rounded-2xl bg-onyx shadow-2xl border border-white/20 select-none"
-              onContextMenu={(e) => e.preventDefault()}
-              data-protected-image="true"
-            >
-              {(() => {
-                const fullOpt = getOptimizedImage(activeGallery.items[activeGallery.currentIndex].src, { width: 1920 });
-                return (
-                  <img
-                    src={fullOpt.src}
-                    srcSet={fullOpt.srcSet}
-                    sizes="90vw"
-                    alt={activeGallery.items[activeGallery.currentIndex].caption}
-                    width={fullOpt.width}
-                    height={fullOpt.height}
-                    draggable={false}
-                    onContextMenu={(e) => e.preventDefault()}
-                    className="max-h-[75vh] w-auto max-w-full object-contain pointer-events-none select-none"
-                    decoding="async"
-                  />
-                );
-              })()}
-              {/* Invisible protective overlay shield against right-click or drag */}
-              <div
-                className="absolute inset-0 z-10 select-none cursor-default"
-                onContextMenu={(e) => e.preventDefault()}
-                onDragStart={(e) => e.preventDefault()}
+  return (
+    <Link
+      to={`/projets/${project.slug}`}
+      onClick={onClick}
+      className="group flex flex-col justify-between bg-white rounded-3xl border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg hover:border-violet-imperial/35 transition-all duration-300 overflow-hidden h-full"
+    >
+      <div>
+        {/* Thumbnail media with 16:10 or 4:3 fixed ratio */}
+        <div className="relative aspect-[4/3] sm:aspect-[16/10] w-full overflow-hidden bg-onyx border-b border-violet-imperial/10">
+          {opt ? (
+            <img
+              src={opt.src}
+              srcSet={opt.srcSet}
+              sizes="(min-width: 1024px) 45vw, (min-width: 768px) 50vw, 100vw"
+              alt={project.title}
+              width={opt.width}
+              height={opt.height}
+              loading={priorityImage ? 'eager' : 'lazy'}
+              fetchPriority={priorityImage ? 'high' : 'auto'}
+              draggable={false}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 pointer-events-none select-none"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-ardoise to-onyx flex items-center justify-center">
+              <img
+                src="/assets/logo/logo-blanc.png"
+                alt=""
                 aria-hidden="true"
+                className="w-12 h-12 opacity-20 object-contain"
               />
             </div>
+          )}
 
-            {/* Image caption and counter */}
-            <div className="mt-4 text-center text-white space-y-1 max-w-xl">
-              <p className="text-sm sm:text-base font-semibold font-body">
-                {activeGallery.items[activeGallery.currentIndex].caption}
-              </p>
-              <p className="text-xs text-white/60 font-body">
-                {activeGallery.projectTitle} • Visuel {activeGallery.currentIndex + 1} sur {activeGallery.items.length}
-              </p>
-            </div>
+          {/* Visuals count pill */}
+          <div className="absolute bottom-3 left-3 z-10">
+            <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-onyx/85 backdrop-blur-md text-white border border-white/10 flex items-center gap-1.5 shadow-sm font-body">
+              <Layers className="w-3 h-3 text-amethyste" />
+              <span>{project.gallery?.length || 0} visuels</span>
+            </span>
+          </div>
+
+          {/* Category pill */}
+          <div className="absolute top-3 left-3 z-10">
+            <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-white/95 backdrop-blur-md text-violet-imperial shadow-sm font-body">
+              {project.category}
+            </span>
           </div>
         </div>
-      )}
-    </div>
+
+        {/* Text body */}
+        <div className="p-6 sm:p-7 space-y-3">
+          <span className="text-[11px] font-bold text-or-champagne tracking-widest uppercase block font-body">
+            Projet 0{index + 1}
+          </span>
+
+          <h2 className="text-xl sm:text-2xl font-title font-semibold text-onyx leading-snug group-hover:text-violet-imperial transition-colors line-clamp-1">
+            {project.title}
+          </h2>
+
+          <p className="text-xs sm:text-sm text-onyx/75 font-body leading-relaxed line-clamp-2">
+            {getProjectAccroche(project)}
+          </p>
+        </div>
+      </div>
+
+      {/* Card action footer */}
+      <div className="px-6 pb-6 pt-2 sm:px-7 sm:pb-7 flex items-center justify-between border-t border-violet-imperial/5">
+        <span className="text-xs font-semibold text-violet-imperial group-hover:text-amethyste transition-colors inline-flex items-center gap-1.5 font-body">
+          <span>Voir le projet</span>
+          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1.5 transition-transform" />
+        </span>
+        <span className="text-[11px] text-onyx/40 font-body">
+          Galerie complète →
+        </span>
+      </div>
+    </Link>
   );
 };

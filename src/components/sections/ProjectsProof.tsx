@@ -53,16 +53,19 @@ export const ProjectsProof: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {featuredProjects.map((project) => {
             const optImg = getOptimizedImage(project.heroImage, { width: 800 });
+            const projectUrl = `/projets/${project.slug}`;
             return (
               <div
                 key={project.id}
                 className="bg-white rounded-3xl overflow-hidden border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group"
               >
                 {/* Image Banner with Anti-Download Shield */}
-                <div 
-                  className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden bg-onyx select-none"
+                <Link
+                  to={projectUrl}
+                  className="relative aspect-[4/3] sm:aspect-[16/11] overflow-hidden bg-onyx select-none block"
                   onContextMenu={(e) => e.preventDefault()}
                   data-protected-image="true"
+                  aria-label={`Voir le projet ${project.title}`}
                 >
                   <img
                     src={optImg.src}
@@ -79,7 +82,7 @@ export const ProjectsProof: React.FC = () => {
                   />
                   {/* Invisible protective overlay shield */}
                   <div
-                    className="absolute inset-0 z-10 select-none cursor-default"
+                    className="absolute inset-0 z-10 select-none cursor-pointer"
                     onContextMenu={(e) => e.preventDefault()}
                     onDragStart={(e) => e.preventDefault()}
                     aria-hidden="true"
@@ -87,37 +90,39 @@ export const ProjectsProof: React.FC = () => {
                   <div className="absolute top-3 left-3 z-20 bg-onyx/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-[11px] font-semibold text-ivoire-violet uppercase tracking-wider">
                     {project.category}
                   </div>
-                </div>
+                </Link>
 
-              {/* Text Info */}
-              <div className="p-6 flex-grow flex flex-col justify-between space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-xl font-title font-semibold text-onyx group-hover:text-violet-imperial transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-onyx/70 leading-relaxed font-body">
-                    {project.tagline}
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-violet-imperial/10 space-y-3">
-                  <div className="flex items-start gap-2 text-xs text-onyx/80 font-body">
-                    <CheckCircle className="w-4 h-4 text-violet-imperial shrink-0 mt-0.5" />
-                    <span><strong className="text-onyx font-semibold">Résultat :</strong> {project.result}</span>
+                {/* Text Info */}
+                <div className="p-6 flex-grow flex flex-col justify-between space-y-4">
+                  <div className="space-y-2">
+                    <Link to={projectUrl} className="block group/title">
+                      <h3 className="text-xl font-title font-semibold text-onyx group-hover/title:text-violet-imperial transition-colors">
+                        {project.title}
+                      </h3>
+                    </Link>
+                    <p className="text-xs sm:text-sm text-onyx/70 leading-relaxed font-body">
+                      {project.tagline}
+                    </p>
                   </div>
 
-                  <Link
-                    to={`/projets#${project.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-violet-imperial group-hover:underline underline-offset-4"
-                  >
-                    <span>Découvrir l'étude de cas</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                  <div className="pt-3 border-t border-violet-imperial/10 space-y-3">
+                    <div className="flex items-start gap-2 text-xs text-onyx/80 font-body">
+                      <CheckCircle className="w-4 h-4 text-violet-imperial shrink-0 mt-0.5" />
+                      <span><strong className="text-onyx font-semibold">Résultat :</strong> {project.result}</span>
+                    </div>
+
+                    <Link
+                      to={projectUrl}
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-violet-imperial group-hover:underline underline-offset-4"
+                    >
+                      <span>Découvrir l'étude de cas</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
         </div>
 
         {/* Bottom CTA Banner */}

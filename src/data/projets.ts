@@ -4,6 +4,7 @@ export interface Project {
   title: string;
   category: string;
   tagline: string;
+  accroche?: string;
   clientGoal: string;
   designedSolution: string;
   result: string;
@@ -20,10 +21,11 @@ export interface Project {
 export const projectsData: Project[] = [
   {
     id: '72h-cj-2026',
-    slug: '72h-cj-2026',
+    slug: '72-heures-cj-2026',
     title: '72 Heures des étudiants en communication et journalisme 2026',
     category: 'Communication Événementielle & Carrousel',
     tagline: 'Une stratégie visuelle rythmée pour surpasser l’impact des éditions précédentes.',
+    accroche: 'Une stratégie visuelle rythmée pour surpasser l’impact des éditions précédentes.',
     clientGoal: 'Faire mieux que l’édition précédente de l’événement en termes de visibilité et d’engouement.',
     designedSolution: 'Conception principale autour d’un carrousel créatif et stratégique surfant sur la Saint-Valentin ; ensemble de visuels complémentaires comprenant l’annonce de stand disponible, les concours et la couverture officielle du rapport d’activité.',
     result: 'Client pleinement satisfait de la dynamique créée et de la cohérence globale sur tous les canaux.',
@@ -98,6 +100,7 @@ export const projectsData: Project[] = [
     title: 'Mon Frère, Parle',
     category: 'Identité Visuelle & Campagne de Sensibilisation',
     tagline: 'Une identité apaisante pour libérer la parole des hommes sur la santé mentale.',
+    accroche: 'Une identité apaisante pour libérer la parole des hommes sur la santé mentale.',
     clientGoal: 'Faire connaître un nouveau format de thérapie destiné aux hommes, à l’occasion du mois de la santé mentale.',
     designedSolution: 'Une identité visuelle pensée pour apaiser l’esprit et libérer des surcharges mentales : palette chromatique douce, typographie bienveillante et gestion aérée des espaces négatifs, orchestrées au service d’un message profondément humain.',
     result: 'Client satisfait de l’accueil bienveillant et de la justesse du ton véhiculé par chaque support.',
@@ -184,6 +187,7 @@ export const projectsData: Project[] = [
     title: 'Off Day : 24H sans écran, 24H pour moi',
     category: 'Communication Événementielle & Campagne Digitale',
     tagline: 'Une conception épurée pour marquer les esprits dès la première édition.',
+    accroche: 'Une conception épurée pour marquer les esprits dès la première édition.',
     clientGoal: 'Captiver et marquer les esprits pour installer la toute première édition de l’événement.',
     designedSolution: 'Une direction artistique axée sur la simplicité radicale et l’espace, pensée pour retenir l’attention du public sans surcharger son esprit — en résonance directe avec le concept de déconnexion numérique.',
     result: 'Client satisfait du niveau d’attention et de la mémorisation forte suscités par la campagne.',
@@ -315,6 +319,7 @@ export const projectsData: Project[] = [
     title: 'Café Inspire',
     category: 'Branding Social Media & Campagnes Publicitaires',
     tagline: 'Structuration d’une identité visuelle récurrente pour stimuler l’engagement commercial.',
+    accroche: 'Structuration d’une identité visuelle récurrente pour stimuler l’engagement commercial.',
     clientGoal: 'Obtenir des visuels de qualité pour alimenter régulièrement sa page Facebook et lancer des campagnes publicitaires performantes.',
     designedSolution: 'Création en amont d’une mini-charte graphique cohérente (palette, codes typographiques, templates de mise en page) à partir du logo initial, suivie de la production mensuelle de visuels percutants adaptés aux temps forts du café.',
     result: 'Les nouveaux visuels ont nettement capté et attiré davantage l’attention que les publications antérieures du client.',
@@ -361,6 +366,7 @@ export const projectsData: Project[] = [
     title: 'Bang',
     category: 'Identité Visuelle de Marque & Stratégie',
     tagline: 'Une identité singulière pour réinventer l’expérience de révision des élèves et étudiants.',
+    accroche: 'Une identité singulière pour réinventer l’expérience de révision des élèves et étudiants.',
     clientGoal: 'Rendre plus faciles et stimulantes les révisions des étudiants et élèves grâce à une identité visuelle distincte, mémorable et structurée.',
     designedSolution: 'Création d’une identité unique avec une palette chromatique audacieuse rompant avec les codes académiques conventionnels, et conception d’un logotype original garanti sans similitude avec les marques existantes sur les moteurs de recherche.',
     result: 'Client pleinement satisfait du positionnement novateur et de la reconnaissance immédiate de la marque.',

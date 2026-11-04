@@ -54,6 +54,7 @@ export interface DbProject {
   display_order: number;
   created_at: string;
   hero_image?: string;
+  accroche?: string;
   gallery?: {
     id?: string;
     src: string;
@@ -100,6 +101,14 @@ export interface DbArticle {
   updated_at: string;
 }
 
+export interface DbProjectRedirect {
+  id: string;
+  old_slug: string;
+  new_slug: string;
+  projet_id?: string;
+  created_at: string;
+}
+
 export interface DbArticleRedirect {
   id: string;
   old_slug: string;
@@ -129,6 +138,7 @@ const getInitialProjects = (): DbProject[] => {
     title: p.title,
     category: p.category,
     tagline: p.tagline,
+    accroche: p.accroche || p.tagline,
     client_goal: p.clientGoal,
     designed_solution: p.designedSolution,
     result: p.result,
@@ -667,6 +677,7 @@ export const fetchPublicProjects = async (): Promise<Project[]> => {
             title: p.title,
             category: p.category,
             tagline: p.tagline,
+            accroche: p.accroche || p.tagline,
             clientGoal: p.client_goal,
             designedSolution: p.designed_solution,
             result: p.result,
@@ -695,6 +706,7 @@ export const fetchPublicProjects = async (): Promise<Project[]> => {
       title: p.title,
       category: p.category,
       tagline: p.tagline,
+      accroche: p.accroche || p.tagline,
       clientGoal: p.client_goal,
       designedSolution: p.designed_solution,
       result: p.result,
@@ -705,6 +717,53 @@ export const fetchPublicProjects = async (): Promise<Project[]> => {
         caption: g.caption,
       })),
     }));
+};
+
+export const fetchPublicProjectBySlug = async (
+  slug: string
+): Promise<{ project: Project | null; redirectSlug?: string }> => {
+  if (slug === '72h-cj-2026') {
+    return { project: null, redirectSlug: '72-heures-cj-2026' };
+  }
+  // Check redirects
+  if (isSupabaseConfigured() && supabase) {
+    try {
+      const { data: redir } = await supabase
+        .from('projet_redirects')
+        .select('new_slug')
+        .eq('old_slug', slug)
+        .maybeSingle();
+      if (redir?.new_slug && redir.new_slug !== slug) {
+        return { project: null, redirectSlug: redir.new_slug };
+      }
+    } catch {}
+  } else {
+    const redirects = getLocalStore<Record<string, string>>('cs_projet_redirects', {});
+    if (redirects[slug] && redirects[slug] !== slug) {
+      return { project: null, redirectSlug: redirects[slug] };
+    }
+  }
+
+  const all = await fetchPublicProjects();
+  const found = all.find((p) => p.slug === slug || p.id === slug);
+  return { project: found || null };
+};
+
+export const recordProjectRedirect = async (oldSlug: string, newSlug: string, projectId?: string): Promise<void> => {
+  if (!oldSlug || !newSlug || oldSlug === newSlug) return;
+  try {
+    if (isSupabaseConfigured() && supabase) {
+      await supabase.from('projet_redirects').upsert([
+        { old_slug: oldSlug, new_slug: newSlug, ...(projectId ? { projet_id: projectId } : {}), created_at: new Date().toISOString() },
+      ]);
+    } else {
+      const redirects = getLocalStore<Record<string, string>>('cs_projet_redirects', {});
+      redirects[oldSlug] = newSlug;
+      setLocalStore('cs_projet_redirects', redirects);
+    }
+  } catch (err) {
+    console.warn('recordProjectRedirect error:', err);
+  }
 };
 
 export const fetchAdminProjects = async (): Promise<DbProject[]> => {
@@ -761,6 +820,7 @@ export const saveProject = async (project: Partial<DbProject>): Promise<{ succes
         title: project.title,
         category: project.category,
         tagline: project.tagline,
+        accroche: project.accroche || project.tagline || null,
         client_goal: project.client_goal,
         designed_solution: project.designed_solution,
         result: project.result,
@@ -809,6 +869,7 @@ export const saveProject = async (project: Partial<DbProject>): Promise<{ succes
           title: project.title || 'Nouveau Projet',
           category: project.category || 'Branding & Identité',
           tagline: project.tagline || '',
+          accroche: project.accroche || project.tagline || '',
           client_goal: project.client_goal || '',
           designed_solution: project.designed_solution || '',
           result: project.result || '',

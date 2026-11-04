@@ -5,6 +5,7 @@ import { Layout } from './components/layout/Layout';
 import { Accueil } from './pages/Accueil';
 import { Offres } from './pages/Offres';
 import { Projets } from './pages/Projets';
+import { ProjetDetail } from './pages/ProjetDetail';
 import { Blog } from './pages/Blog';
 import { BlogPost } from './pages/BlogPost';
 import { APropos } from './pages/APropos';
@@ -79,6 +80,19 @@ const AnimatedPublicRoutes: React.FC = () => {
               exit="exit"
             >
               <Projets />
+            </motion.div>
+          }
+        />
+        <Route
+          path="/projets/:slug"
+          element={
+            <motion.div
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <ProjetDetail />
             </motion.div>
           }
         />

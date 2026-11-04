@@ -30,6 +30,11 @@ export const Header: React.FC = () => {
     { name: 'À propos', path: '/a-propos' },
   ];
 
+  const isLinkActive = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -44,21 +49,22 @@ export const Header: React.FC = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8 bg-white/70 backdrop-blur-md px-6 py-2 rounded-full border border-violet-imperial/10 shadow-sm" aria-label="Navigation principale">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.path}
-              to={link.path}
-              className={({ isActive }) =>
-                `text-sm font-medium transition-colors hover:text-violet-imperial py-1 relative ${
-                  isActive
+          {navLinks.map((link) => {
+            const active = isLinkActive(link.path);
+            return (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                className={`text-sm font-medium transition-colors hover:text-violet-imperial py-1 relative ${
+                  active
                     ? 'text-violet-imperial font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-violet-imperial after:rounded-full'
                     : 'text-onyx/70'
-                }`
-              }
-            >
-              {link.name}
-            </NavLink>
-          ))}
+                }`}
+              >
+                {link.name}
+              </NavLink>
+            );
+          })}
         </nav>
 
         {/* Desktop CTA */}
@@ -99,19 +105,20 @@ export const Header: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden glass-header border-b border-violet-imperial/15 px-6 py-6 animate-fadeIn shadow-soft-lg">
           <nav className="flex flex-col gap-4 mb-6">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.path}
-                to={link.path}
-                className={({ isActive }) =>
-                  `text-base py-2 font-medium transition-colors ${
-                    isActive ? 'text-violet-imperial font-bold' : 'text-onyx/80'
-                  }`
-                }
-              >
-                {link.name}
-              </NavLink>
-            ))}
+            {navLinks.map((link) => {
+              const active = isLinkActive(link.path);
+              return (
+                <NavLink
+                  key={link.path}
+                  to={link.path}
+                  className={`text-base py-2 font-medium transition-colors ${
+                    active ? 'text-violet-imperial font-bold' : 'text-onyx/80'
+                  }`}
+                >
+                  {link.name}
+                </NavLink>
+              );
+            })}
           </nav>
           <CtaButton
             to="/#contact"

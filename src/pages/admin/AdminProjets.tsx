@@ -12,7 +12,7 @@ import {
   Save,
   Layers,
 } from 'lucide-react';
-import { DbProject, saveProject, deleteProject } from '../../lib/supabase';
+import { DbProject, saveProject, deleteProject, recordProjectRedirect } from '../../lib/supabase';
 
 interface AdminProjetsProps {
   projects: DbProject[];
@@ -28,6 +28,7 @@ export const AdminProjets: React.FC<AdminProjetsProps> = ({
   onCloseNewModal,
 }) => {
   const [editingProject, setEditingProject] = useState<Partial<DbProject> | null>(null);
+  const [originalProject, setOriginalProject] = useState<DbProject | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [newImageUrl, setNewImageUrl] = useState('');
@@ -55,6 +56,7 @@ export const AdminProjets: React.FC<AdminProjetsProps> = ({
 
   const handleEdit = (project: DbProject) => {
     setEditingProject({ ...project, gallery: [...(project.gallery || [])] });
+    setOriginalProject(project);
     setSaveError(null);
   };
 
@@ -78,9 +80,21 @@ export const AdminProjets: React.FC<AdminProjetsProps> = ({
     setIsSaving(true);
     setSaveError(null);
 
+    // Slug duplicate check
+    const isDup = projects.some(p => p.id !== editingProject.id && p.slug === slug);
+    if (isDup) {
+      setSaveError(`Le slug "${slug}" est déjà utilisé par un autre projet.`);
+      return;
+    }
+
+    if (originalProject && originalProject.status === 'publie' && originalProject.slug && originalProject.slug !== slug) {
+      await recordProjectRedirect(originalProject.slug, slug, originalProject.id);
+    }
+
     const result = await saveProject({
       ...editingProject,
       slug,
+      accroche: editingProject.accroche || editingProject.tagline || '',
       hero_image: editingProject.gallery?.find((g) => g.is_hero)?.src || editingProject.gallery?.[0]?.src,
     });
 
@@ -323,7 +337,19 @@ export const AdminProjets: React.FC<AdminProjetsProps> = ({
                   <input
                     type="text"
                     value={editingProject.title || ''}
-                    onChange={(e) => setEditingProject({ ...editingProject, title: e.target.value })}
+                    onChange={(e) => {
+                      const newTitle = e.target.value;
+                      const updates: Partial<DbProject> = { ...editingProject, title: newTitle };
+                      if (!editingProject.id || !editingProject.slug) {
+                        updates.slug = newTitle
+                          .toLowerCase()
+                          .normalize('NFD')
+                          .replace(/[\u0300-\u036f]/g, '')
+                          .replace(/[^a-z0-9]+/g, '-')
+                          .replace(/(^-|-$)+/g, '');
+                      }
+                      setEditingProject(updates);
+                    }}
                     placeholder="Ex: Mon Frère, Parle"
                     required
                     className="w-full px-4 py-2.5 rounded-xl bg-onyx border border-violet-imperial/20 text-white text-xs font-body focus:outline-none focus:border-amethyste"
