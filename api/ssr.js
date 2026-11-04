@@ -2809,16 +2809,18 @@ async function handler(req, res) {
             </p>
           </header>
 
-          <!-- Hero Image -->
-          <div class="w-full aspect-[16/10] sm:aspect-[16/9] max-h-[560px] rounded-3xl overflow-hidden bg-onyx shadow-soft mb-12 sm:mb-16 border border-violet-imperial/10" style="border-radius:1.5rem; overflow:hidden; border:1px solid rgba(102,0,204,0.1);">
+          <!-- Hero Image: Pr\xE9servation int\xE9grale, sans rognage ni d\xE9formation -->
+          <div class="relative w-full rounded-3xl overflow-hidden bg-[#0D0A18] border border-violet-imperial/15 shadow-soft-lg mb-12 sm:mb-16 p-3 sm:p-6 md:p-8 flex items-center justify-center min-h-[320px] sm:min-h-[460px] md:min-h-[540px]" style="background-color:#0D0A18; border-radius:1.5rem; overflow:hidden; border:1px solid rgba(102,0,204,0.15); display:flex; align-items:center; justify-content:center; position:relative; padding:1.5rem; margin-bottom:3rem;">
+            <div style="position:absolute; inset:0; background-image:url(${heroOpt.src}); background-size:cover; background-position:center; filter:blur(40px); opacity:0.25; transform:scale(1.1); pointer-events:none;" aria-hidden="true"></div>
             <img
               src="${heroOpt.src}"
               ${heroOpt.srcSet ? `srcset="${heroOpt.srcSet}"` : ""}
-              sizes="(min-width: 1152px) 1152px, 100vw"
+              sizes="(min-width: 1024px) 80vw, 100vw"
               alt="${project.title}"
               width="${heroOpt.width || 1200}"
               height="${heroOpt.height || 675}"
-              class="w-full h-full object-cover"
+              class="relative z-10 max-h-[580px] sm:max-h-[680px] md:max-h-[760px] w-auto max-w-full h-auto rounded-2xl shadow-soft object-contain"
+              style="position:relative; z-index:10; max-height:680px; width:auto; max-width:100%; height:auto; border-radius:1rem; object-fit:contain; margin:0 auto; display:block;"
               loading="eager"
               decoding="async"
             />
