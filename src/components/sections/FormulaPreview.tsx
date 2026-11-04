@@ -58,7 +58,7 @@ export const FormulaPreview: React.FC = () => {
                     {offer.title}
                   </h3>
 
-                  <p className="text-sm text-onyx/75 leading-relaxed font-body mb-6">
+                  <p className="text-base text-onyx/80 leading-relaxed font-body mb-6">
                     {offer.subtitle}
                   </p>
                 </div>
@@ -66,19 +66,19 @@ export const FormulaPreview: React.FC = () => {
                 <div className="pt-4 border-t border-violet-imperial/10 flex items-center justify-between">
                   <Link
                     to="/offres"
-                    className="text-xs font-semibold uppercase tracking-wider text-violet-imperial inline-flex items-center gap-1.5 group-hover:underline underline-offset-4"
+                    className="text-sm font-semibold uppercase tracking-wider text-violet-imperial inline-flex items-center gap-1.5 min-h-[44px] py-2 group-hover:underline underline-offset-4"
                   >
                     <span>Voir le détail</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                   </Link>
 
                   {offer.deliveryTime && (
-                    <span className="text-[11px] font-semibold text-or-champagne bg-or-champagne/10 px-2.5 py-1 rounded-full border border-or-champagne/20">
+                    <span className="text-xs font-semibold text-or-champagne bg-or-champagne/10 px-2.5 py-1 rounded-full border border-or-champagne/20">
                       {offer.deliveryTime}
                     </span>
                   )}
                   {offer.badge && (
-                    <span className="text-[11px] font-semibold text-violet-imperial bg-violet-imperial/10 px-2.5 py-1 rounded-full border border-violet-imperial/20">
+                    <span className="text-xs font-semibold text-violet-imperial bg-violet-imperial/10 px-2.5 py-1 rounded-full border border-violet-imperial/20">
                       {offer.badge}
                     </span>
                   )}

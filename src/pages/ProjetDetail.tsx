@@ -396,7 +396,7 @@ export const ProjetDetail: React.FC = () => {
         {totalProjects > 1 && (
           <nav
             aria-label="Projets voisins"
-            className="pt-8 border-t border-violet-imperial/10 grid grid-cols-1 sm:grid-cols-2 gap-4"
+            className="hidden md:grid pt-8 border-t border-violet-imperial/10 md:grid-cols-2 gap-4"
           >
             {prevProject && (() => {
               const prevOpt = getOptimizedImage(prevProject.heroImage || prevProject.gallery?.[0]?.src || '', { width: 480 });
@@ -422,7 +422,7 @@ export const ProjetDetail: React.FC = () => {
                     />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[11px] font-semibold text-violet-imperial uppercase flex items-center gap-1 font-body">
+                    <span className="text-xs font-semibold text-violet-imperial uppercase flex items-center gap-1 font-body">
                       <ArrowLeft className="w-3 h-3 group-hover:-translate-x-1 transition-transform" />
                       <span>Projet précédent</span>
                     </span>
@@ -442,7 +442,7 @@ export const ProjetDetail: React.FC = () => {
                   className="group p-4 sm:p-5 rounded-2xl bg-white border border-violet-imperial/10 hover:border-violet-imperial/30 transition-all flex items-center justify-between gap-4 text-right shadow-sm sm:col-start-2"
                 >
                   <div className="min-w-0 flex-1">
-                    <span className="text-[11px] font-semibold text-violet-imperial uppercase inline-flex items-center gap-1 font-body">
+                    <span className="text-xs font-semibold text-violet-imperial uppercase inline-flex items-center gap-1 font-body">
                       <span>Projet suivant</span>
                       <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                     </span>

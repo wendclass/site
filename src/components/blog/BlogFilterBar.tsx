@@ -82,7 +82,7 @@ export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
                   aria-selected={selectedRubrique === 'tous'}
                   ref={selectedRubrique === 'tous' ? activePillRef : null}
                   onClick={() => onSelectRubrique('tous')}
-                  className={`min-h-[44px] px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap snap-center transition-all duration-200 shrink-0 flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-amethyste/60 ${
+                  className={`min-h-[44px] px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap snap-center transition-all duration-200 shrink-0 flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-amethyste/60 ${
                     selectedRubrique === 'tous'
                       ? 'bg-amethyste text-onyx shadow-glow font-bold'
                       : 'bg-white/5 text-ivoire-violet/75 border border-white/10 hover:text-white hover:border-amethyste/40'
@@ -90,7 +90,7 @@ export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
                 >
                   <span>Tous</span>
                   <span
-                    className={`text-[11px] px-1.5 py-0.5 rounded-full ${
+                    className={`text-xs px-1.5 py-0.5 rounded-full ${
                       selectedRubrique === 'tous'
                         ? 'bg-onyx/20 text-onyx font-bold'
                         : 'bg-white/10 text-ivoire-violet/60'
@@ -123,7 +123,7 @@ export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
                     >
                       <span>{rub.name}</span>
                       <span
-                        className={`text-[11px] px-1.5 py-0.5 rounded-full ${
+                        className={`text-xs px-1.5 py-0.5 rounded-full ${
                           isActive
                             ? 'bg-onyx/20 text-onyx font-bold'
                             : 'bg-white/10 text-ivoire-violet/60'
@@ -152,7 +152,7 @@ export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
                 placeholder="Rechercher un article..."
-                className="min-h-[44px] w-full pl-10 pr-9 py-2.5 rounded-2xl bg-black/50 border border-white/10 text-xs sm:text-sm text-white placeholder-ivoire-violet/40 focus:outline-none focus:border-amethyste focus:ring-1 focus:ring-amethyste transition-all"
+                className="min-h-[44px] w-full pl-10 pr-9 py-2.5 rounded-2xl bg-black/50 border border-white/10 text-base text-white placeholder:text-base placeholder-ivoire-violet/50 focus:outline-none focus:border-amethyste focus:ring-1 focus:ring-amethyste transition-all"
               />
               {searchQuery && (
                 <button
@@ -171,7 +171,7 @@ export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
 
       {/* Results Summary Bar & Active Filter Chips */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-ivoire-violet/60 pt-1">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-ivoire-violet/75 pt-1">
           {/* Count and Screen reader live announcement */}
           <div className="flex items-center gap-2">
             <span className="font-semibold text-ivoire-violet/90">

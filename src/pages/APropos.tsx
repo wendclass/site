@@ -148,10 +148,10 @@ export const APropos: React.FC = () => {
                     {/* Floating caption tag */}
                     <div className="absolute bottom-3 left-3 right-3 z-30 p-3 rounded-2xl bg-onyx/75 backdrop-blur-md border border-white/15 text-white flex items-center justify-between pointer-events-auto">
                       <div className="space-y-0.5">
-                        <span className="text-xs font-bold block font-body text-or-champagne">Scott Nana</span>
-                        <span className="text-[11px] text-ivoire-violet/70 block font-body">Brand & Graphic Designer</span>
+                        <span className="text-sm font-bold block font-body text-or-champagne">Scott Nana</span>
+                        <span className="text-xs text-ivoire-violet/70 block font-body">Brand & Graphic Designer</span>
                       </div>
-                      <span className="text-[10px] uppercase tracking-wider font-semibold bg-violet-imperial/40 px-2 py-0.5 rounded-full border border-violet-imperial/40 text-amethyste">
+                      <span className="text-xs uppercase tracking-wider font-semibold bg-violet-imperial/40 px-2 py-0.5 rounded-full border border-violet-imperial/40 text-amethyste">
                         Fondateur
                       </span>
                     </div>
@@ -195,7 +195,7 @@ export const APropos: React.FC = () => {
                 « Le design n'est pas une question d'esthétique. C'est un outil d'impact. »
               </blockquote>
 
-              <p className="text-xs sm:text-sm text-ivoire-violet/70 font-body max-w-lg mx-auto pt-2">
+              <p className="text-sm sm:text-base text-ivoire-violet/80 font-body max-w-lg mx-auto pt-2">
                 Tout ce que je conçois pour votre marque — de la couleur d'un bouton au choix d'une typographie — répond à cette seule exigence d'utilité et de résultat.
               </p>
             </div>
@@ -211,7 +211,7 @@ export const APropos: React.FC = () => {
               <h2 className="text-2xl sm:text-3xl font-title font-semibold text-onyx">
                 Et si nous donnions à votre marque l'image qui s'impose ?
               </h2>
-              <p className="text-sm sm:text-base text-onyx/75 font-body max-w-xl mx-auto">
+              <p className="text-base text-onyx/80 font-body max-w-xl mx-auto">
                 Parlez-moi de votre activité, de vos défis actuels et de vos ambitions. Je vous proposerai un cadre de travail sur mesure.
               </p>
             </div>

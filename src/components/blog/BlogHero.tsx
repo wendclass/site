@@ -264,7 +264,7 @@ export const BlogHero: React.FC<BlogHeroProps> = ({ articles }) => {
                     target.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                className="inline-flex items-center gap-2 text-xs font-semibold text-amethyste hover:text-white transition-colors group focus:outline-none focus:ring-2 focus:ring-amethyste/50 rounded-lg p-1"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-amethyste hover:text-white transition-colors group focus:outline-none focus:ring-2 focus:ring-amethyste/50 rounded-lg min-h-[44px] py-2 px-1"
               >
                 <span>Voir tous les articles</span>
                 <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform" />
@@ -410,7 +410,7 @@ export const BlogHero: React.FC<BlogHeroProps> = ({ articles }) => {
 
                             {/* Rubrique pill (top left) */}
                             <div className="absolute top-4 left-4 z-20">
-                              <span className="px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-onyx/85 backdrop-blur-md text-amethyste border border-amethyste/40 shadow-sm">
+                              <span className="px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase bg-onyx/85 backdrop-blur-md text-amethyste border border-amethyste/40 shadow-sm">
                                 {getRubriqueName(article.rubrique) ||
                                   'Identité Visuelle'}
                               </span>

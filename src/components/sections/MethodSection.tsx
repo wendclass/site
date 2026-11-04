@@ -142,7 +142,7 @@ export const MethodSection: React.FC = () => {
                         {step.title}
                       </h3>
 
-                      <p className="text-sm text-onyx/75 font-body leading-relaxed">
+                      <p className="text-base text-onyx/80 font-body leading-relaxed">
                         {step.description}
                       </p>
 
@@ -150,7 +150,7 @@ export const MethodSection: React.FC = () => {
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
-                          className="pt-2 text-xs text-onyx/65 font-body border-t border-violet-imperial/10 mt-3"
+                          className="pt-2 text-sm text-onyx/70 font-body border-t border-violet-imperial/10 mt-3"
                         >
                           {step.details}
                         </motion.div>
@@ -166,7 +166,7 @@ export const MethodSection: React.FC = () => {
           <div className="lg:col-span-6 lg:sticky lg:top-28">
             <div className="relative bg-onyx rounded-3xl p-4 sm:p-6 border border-white/15 shadow-soft-lg overflow-hidden text-white">
               {/* Top Bar */}
-              <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10 text-xs text-ivoire-violet/70">
+              <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10 text-sm text-ivoire-violet/75">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-amethyste" />
                   <span className="text-or-champagne font-semibold uppercase tracking-wider text-[11px]">

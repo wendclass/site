@@ -36,21 +36,22 @@ export const Accordion: React.FC<AccordionProps> = ({
   const contentId = id || `accordion-content-${Math.random().toString(36).substring(2, 9)}`;
 
   return (
-    <div className={`border-t border-violet-imperial/10 pt-4 mt-4 ${className}`}>
+    <div className={`border-t border-violet-imperial/10 pt-3 mt-3 ${className}`}>
+      {/* Fully clickable header with min 44px touch target & 16px readable font */}
       <button
         type="button"
         onClick={handleToggle}
-        className="w-full flex items-center justify-between py-2 text-left text-sm font-medium text-violet-imperial hover:text-[#7818e8] transition-colors group focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-imperial/50 rounded"
+        className="w-full flex items-center justify-between min-h-[44px] py-2.5 px-1 text-left text-base font-semibold text-violet-imperial hover:text-[#7818e8] transition-colors group focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-imperial/50 rounded-xl"
         aria-expanded={isOpen}
         aria-controls={contentId}
       >
-        <span className="flex items-center gap-2 group-hover:underline underline-offset-4">
+        <span className="flex items-center gap-2 group-hover:underline underline-offset-4 text-onyx font-title text-lg sm:text-xl font-medium">
           {title}
         </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.25, ease: 'easeInOut' }}
-          className="p-1 rounded-full bg-violet-imperial/5 group-hover:bg-violet-imperial/10 text-violet-imperial"
+          className="p-1.5 rounded-full bg-violet-imperial/10 text-violet-imperial shrink-0 ml-3 group-hover:bg-violet-imperial/20 transition-colors"
         >
           <ChevronDown className="w-4 h-4" />
         </motion.div>
@@ -66,7 +67,7 @@ export const Accordion: React.FC<AccordionProps> = ({
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="pt-3 pb-2 text-sm text-onyx/80 leading-relaxed font-body">
+            <div className="pt-3 pb-3 px-1 text-base text-onyx/80 leading-relaxed font-body">
               {children}
             </div>
           </motion.div>

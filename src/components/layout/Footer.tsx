@@ -8,11 +8,11 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-onyx text-ivoire-violet pt-16 pb-12 border-t border-white/10 relative overflow-hidden">
+    <footer className="bg-onyx text-ivoire-violet pt-16 pb-24 sm:pb-14 border-t border-white/10 relative overflow-hidden">
       {/* Subtle background ambient glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-gradient-to-b from-violet-imperial/20 to-transparent blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10 items-start">
           {/* Brand Column */}
           <div className="md:col-span-6 space-y-4">
@@ -20,7 +20,7 @@ export const Footer: React.FC = () => {
             <p className="text-or-champagne font-medium text-lg tracking-wide max-w-md pt-2">
               « L'identité visuelle qui vous impose »
             </p>
-            <p className="text-ivoire-violet/70 text-sm max-w-md leading-relaxed">
+            <p className="text-ivoire-violet/75 text-sm sm:text-base max-w-md leading-relaxed">
               Marque personnelle de Scott Nana, Brand & Graphic Designer basé à Ouagadougou, Burkina Faso. 
               Chaque visuel est pensé stratégiquement pour capter l’attention et transformer vos prospects en clients.
             </p>
@@ -28,32 +28,32 @@ export const Footer: React.FC = () => {
 
           {/* Navigation Links */}
           <div className="md:col-span-3 space-y-3">
-            <h3 className="text-xs uppercase tracking-widest text-amethyste font-semibold font-body">
+            <h3 className="text-sm uppercase tracking-wider text-amethyste font-semibold font-body">
               Navigation
             </h3>
-            <ul className="space-y-2.5 text-sm font-medium">
+            <ul className="space-y-2 text-sm sm:text-base font-medium">
               <li>
-                <Link to="/" className="text-ivoire-violet/80 hover:text-white transition-colors">
+                <Link to="/" className="text-ivoire-violet/80 hover:text-white transition-colors py-1 inline-flex items-center min-h-[36px] sm:min-h-0">
                   Accueil
                 </Link>
               </li>
               <li>
-                <Link to="/offres" className="text-ivoire-violet/80 hover:text-white transition-colors">
+                <Link to="/offres" className="text-ivoire-violet/80 hover:text-white transition-colors py-1 inline-flex items-center min-h-[36px] sm:min-h-0">
                   Offres & Formules
                 </Link>
               </li>
               <li>
-                <Link to="/projets" className="text-ivoire-violet/80 hover:text-white transition-colors">
+                <Link to="/projets" className="text-ivoire-violet/80 hover:text-white transition-colors py-1 inline-flex items-center min-h-[36px] sm:min-h-0">
                   Mes projets
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="text-ivoire-violet/80 hover:text-white transition-colors">
+                <Link to="/blog" className="text-ivoire-violet/80 hover:text-white transition-colors py-1 inline-flex items-center min-h-[36px] sm:min-h-0">
                   Blog & Analyses
                 </Link>
               </li>
               <li>
-                <Link to="/a-propos" className="text-ivoire-violet/80 hover:text-white transition-colors">
+                <Link to="/a-propos" className="text-ivoire-violet/80 hover:text-white transition-colors py-1 inline-flex items-center min-h-[36px] sm:min-h-0">
                   À propos
                 </Link>
               </li>
@@ -62,10 +62,10 @@ export const Footer: React.FC = () => {
 
           {/* Social & CTA Column */}
           <div className="md:col-span-3 space-y-4">
-            <h3 className="text-xs uppercase tracking-widest text-amethyste font-semibold font-body">
+            <h3 className="text-sm uppercase tracking-wider text-amethyste font-semibold font-body">
               Échange direct
             </h3>
-            <p className="text-xs text-ivoire-violet/70">
+            <p className="text-sm text-ivoire-violet/75 leading-relaxed">
               Un projet en tête ? Parlons de vos objectifs et de la stratégie visuelle adaptée.
             </p>
             <CtaButton
@@ -77,16 +77,16 @@ export const Footer: React.FC = () => {
               Prendre contact
             </CtaButton>
 
-            {/* Social Icons */}
+            {/* Social Icons (all with touch target >= 44x44px) */}
             <div className="pt-2">
-              <span className="text-xs text-ivoire-violet/50 block mb-2">Réseaux & Portfolio</span>
+              <span className="text-sm text-ivoire-violet/60 block mb-2.5">Réseaux & Portfolio</span>
               <div className="flex items-center gap-3">
                 {/* LinkedIn */}
                 <a
                   href="https://linkedin.com/in/wendclass"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-ivoire-violet/80 hover:text-white hover:bg-violet-imperial hover:border-violet-imperial transition-all duration-300"
+                  className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-ivoire-violet/80 hover:text-white hover:bg-violet-imperial hover:border-violet-imperial transition-all duration-300 active:scale-95"
                   aria-label="LinkedIn de Scott Nana / Class S"
                 >
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -99,11 +99,11 @@ export const Footer: React.FC = () => {
                   href="https://web.facebook.com/wendclass"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-ivoire-violet/80 hover:text-white hover:bg-violet-imperial hover:border-violet-imperial transition-all duration-300"
+                  className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-ivoire-violet/80 hover:text-white hover:bg-violet-imperial hover:border-violet-imperial transition-all duration-300 active:scale-95"
                   aria-label="Facebook de Scott Nana / Class S"
                 >
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/>
+                    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
                   </svg>
                 </a>
 
@@ -112,7 +112,7 @@ export const Footer: React.FC = () => {
                   href="https://behance.net/wendclass"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-ivoire-violet/80 hover:text-white hover:bg-violet-imperial hover:border-violet-imperial transition-all duration-300"
+                  className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-ivoire-violet/80 hover:text-white hover:bg-violet-imperial hover:border-violet-imperial transition-all duration-300 active:scale-95"
                   aria-label="Behance de Scott Nana / Class S"
                 >
                   <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -124,10 +124,10 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom copyright line */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ivoire-violet/50">
+        {/* Bottom copyright line (Section 2: Secondary floor >= 14px) */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-ivoire-violet/60">
           <p>© {currentYear} Class S. Tous droits réservés.</p>
-          <p className="flex items-center gap-1 text-ivoire-violet/60">
+          <p className="flex items-center gap-1.5 text-ivoire-violet/70">
             Conception & identité : <span className="text-amethyste font-medium">Class S</span> — Scott Nana
           </p>
         </div>

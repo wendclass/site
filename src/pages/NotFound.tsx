@@ -40,7 +40,7 @@ export const NotFound: React.FC = () => {
           Page introuvable. Votre image, elle, ne devrait jamais l’être.
         </h1>
 
-        <p className="text-sm sm:text-base text-onyx/75 max-w-xl mx-auto leading-relaxed">
+        <p className="text-base text-onyx/80 max-w-xl mx-auto leading-relaxed">
           L’adresse demandée n’existe pas ou a été déplacée. En attendant de retrouver votre chemin, esquivez les visuels sans âme pour les corriger avec l’identité Class S.
         </p>
       </div>
@@ -56,7 +56,7 @@ export const NotFound: React.FC = () => {
       <div className="text-center pt-2">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-onyx/70 hover:text-violet-imperial transition-colors"
+          className="inline-flex items-center gap-2 text-sm sm:text-base font-semibold text-onyx/75 hover:text-violet-imperial transition-colors min-h-[44px] py-2 px-3"
         >
           <Home className="w-4 h-4 text-violet-imperial" />
           <span>Ou quitter le jeu et revenir directement à l’accueil</span>

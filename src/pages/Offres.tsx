@@ -31,7 +31,7 @@ export const Offres: React.FC = () => {
           <p className="text-lg sm:text-xl font-title font-medium text-onyx italic leading-relaxed">
             « Chaque élément de votre identité sera construit pour qu'elle s'impose dans votre marché et ne se noie pas parmi vos concurrents. »
           </p>
-          <span className="text-xs text-violet-imperial font-semibold uppercase tracking-wider mt-2 block font-body">
+          <span className="text-sm text-violet-imperial font-semibold uppercase tracking-wider mt-2 block font-body">
             — Engagement de conception Class S
           </span>
         </div>
@@ -61,7 +61,7 @@ export const Offres: React.FC = () => {
                         {offer.title}
                       </h2>
 
-                      <p className="text-sm sm:text-base text-onyx/75 font-body leading-relaxed">
+                      <p className="text-base text-onyx/80 font-body leading-relaxed">
                         {offer.subtitle}
                       </p>
                     </div>
@@ -104,7 +104,7 @@ export const Offres: React.FC = () => {
                         {offer.title}
                       </h2>
 
-                      <p className="text-sm text-ivoire-violet/80 font-body leading-relaxed">
+                      <p className="text-base text-ivoire-violet/85 font-body leading-relaxed">
                         {offer.subtitle}
                       </p>
                     </div>
@@ -167,7 +167,7 @@ export const Offres: React.FC = () => {
 
                 {/* 3 Highlighted details */}
                 <div className="space-y-4">
-                  <span className="text-xs font-bold uppercase tracking-wider text-violet-imperial block font-body">
+                  <span className="text-sm font-bold uppercase tracking-wider text-violet-imperial block font-body">
                     Ce qui fait la différence dans cette formule :
                   </span>
 
@@ -180,7 +180,7 @@ export const Offres: React.FC = () => {
                         <div className="w-6 h-6 rounded-full bg-violet-imperial/15 text-violet-imperial flex items-center justify-center shrink-0 mt-0.5">
                           <Check className="w-3.5 h-3.5" />
                         </div>
-                        <p className="text-xs sm:text-sm text-onyx/85 font-body leading-relaxed">
+                        <p className="text-sm sm:text-base text-onyx/85 font-body leading-relaxed">
                           {detail}
                         </p>
                       </div>
@@ -198,7 +198,7 @@ export const Offres: React.FC = () => {
                       {offer.accordionDetails[0].items.map((item, idx) => (
                         <div key={idx} className="flex items-start gap-2.5">
                           <span className="text-amethyste font-bold">•</span>
-                          <span className="text-xs sm:text-sm text-onyx/80 font-body">{item}</span>
+                          <span className="text-sm sm:text-base text-onyx/80 font-body">{item}</span>
                         </div>
                       ))}
                     </div>

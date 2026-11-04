@@ -87,7 +87,7 @@ export const ProjectsProof: React.FC = () => {
                     onDragStart={(e) => e.preventDefault()}
                     aria-hidden="true"
                   />
-                  <div className="absolute top-3 left-3 z-20 bg-onyx/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-[11px] font-semibold text-ivoire-violet uppercase tracking-wider">
+                  <div className="absolute top-3 left-3 z-20 bg-onyx/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-xs font-semibold text-ivoire-violet uppercase tracking-wider">
                     {project.category}
                   </div>
                 </Link>
@@ -100,20 +100,20 @@ export const ProjectsProof: React.FC = () => {
                         {project.title}
                       </h3>
                     </Link>
-                    <p className="text-xs sm:text-sm text-onyx/70 leading-relaxed font-body">
+                    <p className="text-sm sm:text-base text-onyx/75 leading-relaxed font-body">
                       {project.tagline}
                     </p>
                   </div>
 
                   <div className="pt-3 border-t border-violet-imperial/10 space-y-3">
-                    <div className="flex items-start gap-2 text-xs text-onyx/80 font-body">
+                    <div className="flex items-start gap-2 text-sm text-onyx/80 font-body">
                       <CheckCircle className="w-4 h-4 text-violet-imperial shrink-0 mt-0.5" />
                       <span><strong className="text-onyx font-semibold">Résultat :</strong> {project.result}</span>
                     </div>
 
                     <Link
                       to={projectUrl}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-violet-imperial group-hover:underline underline-offset-4"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-wider text-violet-imperial min-h-[44px] py-2 group-hover:underline underline-offset-4"
                     >
                       <span>Découvrir l'étude de cas</span>
                       <ArrowRight className="w-3.5 h-3.5" />

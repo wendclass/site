@@ -44,7 +44,7 @@ export const FaqSection: React.FC = () => {
                   id={item.id}
                   className="!border-none !pt-2 !mt-0"
                 >
-                  <p className="text-sm sm:text-base text-onyx/80 font-body leading-relaxed pl-2 border-l-2 border-violet-imperial/30 py-1">
+                  <p className="text-base text-onyx/85 font-body leading-relaxed pl-2 border-l-2 border-violet-imperial/30 py-1">
                     {item.answer}
                   </p>
                 </Accordion>
@@ -55,7 +55,7 @@ export const FaqSection: React.FC = () => {
 
         {/* Bottom Action Bridge */}
         <div className="text-center pt-2">
-          <p className="text-sm text-onyx/75 font-body mb-4">
+          <p className="text-base text-onyx/80 font-body mb-4">
             Vous avez une autre question spécifique à votre projet ?
           </p>
           <CtaButton to="/#contact" variant="champagne" size="md" icon={<ArrowUpRight className="w-4 h-4" />}>

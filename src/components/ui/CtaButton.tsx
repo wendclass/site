@@ -31,12 +31,13 @@ export const CtaButton: React.FC<CtaButtonProps> = ({
   fullWidth = false,
 }) => {
   const baseStyles =
-    'inline-flex items-center justify-center font-medium font-body rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98] select-none cursor-pointer';
+    'inline-flex items-center justify-center font-medium font-body rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98] select-none cursor-pointer text-center';
 
+  // Section 5: All touch targets must be at least 44x44px
   const sizeStyles = {
-    sm: 'px-4 py-2 text-sm gap-1.5 min-h-[38px]',
-    md: 'px-6 py-3 text-base gap-2 min-h-[46px]',
-    lg: 'px-8 py-4 text-lg gap-2.5 min-h-[54px]',
+    sm: 'px-4 py-2.5 text-sm gap-1.5 min-h-[44px]',
+    md: 'px-5 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base gap-2 min-h-[46px]',
+    lg: 'px-6 sm:px-8 py-3.5 sm:py-4 text-base sm:text-lg gap-2.5 min-h-[48px] sm:min-h-[54px]',
   };
 
   const variantStyles = {
@@ -49,7 +50,7 @@ export const CtaButton: React.FC<CtaButtonProps> = ({
     dark:
       'bg-ivoire-violet text-onyx hover:bg-white shadow-soft hover:shadow-glow hover:-translate-y-0.5 focus-visible:ring-white',
     ghost:
-      'bg-transparent text-onyx hover:text-violet-imperial hover:bg-violet-imperial/5 focus-visible:ring-violet-imperial',
+      'bg-transparent text-onyx hover:text-violet-imperial hover:bg-violet-imperial/5 focus-visible:ring-violet-imperial min-h-[44px]',
   };
 
   const widthStyle = fullWidth ? 'w-full' : '';
@@ -60,8 +61,12 @@ export const CtaButton: React.FC<CtaButtonProps> = ({
   const content = (
     <>
       {icon && iconPosition === 'left' && <span className="shrink-0">{icon}</span>}
-      <span>{children}</span>
-      {icon && iconPosition === 'right' && <span className="shrink-0 transition-transform duration-300 group-hover:translate-x-0.5">{icon}</span>}
+      <span className="leading-snug">{children}</span>
+      {icon && iconPosition === 'right' && (
+        <span className="shrink-0 transition-transform duration-300 group-hover:translate-x-0.5">
+          {icon}
+        </span>
+      )}
     </>
   );
 

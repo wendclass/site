@@ -349,7 +349,7 @@ export const ContactForm: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-b from-ivoire-violet via-white to-ivoire-violet relative scroll-mt-24">
+    <section id="contact" className="pt-16 pb-28 sm:py-20 bg-gradient-to-b from-ivoire-violet via-white to-ivoire-violet relative scroll-mt-24">
       {/* Decorative ambient elements */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-violet-imperial/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
       <div className="absolute bottom-10 right-0 w-96 h-96 bg-or-champagne/10 rounded-full blur-3xl pointer-events-none" />
@@ -375,7 +375,7 @@ export const ContactForm: React.FC = () => {
           {/* Progress Header */}
           {!isSuccess && (
             <div className="mb-8">
-              <div className="flex items-center justify-between text-xs font-medium text-onyx/60 mb-2 font-body">
+              <div className="flex items-center justify-between text-sm font-medium text-onyx/75 mb-2 font-body">
                 <span>Étape {currentStep} sur {totalSteps}</span>
                 <span className="text-violet-imperial font-semibold">
                   {currentStep === 1 && 'Type de projet'}
@@ -417,7 +417,7 @@ export const ContactForm: React.FC = () => {
                   <p className="text-lg text-onyx/85 font-medium leading-relaxed font-body bg-ivoire-violet p-4 rounded-2xl border border-violet-imperial/15">
                     « Merci, votre demande est bien reçue. Je reviens vers vous sur WhatsApp sous 24 heures. »
                   </p>
-                  <p className="text-xs text-onyx/60 font-body">
+                  <p className="text-sm text-onyx/70 font-body">
                     Vous souhaitez accélérer l'échange ? Vous pouvez également m'écrire directement sur WhatsApp avec votre récapitulatif pré-rempli :
                   </p>
                 </div>
@@ -459,7 +459,7 @@ export const ContactForm: React.FC = () => {
                       <label className="text-lg font-semibold text-onyx font-body block">
                         1. Quel est le type de votre projet ?
                       </label>
-                      <p className="text-xs text-onyx/60">Sélectionnez une option pour personnaliser les questions suivantes.</p>
+                      <p className="text-sm text-onyx/70">Sélectionnez une option pour personnaliser les questions suivantes.</p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -479,7 +479,7 @@ export const ContactForm: React.FC = () => {
                             <span className="font-semibold text-sm sm:text-base text-onyx font-body block mb-1">
                               {option.label}
                             </span>
-                            <span className="text-xs text-onyx/60 font-body">
+                            <span className="text-sm text-onyx/70 font-body">
                               {option.desc}
                             </span>
                           </button>
@@ -502,7 +502,7 @@ export const ContactForm: React.FC = () => {
                       <label className="text-lg font-semibold text-onyx font-body block">
                         2. Qu’aimeriez-vous que ce projet vous apporte ?
                       </label>
-                      <p className="text-xs text-onyx/60">Plusieurs choix possibles.</p>
+                      <p className="text-sm text-onyx/70">Plusieurs choix possibles.</p>
                     </div>
 
                     <div className="space-y-3">
@@ -621,7 +621,7 @@ export const ContactForm: React.FC = () => {
                           <label className="text-lg font-semibold text-onyx font-body block">
                             3. Quels supports vous faut-il ?
                           </label>
-                          <p className="text-xs text-onyx/60">Choix multiple.</p>
+                          <p className="text-sm text-onyx/70">Choix multiple.</p>
                         </div>
                         <div className="space-y-3">
                           {BRANCH_C_OPTIONS.map((opt) => {
@@ -934,7 +934,7 @@ export const ContactForm: React.FC = () => {
                     <div className="space-y-4">
                       {/* Nom */}
                       <div>
-                        <label className="text-xs font-semibold text-onyx/80 block mb-1.5 font-body">
+                        <label className="text-sm font-semibold text-onyx/85 block mb-1.5 font-body">
                           Nom & Prénom <span className="text-violet-imperial">*</span>
                         </label>
                         <div className="relative">
@@ -954,7 +954,7 @@ export const ContactForm: React.FC = () => {
 
                       {/* Entreprise */}
                       <div>
-                        <label className="text-xs font-semibold text-onyx/80 block mb-1.5 font-body">
+                        <label className="text-sm font-semibold text-onyx/85 block mb-1.5 font-body">
                           Nom de l’entreprise ou de la marque <span className="text-violet-imperial">*</span>
                         </label>
                         <div className="relative">
@@ -974,7 +974,7 @@ export const ContactForm: React.FC = () => {
 
                       {/* WhatsApp */}
                       <div>
-                        <label className="text-xs font-semibold text-onyx/80 block mb-1.5 font-body">
+                        <label className="text-sm font-semibold text-onyx/85 block mb-1.5 font-body">
                           Numéro WhatsApp <span className="text-violet-imperial">*</span>
                         </label>
                         <div className="relative">
@@ -990,7 +990,7 @@ export const ContactForm: React.FC = () => {
                             className="w-full pl-11 pr-4 py-3 text-sm bg-ivoire-violet/60 border border-violet-imperial/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-imperial font-body"
                           />
                         </div>
-                        <span className="text-[11px] text-onyx/50 block mt-1">
+                        <span className="text-xs text-onyx/60 block mt-1">
                           Réponse directe sur votre messagerie sous 24h ouvrées.
                         </span>
                       </div>
@@ -1023,25 +1023,25 @@ export const ContactForm: React.FC = () => {
 
                 {/* Error Banner */}
                 {errorMsg && (
-                  <div className="mt-6 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium flex items-center gap-2 font-body animate-shake">
+                  <div className="mt-6 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm font-medium flex items-center gap-2 font-body animate-shake">
                     <AlertCircle className="w-4 h-4 shrink-0" />
                     <span>{errorMsg}</span>
                   </div>
                 )}
 
                 {/* Navigation Buttons */}
-                <div className="mt-8 pt-6 border-t border-violet-imperial/10 flex items-center justify-between gap-4">
+                <div className="mt-8 pt-6 border-t border-violet-imperial/10 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
                   {currentStep > 1 ? (
                     <button
                       type="button"
                       onClick={handlePrev}
-                      className="inline-flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium text-onyx/70 hover:text-violet-imperial rounded-full hover:bg-violet-imperial/5 transition-colors"
+                      className="inline-flex items-center justify-center gap-1.5 px-5 py-3 text-sm font-medium text-onyx/75 hover:text-violet-imperial rounded-full hover:bg-violet-imperial/5 transition-colors min-h-[44px] w-full sm:w-auto"
                     >
                       <ArrowLeft className="w-4 h-4" />
                       Précédent
                     </button>
                   ) : (
-                    <div />
+                    <div className="hidden sm:block" />
                   )}
 
                   {currentStep < totalSteps ? (
@@ -1050,6 +1050,7 @@ export const ContactForm: React.FC = () => {
                       onClick={handleNext}
                       variant="primary"
                       size="md"
+                      className="w-full sm:w-auto justify-center"
                       icon={<ArrowRight className="w-4 h-4" />}
                     >
                       Continuer
@@ -1060,6 +1061,7 @@ export const ContactForm: React.FC = () => {
                       variant="champagne"
                       size="md"
                       disabled={isSubmitting}
+                      className="w-full sm:w-auto justify-center font-bold text-base"
                       icon={<Send className="w-4 h-4" />}
                     >
                       {isSubmitting ? 'Envoi en cours...' : 'Envoyer ma demande'}

@@ -117,7 +117,7 @@ export const SocialProofWall: React.FC = () => {
                         ))}
                       </div>
                       {testim.category && (
-                        <span className="text-[11px] uppercase tracking-wider font-semibold text-violet-imperial bg-violet-imperial/10 px-2.5 py-0.5 rounded-full font-body">
+                        <span className="text-xs uppercase tracking-wider font-semibold text-violet-imperial bg-violet-imperial/10 px-2.5 py-0.5 rounded-full font-body">
                           {testim.category}
                         </span>
                       )}
@@ -125,13 +125,13 @@ export const SocialProofWall: React.FC = () => {
 
                     <div className="relative pt-2">
                       <MessageSquareQuote className="w-8 h-8 text-violet-imperial/15 absolute -top-1 -left-2" />
-                      <p className="text-sm sm:text-base text-onyx/85 italic font-body relative z-10 leading-relaxed pl-3">
+                      <p className="text-base text-onyx/90 italic font-body relative z-10 leading-relaxed pl-3">
                         {testim.content}
                       </p>
                     </div>
 
                     {testim.impact_result && (
-                      <div className="pt-2 flex items-start gap-2 text-xs text-onyx/70 font-body">
+                      <div className="pt-2 flex items-start gap-2 text-sm text-onyx/75 font-body">
                         <CheckCircle2 className="w-4 h-4 text-violet-imperial shrink-0 mt-0.5" />
                         <span><strong>Impact constaté :</strong> {testim.impact_result}</span>
                       </div>
@@ -140,15 +140,15 @@ export const SocialProofWall: React.FC = () => {
 
                   <div className="mt-6 pt-4 border-t border-violet-imperial/10 flex items-center justify-between">
                     <div>
-                      <span className="text-xs font-bold text-onyx block font-body">{testim.author_name}</span>
-                      <span className="text-[11px] text-onyx/50 font-body">{testim.author_role_company || 'Client Class S'}</span>
+                      <span className="text-sm font-bold text-onyx block font-body">{testim.author_name}</span>
+                      <span className="text-xs text-onyx/50 font-body">{testim.author_role_company || 'Client Class S'}</span>
                     </div>
                     {projectSlug && (
                       <CtaButton
                         to={`/projets/${projectSlug}`}
                         variant="ghost"
                         size="sm"
-                        className="!px-2 !py-1 !text-xs text-violet-imperial"
+                        className="!px-3 !py-1.5 !text-sm min-h-[44px] text-violet-imperial"
                         icon={<ArrowUpRight className="w-3.5 h-3.5" />}
                       >
                         Étude
@@ -200,7 +200,7 @@ export const SocialProofWall: React.FC = () => {
                         ))}
                       </div>
                       {testim.category && (
-                        <span className="text-[11px] uppercase tracking-wider font-semibold text-violet-imperial bg-violet-imperial/10 px-2.5 py-0.5 rounded-full font-body">
+                        <span className="text-xs uppercase tracking-wider font-semibold text-violet-imperial bg-violet-imperial/10 px-2.5 py-0.5 rounded-full font-body">
                           {testim.category}
                         </span>
                       )}
@@ -209,14 +209,14 @@ export const SocialProofWall: React.FC = () => {
                     {/* Testimonial Quote */}
                     <div className="relative pt-2">
                       <MessageSquareQuote className="w-8 h-8 text-violet-imperial/15 absolute -top-1 -left-2" />
-                      <p className="text-sm sm:text-base text-onyx/85 italic font-body relative z-10 leading-relaxed pl-3 line-clamp-3">
+                      <p className="text-base text-onyx/90 italic font-body relative z-10 leading-relaxed pl-3 line-clamp-3">
                         {testim.content}
                       </p>
                     </div>
 
                     {/* Result Tag */}
                     {testim.impact_result && (
-                      <div className="pt-2 flex items-start gap-2 text-xs text-onyx/70 font-body">
+                      <div className="pt-2 flex items-start gap-2 text-sm text-onyx/75 font-body">
                         <CheckCircle2 className="w-4 h-4 text-violet-imperial shrink-0 mt-0.5" />
                         <span className="line-clamp-2"><strong>Impact constaté :</strong> {testim.impact_result}</span>
                       </div>
@@ -226,15 +226,15 @@ export const SocialProofWall: React.FC = () => {
                   {/* Bottom Project Link */}
                   <div className="mt-6 pt-4 border-t border-violet-imperial/10 flex items-center justify-between">
                     <div className="max-w-[200px]">
-                      <span className="text-xs font-bold text-onyx block font-body truncate">{testim.author_name}</span>
-                      <span className="text-[11px] text-onyx/50 font-body">{testim.author_role_company || 'Client Class S'}</span>
+                      <span className="text-sm font-bold text-onyx block font-body truncate">{testim.author_name}</span>
+                      <span className="text-xs text-onyx/50 font-body">{testim.author_role_company || 'Client Class S'}</span>
                     </div>
                     {projectSlug && (
                       <CtaButton
                         to={`/projets/${projectSlug}`}
                         variant="ghost"
                         size="sm"
-                        className="!px-2 !py-1 !text-xs text-violet-imperial shrink-0"
+                        className="!px-3 !py-1.5 !text-sm min-h-[44px] text-violet-imperial shrink-0"
                         icon={<ArrowUpRight className="w-3.5 h-3.5" />}
                       >
                         Étude
@@ -247,7 +247,7 @@ export const SocialProofWall: React.FC = () => {
           </div>
 
           <div className="text-center mt-2">
-            <span className="text-[11px] text-onyx/40 font-body">
+            <span className="text-xs text-onyx/40 font-body">
               (Survolez ou touchez pour mettre le défilement en pause)
             </span>
           </div>

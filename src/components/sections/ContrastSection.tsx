@@ -50,7 +50,7 @@ export const ContrastSection: React.FC = () => {
                   <AlertOctagon className="w-4 h-4 text-red-400" />
                   <span>Sans stratégie de marque</span>
                 </div>
-                <span className="text-[11px] font-semibold uppercase tracking-wider bg-white/10 text-white/70 px-2.5 py-0.5 rounded-full font-body">
+                <span className="text-xs font-semibold uppercase tracking-wider bg-white/10 text-white/70 px-2.5 py-0.5 rounded-full font-body">
                   Image amateur
                 </span>
               </div>
@@ -62,7 +62,7 @@ export const ContrastSection: React.FC = () => {
               {/* Points */}
               <ul className="space-y-4 pt-2">
                 {amateurPoints.map((point, idx) => (
-                  <li key={idx} className="flex items-start gap-3.5 text-sm sm:text-base text-ivoire-violet/75 font-body leading-relaxed">
+                  <li key={idx} className="flex items-start gap-3.5 text-base text-ivoire-violet/85 font-body leading-relaxed">
                     <XCircle className="w-5 h-5 text-red-400/80 shrink-0 mt-0.5" />
                     <span>{point}</span>
                   </li>
@@ -71,7 +71,7 @@ export const ContrastSection: React.FC = () => {
             </div>
 
             {/* Bottom Status */}
-            <div className="mt-8 pt-4 border-t border-white/10 text-xs text-ivoire-violet/50 font-body flex items-center justify-between">
+            <div className="mt-8 pt-4 border-t border-white/10 text-sm text-ivoire-violet/60 font-body flex items-center justify-between">
               <span>Résultat : Perte de clients invisibles</span>
               <span className="text-red-300/80 font-medium">Faible conversion</span>
             </div>
@@ -80,7 +80,7 @@ export const ContrastSection: React.FC = () => {
           {/* Column 2: Image Class S (Light Ivory Violet, Imperial Violet, High Impact) */}
           <div className="bg-white rounded-3xl p-8 sm:p-10 text-onyx flex flex-col justify-between border-2 border-violet-imperial shadow-soft-lg ring-4 ring-violet-imperial/10 relative overflow-hidden group">
             {/* Corner Badge */}
-            <div className="absolute top-0 right-0 bg-gradient-to-l from-or-champagne to-amethyste text-onyx font-bold text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-bl-2xl font-body shadow-sm">
+            <div className="absolute top-0 right-0 bg-gradient-to-l from-or-champagne to-amethyste text-onyx font-bold text-xs uppercase tracking-widest px-4 py-1.5 rounded-bl-2xl font-body shadow-sm">
               Standard Class S
             </div>
 
@@ -90,7 +90,7 @@ export const ContrastSection: React.FC = () => {
                   <TrendingUp className="w-4 h-4 text-violet-imperial" />
                   <span>Avec l'identité Class S</span>
                 </div>
-                <span className="text-[11px] font-semibold uppercase tracking-wider bg-violet-imperial/10 text-violet-imperial px-2.5 py-0.5 rounded-full font-body">
+                <span className="text-xs font-semibold uppercase tracking-wider bg-violet-imperial/10 text-violet-imperial px-2.5 py-0.5 rounded-full font-body">
                   Image qui fait vendre
                 </span>
               </div>
@@ -102,7 +102,7 @@ export const ContrastSection: React.FC = () => {
               {/* Points */}
               <ul className="space-y-4 pt-2">
                 {classSPoints.map((point, idx) => (
-                  <li key={idx} className="flex items-start gap-3.5 text-sm sm:text-base text-onyx/90 font-medium font-body leading-relaxed">
+                  <li key={idx} className="flex items-start gap-3.5 text-base text-onyx/90 font-medium font-body leading-relaxed">
                     <CheckCircle2 className="w-5 h-5 text-violet-imperial shrink-0 mt-0.5" />
                     <span>{point}</span>
                   </li>
@@ -112,7 +112,7 @@ export const ContrastSection: React.FC = () => {
 
             {/* Bottom CTA Bridge */}
             <div className="mt-8 pt-6 border-t border-violet-imperial/15 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="text-xs text-onyx/70 font-body">
+              <div className="text-sm text-onyx/75 font-body">
                 <strong className="text-violet-imperial font-semibold">Résultat direct :</strong> Plus de prises de contact qualifiées
               </div>
               <CtaButton

@@ -165,7 +165,7 @@ export const BlogPost: React.FC = () => {
         <div>
           <Link
             to="/blog"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-ivoire-violet/60 hover:text-white transition-colors group"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-ivoire-violet/75 hover:text-white transition-colors group min-h-[44px] py-2"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             <span>Retour aux articles</span>
@@ -211,14 +211,14 @@ export const BlogPost: React.FC = () => {
               </div>
               <div>
                 <div className="text-sm font-semibold text-white">Scott Nana</div>
-                <div className="text-[11px] text-ivoire-violet/60">
+                <div className="text-xs text-ivoire-violet/60">
                   Brand & Graphic Designer · Class S
                 </div>
               </div>
             </div>
 
             {/* Date & Read time */}
-            <div className="flex items-center gap-4 text-xs text-ivoire-violet/60">
+            <div className="flex items-center gap-4 text-sm text-ivoire-violet/75">
               <div className="flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5 text-or-champagne" />
                 <span>Publié le {formattedDate}</span>
@@ -280,7 +280,7 @@ export const BlogPost: React.FC = () => {
             [&>li]:text-ivoire-violet/90
             [&>strong]:text-white [&>strong]:font-semibold
             [&>a]:text-amethyste [&>a]:underline [&>a]:hover:text-white [&>a]:transition-colors
-            [&>figure]:my-8 [&>figure]:rounded-2xl [&>figure]:overflow-hidden [&>figure>img]:rounded-2xl [&>figure>img]:w-full [&>figure>img]:border [&>figure>img]:border-white/10 [&>figure>figcaption]:text-xs [&>figure>figcaption]:text-center [&>figure>figcaption]:text-ivoire-violet/60 [&>figure>figcaption]:mt-2 [&>figure>figcaption]:italic"
+            [&>figure]:my-8 [&>figure]:rounded-2xl [&>figure]:overflow-hidden [&>figure>img]:rounded-2xl [&>figure>img]:w-full [&>figure>img]:border [&>figure>img]:border-white/10 [&>figure>figcaption]:text-sm [&>figure>figcaption]:text-center [&>figure>figcaption]:text-ivoire-violet/60 [&>figure>figcaption]:mt-2 [&>figure>figcaption]:italic"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(article.content, {
               ALLOWED_TAGS: [

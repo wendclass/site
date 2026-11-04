@@ -28,7 +28,7 @@ export const Accueil: React.FC = () => {
               </div>
 
               {/* H1 - Exact text validated */}
-              <h1 className="text-[2.2rem] sm:text-5xl lg:text-6xl xl:text-7xl font-title font-semibold text-onyx leading-[1.1] tracking-tight">
+              <h1 className="text-fluid-hero font-title font-semibold text-onyx tracking-tight text-balance leading-[1.1]">
                 D'une image qui existe à une image qui fait vendre.
               </h1>
 
@@ -43,7 +43,7 @@ export const Accueil: React.FC = () => {
                   to="/#contact"
                   variant="primary"
                   size="md"
-                  className="!py-3 sm:!py-3.5 sm:!px-8 !text-sm sm:!text-base justify-center"
+                  className="!py-3 sm:!py-3.5 sm:!px-8 !text-base justify-center min-h-[44px]"
                   icon={<ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5" />}
                 >
                   Prendre contact
@@ -52,14 +52,14 @@ export const Accueil: React.FC = () => {
                   to="/projets"
                   variant="secondary"
                   size="md"
-                  className="!py-3 sm:!py-3.5 sm:!px-8 !text-sm sm:!text-base justify-center"
+                  className="!py-3 sm:!py-3.5 sm:!px-8 !text-base justify-center min-h-[44px]"
                 >
                   Voir mes réalisations
                 </CtaButton>
               </div>
 
               {/* Guarantees & Social Proof mini bar */}
-              <div className="pt-6 border-t border-violet-imperial/10 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-onyx/70 font-body">
+              <div className="pt-6 border-t border-violet-imperial/10 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-sm text-onyx/75 font-body">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-violet-imperial" />
                   <span>Direction artistique sur mesure</span>
@@ -92,7 +92,7 @@ export const Accueil: React.FC = () => {
           <p className="text-xl sm:text-2xl md:text-3xl font-title font-normal text-white leading-relaxed italic">
             « Si vous me confiez votre image, chaque visuel est pensé pour que celui qui le voit prenne contact, et que votre activité vende plus. »
           </p>
-          <span className="text-xs text-amethyste font-body block font-medium">
+          <span className="text-sm text-amethyste font-body block font-medium">
             — Scott Nana, Fondateur de Class S
           </span>
         </div>
