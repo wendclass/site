@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { projectsData as initialProjectsData, Project } from '../data/projets';
+import { normalizeProjectSlug } from './projectHelpers';
 
 // Environment variables
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
@@ -122,7 +123,7 @@ export interface DbArticleRedirect {
 // ==============================================================================
 const STORAGE_KEYS = {
   DEMANDES: 'class_s_demandes_v1',
-  PROJETS: 'class_s_projets_v1',
+  PROJETS: 'class_s_projets_v2',
   TEMOIGNAGES: 'class_s_temoignages_v1',
   ARTICLES: 'class_s_articles_v1',
   ARTICLE_REDIRECTS: 'class_s_article_redirects_v1',
@@ -670,10 +671,11 @@ export const fetchPublicProjects = async (): Promise<Project[]> => {
             (a: any, b: any) => (a.display_order || 0) - (b.display_order || 0)
           );
           const hero = sortedImages.find((img: any) => img.is_hero) || sortedImages[0];
+          const normSlug = normalizeProjectSlug(p.slug || p.id || '');
 
           return {
             id: p.id,
-            slug: p.slug,
+            slug: normSlug,
             title: p.title,
             category: p.category,
             tagline: p.tagline,
@@ -700,32 +702,38 @@ export const fetchPublicProjects = async (): Promise<Project[]> => {
   return localList
     .filter((p) => p.status === 'publie')
     .sort((a, b) => a.display_order - b.display_order)
-    .map((p) => ({
-      id: p.id,
-      slug: p.slug,
-      title: p.title,
-      category: p.category,
-      tagline: p.tagline,
-      accroche: p.accroche || p.tagline,
-      clientGoal: p.client_goal,
-      designedSolution: p.designed_solution,
-      result: p.result,
-      disclaimer: p.disclaimer,
-      heroImage: p.hero_image || (p.gallery && p.gallery[0]?.src) || '/assets/logo/logo-violet.png',
-      gallery: (p.gallery || []).map((g) => ({
-        src: g.src,
-        caption: g.caption,
-      })),
-    }));
+    .map((p) => {
+      const normSlug = normalizeProjectSlug(p.slug || p.id || '');
+      return {
+        id: p.id,
+        slug: normSlug,
+        title: p.title,
+        category: p.category,
+        tagline: p.tagline,
+        accroche: p.accroche || p.tagline,
+        clientGoal: p.client_goal,
+        designedSolution: p.designed_solution,
+        result: p.result,
+        disclaimer: p.disclaimer,
+        heroImage: p.hero_image || (p.gallery && p.gallery[0]?.src) || '/assets/logo/logo-violet.png',
+        gallery: (p.gallery || []).map((g) => ({
+          src: g.src,
+          caption: g.caption,
+        })),
+      };
+    });
 };
 
 export const fetchPublicProjectBySlug = async (
   slug: string
 ): Promise<{ project: Project | null; redirectSlug?: string }> => {
-  if (slug === '72h-cj-2026') {
+  const normTarget = normalizeProjectSlug(slug);
+
+  if (slug === '72h-cj-2026' || slug === '72h') {
     return { project: null, redirectSlug: '72-heures-cj-2026' };
   }
-  // Check redirects
+
+  // Check 301 redirects
   if (isSupabaseConfigured() && supabase) {
     try {
       const { data: redir } = await supabase
@@ -744,9 +752,31 @@ export const fetchPublicProjectBySlug = async (
     }
   }
 
+  // 1. Try public fetched list
   const all = await fetchPublicProjects();
-  const found = all.find((p) => p.slug === slug || p.id === slug);
-  return { project: found || null };
+  let found = all.find((p) => {
+    const pNorm = normalizeProjectSlug(p.slug || p.id || '');
+    return pNorm === normTarget || p.id === slug || p.slug === slug;
+  });
+
+  // 2. Always fallback to static initialProjectsData if not in DB
+  if (!found) {
+    found = initialProjectsData.find((p) => {
+      const pNorm = normalizeProjectSlug(p.slug || p.id || '');
+      return pNorm === normTarget || p.id === slug || p.slug === slug;
+    });
+  }
+
+  if (found) {
+    return {
+      project: {
+        ...found,
+        slug: normalizeProjectSlug(found.slug || found.id || ''),
+      },
+    };
+  }
+
+  return { project: null };
 };
 
 export const recordProjectRedirect = async (oldSlug: string, newSlug: string, projectId?: string): Promise<void> => {

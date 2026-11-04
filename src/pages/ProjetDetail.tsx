@@ -17,7 +17,7 @@ import { projectsData, Project } from '../data/projets';
 import { fetchPublicProjects, fetchPublicProjectBySlug } from '../lib/supabase';
 import { getOptimizedImage } from '../lib/images';
 import { useSeo } from '../hooks/useSeo';
-import { getProjectAccroche } from '../lib/projectHelpers';
+import { getProjectAccroche, normalizeProjectSlug } from '../lib/projectHelpers';
 import { ProjectLightbox } from '../components/ui/ProjectLightbox';
 import { CtaButton } from '../components/ui/CtaButton';
 import { NotFound } from './NotFound';
@@ -26,9 +26,15 @@ export const ProjetDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
 
-  const [project, setProject] = useState<Project | null>(null);
+  const initialProject = React.useMemo(() => {
+    if (!slug) return null;
+    const norm = normalizeProjectSlug(slug);
+    return projectsData.find((p) => normalizeProjectSlug(p.slug || p.id) === norm) || null;
+  }, [slug]);
+
+  const [project, setProject] = useState<Project | null>(initialProject);
   const [allProjects, setAllProjects] = useState<Project[]>(projectsData);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!initialProject);
   const [notFound, setNotFound] = useState(false);
 
   // Lightbox state
@@ -45,7 +51,9 @@ export const ProjetDetail: React.FC = () => {
       return;
     }
 
-    setLoading(true);
+    if (!initialProject) {
+      setLoading(true);
+    }
     setNotFound(false);
 
     // Fetch project by slug
@@ -60,7 +68,7 @@ export const ProjetDetail: React.FC = () => {
       if (res.project) {
         setProject(res.project);
         setNotFound(false);
-      } else {
+      } else if (!initialProject) {
         setProject(null);
         setNotFound(true);
       }
@@ -394,7 +402,7 @@ export const ProjetDetail: React.FC = () => {
               const prevOpt = getOptimizedImage(prevProject.heroImage || prevProject.gallery?.[0]?.src || '', { width: 480 });
               return (
                 <Link
-                  to={`/projets/${prevProject.slug}`}
+                  to={`/projets/${normalizeProjectSlug(prevProject.slug || prevProject.id)}`}
                   className="group p-4 sm:p-5 rounded-2xl bg-white border border-violet-imperial/10 hover:border-violet-imperial/30 transition-all flex items-center gap-4 text-left shadow-sm"
                 >
                   <div className="w-14 h-14 rounded-xl overflow-hidden bg-onyx shrink-0 border border-violet-imperial/10 relative">
@@ -430,7 +438,7 @@ export const ProjetDetail: React.FC = () => {
               const nextOpt = getOptimizedImage(nextProject.heroImage || nextProject.gallery?.[0]?.src || '', { width: 480 });
               return (
                 <Link
-                  to={`/projets/${nextProject.slug}`}
+                  to={`/projets/${normalizeProjectSlug(nextProject.slug || nextProject.id)}`}
                   className="group p-4 sm:p-5 rounded-2xl bg-white border border-violet-imperial/10 hover:border-violet-imperial/30 transition-all flex items-center justify-between gap-4 text-right shadow-sm sm:col-start-2"
                 >
                   <div className="min-w-0 flex-1">

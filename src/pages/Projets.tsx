@@ -15,6 +15,7 @@ import { useSeo } from '../hooks/useSeo';
 import {
   getProjectAccroche,
   mapLegacyAnchorToSlug,
+  normalizeProjectSlug,
 } from '../lib/projectHelpers';
 
 export const Projets: React.FC = () => {
@@ -135,7 +136,7 @@ export const Projets: React.FC = () => {
             {featuredProject && (
               <div className="hidden lg:block">
                 <Link
-                  to={`/projets/${featuredProject.slug}`}
+                  to={`/projets/${normalizeProjectSlug(featuredProject.slug || featuredProject.id)}`}
                   onClick={handleProjectClick}
                   className="group block relative bg-white rounded-3xl border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg hover:border-violet-imperial/35 transition-all duration-300 overflow-hidden"
                 >
@@ -293,7 +294,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
   return (
     <Link
-      to={`/projets/${project.slug}`}
+      to={`/projets/${normalizeProjectSlug(project.slug || project.id)}`}
       onClick={onClick}
       className="group flex flex-col justify-between bg-white rounded-3xl border border-violet-imperial/15 shadow-soft hover:shadow-soft-lg hover:border-violet-imperial/35 transition-all duration-300 overflow-hidden h-full"
     >

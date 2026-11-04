@@ -117,7 +117,7 @@ async function getProjects(): Promise<Project[]> {
             const hero = sortedImages.find((img: any) => img.is_hero) || sortedImages[0];
             return {
               id: p.id,
-              slug: p.slug,
+              slug: normalizeProjectSlug(p.slug || p.id),
               title: p.title,
               category: p.category,
               tagline: p.tagline,
@@ -239,9 +239,31 @@ async function getArticlesList(): Promise<any[]> {
 
 
 
+
+export function normalizeProjectSlug(idOrSlug: string): string {
+  if (!idOrSlug) return '';
+  const clean = idOrSlug.toLowerCase().trim();
+  if (clean === '72h-cj-2026' || clean.includes('72h') || clean.includes('72-heures') || clean.includes('72')) {
+    return '72-heures-cj-2026';
+  }
+  if (clean.includes('frere') || clean.includes('frère')) {
+    return 'mon-frere-parle';
+  }
+  if (clean.includes('off') || clean.includes('day')) {
+    return 'off-day';
+  }
+  if (clean.includes('cafe') || clean.includes('café') || clean.includes('inspire')) {
+    return 'cafe-inspire';
+  }
+  if (clean.includes('bang')) {
+    return 'bang';
+  }
+  return clean;
+}
+
 // Fetch 301 redirect for project slugs
 async function getProjectRedirect(slug: string): Promise<string | null> {
-  if (slug === '72h-cj-2026') return '72-heures-cj-2026';
+  if (slug === '72h-cj-2026' || slug === '72h') return '72-heures-cj-2026';
   if (slug && supabaseUrl && supabaseKey) {
     try {
       const res = await fetch(
@@ -977,9 +999,15 @@ export default async function handler(req: any, res: any) {
     }
 
     const projects = await getProjects();
-    const project = projects.find(
-      (p) => p.slug === projectSlug || p.id === projectSlug
+    const targetNorm = normalizeProjectSlug(projectSlug);
+    let project = projects.find(
+      (p) => normalizeProjectSlug(p.slug || p.id) === targetNorm || p.id === projectSlug || p.slug === projectSlug
     );
+    if (!project) {
+      project = projectsData.find(
+        (p) => normalizeProjectSlug(p.slug || p.id) === targetNorm || p.id === projectSlug || p.slug === projectSlug
+      );
+    }
 
     if (!project) {
       pageTitle = "Page introuvable | Class S";

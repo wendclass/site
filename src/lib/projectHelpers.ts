@@ -28,6 +28,30 @@ export function getProjectAccroche(
 }
 
 /**
+ * Normalizes any project id, slug or legacy slug to the official canonical slug.
+ */
+export function normalizeProjectSlug(idOrSlug: string): string {
+  if (!idOrSlug) return '';
+  const clean = idOrSlug.toLowerCase().trim();
+  if (clean === '72h-cj-2026' || clean.includes('72h') || clean.includes('72-heures') || clean.includes('72')) {
+    return '72-heures-cj-2026';
+  }
+  if (clean.includes('frere') || clean.includes('frère')) {
+    return 'mon-frere-parle';
+  }
+  if (clean.includes('off') || clean.includes('day')) {
+    return 'off-day';
+  }
+  if (clean.includes('cafe') || clean.includes('café') || clean.includes('inspire')) {
+    return 'cafe-inspire';
+  }
+  if (clean.includes('bang')) {
+    return 'bang';
+  }
+  return clean;
+}
+
+/**
  * Normalizes legacy anchors like "#off-day" or "#72h-cj-2026" to official canonical slugs.
  */
 export function mapLegacyAnchorToSlug(hash: string): string | null {
@@ -35,17 +59,5 @@ export function mapLegacyAnchorToSlug(hash: string): string | null {
   const clean = hash.replace(/^#/, '').toLowerCase().trim();
   if (!clean) return null;
 
-  const mapping: Record<string, string> = {
-    '72h-cj-2026': '72-heures-cj-2026',
-    '72-heures-cj-2026': '72-heures-cj-2026',
-    '72h': '72-heures-cj-2026',
-    'mon-frere-parle': 'mon-frere-parle',
-    'mon-frère-parle': 'mon-frere-parle',
-    'off-day': 'off-day',
-    'cafe-inspire': 'cafe-inspire',
-    'café-inspire': 'cafe-inspire',
-    'bang': 'bang',
-  };
-
-  return mapping[clean] || clean;
+  return normalizeProjectSlug(clean);
 }
