@@ -700,7 +700,7 @@ export default async function handler(req: any, res: any) {
   else if (normalizedRoute === '/offres') {
     pageTitle = "Formules & Accompagnement Brand Design | Class S";
     pageDesc =
-      "Découvrez nos 5 familles d'accompagnement : Logo & Identité Visuelle, Branding Social Media, Communication Événementielle, Sites Web et Visuels 24h à Ouagadougou.";
+      "Découvrez nos 5 forfaits d'accompagnement : Logo & Identité Visuelle, Branding Social Media, Communication Événementielle, Sites Web et Visuels 24h à Ouagadougou.";
     pageCanonical = `${baseUrl}/offres`;
 
     jsonLd = {
@@ -716,7 +716,7 @@ export default async function handler(req: any, res: any) {
       },
       mainEntity: {
         '@type': 'OfferCatalog',
-        name: "Catalogue des solutions d'accompagnement Class S",
+        name: "Catalogue des forfaits d'accompagnement Class S",
         numberOfItems: offerFamilies.length,
         itemListElement: offerFamilies.map((fam, index) => ({
           '@type': 'ListItem',
@@ -754,9 +754,9 @@ export default async function handler(req: any, res: any) {
                   <th scope="row" style="padding:10px 16px; font-weight:500;">${r.label}</th>
                   ${headers.map(h => {
                     const val = r.values[h.id];
-                    let text = '—';
+                    let text = '-';
                     if (val === true) text = '✓ Inclus';
-                    else if (val === false) text = '—';
+                    else if (val === false) text = '-';
                     else if (val) text = String(val);
                     return `<td style="padding:10px 16px; text-align:center;">${text}</td>`;
                   }).join('')}
@@ -791,7 +791,7 @@ export default async function handler(req: any, res: any) {
             <p class="text-base sm:text-lg font-title italic" style="font-family:'Cormorant Garamond', Georgia, serif;">
               « Chaque élément de votre identité sera construit pour qu'elle s'impose dans votre marché et ne se noie pas parmi vos concurrents. »
             </p>
-            <span class="text-xs text-violet-imperial font-semibold uppercase tracking-wider mt-1 block">— Engagement de conception Class S</span>
+            <span class="text-xs text-violet-imperial font-semibold uppercase tracking-wider mt-1 block">• Engagement de conception Class S</span>
           </div>
         </header>
 
@@ -814,7 +814,7 @@ export default async function handler(req: any, res: any) {
         </section>
 
         <!-- Navigation ancres -->
-        <nav aria-label="Familles d'offres" class="mb-14 flex flex-wrap gap-2.5 justify-center">
+        <nav aria-label="Forfaits d'offres" class="mb-14 flex flex-wrap gap-2.5 justify-center">
           ${offerFamilies.map(fam => `
             <a href="#${fam.anchorId}" class="px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-white border border-violet-imperial/20 text-onyx hover:bg-violet-imperial hover:text-white transition-colors">
               ${fam.navLabel}
@@ -822,10 +822,10 @@ export default async function handler(req: any, res: any) {
           `).join('')}
         </nav>
 
-        <!-- Famille 01 : Logo & Identité Visuelle -->
+        <!-- Forfait 01 : Logo & Identité Visuelle -->
         <section id="famille-logo" class="mb-20 scroll-mt-28">
           <div class="mb-8">
-            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">01 · Logo & Identité</span>
+            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">01 · Forfait Logo & Identité</span>
             <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mt-1 mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
               ${familyLogo.title}
             </h2>
@@ -871,14 +871,14 @@ export default async function handler(req: any, res: any) {
             <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
               Comparer les formules Logo & Identité en détail
             </h3>
-            ${renderTable(familyLogo.comparisonHeaders!, familyLogo.comparisonRows!, 'Matrice comparative — Logo & Identité')}
+            ${renderTable(familyLogo.comparisonHeaders!, familyLogo.comparisonRows!, 'Matrice comparative : Logo & Identité')}
           </div>
         </section>
 
-        <!-- Famille 02 : Branding Social Media -->
+        <!-- Forfait 02 : Branding Social Media -->
         <section id="famille-social" class="mb-20 scroll-mt-28">
           <div class="mb-8">
-            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">02 · Réseaux Sociaux</span>
+            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">02 · Forfait Réseaux Sociaux</span>
             <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mt-1 mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
               ${familySocial.title}
             </h2>
@@ -918,15 +918,15 @@ export default async function handler(req: any, res: any) {
             <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
               Comparer les formules Réseaux Sociaux en détail
             </h3>
-            ${renderTable(familySocial.comparisonHeaders!, familySocial.comparisonRows!, 'Matrice comparative — Branding Social Media')}
+            ${renderTable(familySocial.comparisonHeaders!, familySocial.comparisonRows!, 'Matrice comparative : Branding Social Media')}
           </div>
         </section>
 
-        <!-- Famille 03 : Communication Événementielle -->
+        <!-- Forfait 03 : Communication Événementielle -->
         <section id="famille-evenementiel" class="mb-20 scroll-mt-28">
           <div class="p-6 sm:p-10 rounded-3xl bg-white border border-or-champagne/30 shadow-soft">
             <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-              <span class="text-xs font-bold text-or-champagne uppercase tracking-wider">03 · Événementiel</span>
+              <span class="text-xs font-bold text-or-champagne uppercase tracking-wider">03 · Forfait Événementiel</span>
               <span class="px-3 py-1 rounded-full text-xs font-semibold bg-or-champagne/15 text-[#8A5E2E]">Sur devis personnalisé</span>
             </div>
             <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
@@ -952,11 +952,11 @@ export default async function handler(req: any, res: any) {
           </div>
         </section>
 
-        <!-- Famille 04 : Sites Web (Bande sombre Onyx) -->
+        <!-- Forfait 04 : Sites Web (Bande sombre Onyx) -->
         <section id="famille-sites-web" class="mb-20 scroll-mt-28 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-16" style="background-color:#0D0A18; color:#F8F5FF;">
           <div class="max-w-6xl mx-auto">
             <div class="mb-10 text-center max-w-3xl mx-auto">
-              <span class="text-xs font-bold uppercase tracking-wider" style="color:#C9A070;">04 · Présence Web Haute Performance</span>
+              <span class="text-xs font-bold uppercase tracking-wider" style="color:#C9A070;">04 · Forfait Sites Web Haute Performance</span>
               <h2 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold mt-2 mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#F8F5FF;">
                 ${familyWeb.title}
               </h2>
@@ -1029,17 +1029,17 @@ export default async function handler(req: any, res: any) {
               <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#F8F5FF;">
                 Comparer les formats de sites web
               </h3>
-              ${renderTable(familyWeb.comparisonHeaders!, familyWeb.comparisonRows!, 'Matrice comparative — Sites Web', true)}
+              ${renderTable(familyWeb.comparisonHeaders!, familyWeb.comparisonRows!, 'Matrice comparative : Sites Web', true)}
             </div>
           </div>
         </section>
 
-        <!-- Famille 05 : Visuels à l'unité -->
+        <!-- Forfait 05 : Visuels à l'unité -->
         <section id="famille-visuels" class="mb-20 scroll-mt-28">
           <div class="p-6 sm:p-8 rounded-3xl bg-white border border-violet-imperial/15 shadow-soft flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="max-w-2xl">
               <div class="flex items-center gap-3 mb-2">
-                <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">05 · Réactivité</span>
+                <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">05 · Forfait Réactivité 24h</span>
                 <span class="px-3 py-0.5 rounded-full text-xs font-semibold bg-violet-imperial/10 text-violet-imperial">Livraison garantie sous 24h</span>
               </div>
               <h2 class="text-2xl sm:text-3xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">

@@ -73,31 +73,31 @@ export const GUIDE_SITUATIONS: GuideSituation[] = [
     id: 'launch-biz',
     text: 'Je lance mon activité',
     targetId: 'formule-logo-essentiel',
-    category: 'Logo — Essentiel'
+    category: 'Logo : Essentiel'
   },
   {
     id: 'coherent-brand',
     text: 'Je veux une image cohérente partout',
     targetId: 'formule-logo-standard',
-    category: 'Logo — Standard'
+    category: 'Logo : Standard'
   },
   {
     id: 'investors-clients',
     text: 'Je vise des investisseurs ou de grands clients',
     targetId: 'formule-logo-signature',
-    category: 'Logo — Signature'
+    category: 'Logo : Signature'
   },
   {
     id: 'no-social-manager',
     text: 'Je n’ai personne pour animer mes réseaux',
     targetId: 'formule-social-presence',
-    category: 'Réseaux — Présence Continue'
+    category: 'Réseaux : Présence Continue'
   },
   {
     id: 'sell-continuously',
     text: 'Je veux vendre en continu, pas seulement exister en ligne',
     targetId: 'formule-social-croissance',
-    category: 'Réseaux — Croissance Accélérée'
+    category: 'Réseaux : Croissance Accélérée'
   },
   {
     id: 'need-website-fast',
@@ -113,7 +113,7 @@ export const GUIDE_SITUATIONS: GuideSituation[] = [
   }
 ];
 
-// Catalogue complet des 5 familles d'offres
+// Catalogue complet des 5 forfaits d'offres
 export const offerFamilies: OfferFamily[] = [
   // ---------------------------------------------------------------------------
   // 01. Logo & Identité Visuelle
@@ -458,7 +458,7 @@ export const offerFamilies: OfferFamily[] = [
   }
 ];
 
-// Formats interactifs pour la famille Sites Web (avec bascule Essentiel / Premium)
+// Formats interactifs pour le forfait Sites Web (avec bascule Essentiel / Premium)
 export const websiteFormats: WebsiteFormat[] = [
   {
     id: 'vitrine',

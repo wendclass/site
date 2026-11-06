@@ -100,7 +100,7 @@ export const APropos: React.FC = () => {
                           src={optPortrait.src}
                           srcSet={optPortrait.srcSet}
                           sizes="(min-width: 768px) 40vw, 90vw"
-                          alt="Scott Nana — Brand & Graphic Designer, Fondateur de Class S"
+                          alt="Scott Nana • Brand & Graphic Designer, Fondateur de Class S"
                           width={optPortrait.width}
                           height={optPortrait.height}
                           loading="lazy"
@@ -196,7 +196,7 @@ export const APropos: React.FC = () => {
               </blockquote>
 
               <p className="text-xs sm:text-sm text-ivoire-violet/70 font-body max-w-lg mx-auto pt-2">
-                Tout ce que je conçois pour votre marque — de la couleur d'un bouton au choix d'une typographie — répond à cette seule exigence d'utilité et de résultat.
+                Tout ce que je conçois pour votre marque • de la couleur d'un bouton au choix d'une typographie • répond à cette seule exigence d'utilité et de résultat.
               </p>
             </div>
           </section>

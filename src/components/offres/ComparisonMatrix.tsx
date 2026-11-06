@@ -66,7 +66,7 @@ export const ComparisonMatrix: React.FC<ComparisonMatrixProps> = ({
         <div className="hidden md:block overflow-x-auto max-h-[640px] relative">
           <table className="w-full text-left border-collapse">
             <caption className="sr-only">
-              {title} — Comparaison détaillée des formules selon {totalCriteria} critères
+              {title} : Comparaison détaillée des formules selon {totalCriteria} critères
             </caption>
             <thead className={`sticky top-0 z-10 backdrop-blur-md ${isDark ? 'bg-onyx/90 border-b border-white/10' : 'bg-white/95 border-b border-violet-imperial/15'}`}>
               <tr>

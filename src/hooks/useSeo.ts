@@ -70,7 +70,7 @@ export const useSeo = ({
     setMetaTag('property', 'og:url', currentUrl);
     setMetaTag('property', 'og:type', ogType);
     setMetaTag('property', 'og:image', finalImage);
-    setMetaTag('property', 'og:site_name', 'Class S — Scott Nana');
+    setMetaTag('property', 'og:site_name', 'Class S • Scott Nana');
 
     if (ogType === 'article') {
       if (publishedTime) {

@@ -128,7 +128,7 @@ export const Footer: React.FC = () => {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ivoire-violet/50">
           <p>© {currentYear} Class S. Tous droits réservés.</p>
           <p className="flex items-center gap-1 text-ivoire-violet/60">
-            Conception & identité : <span className="text-amethyste font-medium">Class S</span> — Scott Nana
+            Conception & identité : <span className="text-amethyste font-medium">Class S</span> • Scott Nana
           </p>
         </div>
       </div>

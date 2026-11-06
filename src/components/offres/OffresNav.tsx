@@ -30,7 +30,7 @@ export const OffresNav: React.FC<OffresNavProps> = ({ onNavClick }) => {
 
   return (
     <nav
-      aria-label="Navigation des familles d'offres"
+      aria-label="Navigation des forfaits d'offres"
       className="md:sticky md:top-20 z-30 transition-all duration-200 py-2 -mx-4 px-4 sm:mx-0 sm:px-0"
     >
       <div className="bg-white/95 backdrop-blur-md p-2 rounded-2xl border border-violet-imperial/15 shadow-sm md:shadow-soft">

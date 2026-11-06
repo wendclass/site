@@ -27,19 +27,19 @@ import { useSeo } from '../hooks/useSeo';
 
 export const Offres: React.FC = () => {
   useSeo({
-    title: 'Nos Formules & Accompagnement | Class S — Scott Nana',
+    title: 'Nos Formules & Accompagnement | Class S • Scott Nana',
     description:
-      'Découvrez nos 5 familles d’accompagnement stratégique : Logo & Identité Visuelle, Branding Social Media, Communication Événementielle, Sites Web et Visuels 24h à Ouagadougou.',
+      'Découvrez nos 5 forfaits d’accompagnement stratégique : Logo & Identité Visuelle, Branding Social Media, Communication Événementielle, Sites Web et Visuels 24h à Ouagadougou.',
     canonicalUrl: 'https://www.wendclass.com/offres',
   });
 
   // State to track formula highlighting when clicking from the guide
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
 
-  // State for mobile formula tabs (Famille 01 Logo)
+  // State for mobile formula tabs (Forfait 01 Logo)
   const [mobileLogoTab, setMobileLogoTab] = useState<'essentiel' | 'standard' | 'signature'>('standard');
 
-  // State for website format toggles (Famille 04 Sites Web)
+  // State for website format toggles (Forfait 04 Sites Web)
   const [vitrineVariant, setVitrineVariant] = useState<'essentiel' | 'premium'>('essentiel');
   const [multiVariant, setMultiVariant] = useState<'essentiel' | 'premium'>('essentiel');
 
@@ -96,7 +96,7 @@ export const Offres: React.FC = () => {
               « Chaque élément de votre identité sera construit pour qu'elle s'impose dans votre marché et ne se noie pas parmi vos concurrents. »
             </p>
             <span className="text-xs text-violet-imperial font-semibold uppercase tracking-wider mt-2.5 block font-body">
-              — Engagement de conception Class S
+              • Engagement de conception Class S
             </span>
           </div>
         </header>
@@ -107,23 +107,23 @@ export const Offres: React.FC = () => {
         <OffresGuide onSelectSituation={scrollToTarget} />
 
         {/* ================================================================= */}
-        {/* 3. NAVIGATION PAR ANCRES (5 FAMILLES)                             */}
+        {/* 3. NAVIGATION PAR ANCRES (5 FORFAITS)                              */}
         {/* ================================================================= */}
         <OffresNav onNavClick={scrollToTarget} />
 
         {/* ================================================================= */}
-        {/* 4. LES 5 FAMILLES D'OFFRES DANS L'ORDRE STRICT                    */}
+        {/* 4. LES 5 FORFAITS D'OFFRES DANS L'ORDRE STRICT                     */}
         {/* ================================================================= */}
         <div className="space-y-20 sm:space-y-28">
           {/* --------------------------------------------------------------- */}
-          {/* FAMILLE 01 : LOGO & IDENTITÉ VISUELLE                           */}
+          {/* FORFAIT 01 : LOGO & IDENTITÉ VISUELLE                            */}
           {/* --------------------------------------------------------------- */}
           <section
             id={familyLogo.anchorId}
             aria-labelledby="heading-logo"
             className="scroll-mt-28 space-y-8"
           >
-            {/* Header de la famille */}
+            {/* Header du forfait */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-violet-imperial/10 pb-6">
               <div className="space-y-2 max-w-2xl">
                 <div className="flex items-center gap-2.5">
@@ -131,7 +131,7 @@ export const Offres: React.FC = () => {
                     <Layers className="w-4 h-4" />
                   </div>
                   <span className="text-xs sm:text-sm font-bold text-or-champagne uppercase tracking-widest">
-                    Famille {familyLogo.number}
+                    Forfait {familyLogo.number}
                   </span>
                 </div>
                 <h2 id="heading-logo" className="text-2xl sm:text-3xl lg:text-4xl font-title font-semibold text-onyx">
@@ -284,14 +284,14 @@ export const Offres: React.FC = () => {
           </section>
 
           {/* --------------------------------------------------------------- */}
-          {/* FAMILLE 02 : BRANDING SOCIAL MEDIA                              */}
+          {/* FORFAIT 02 : BRANDING SOCIAL MEDIA                               */}
           {/* --------------------------------------------------------------- */}
           <section
             id={familySocial.anchorId}
             aria-labelledby="heading-social"
             className="scroll-mt-28 space-y-8 bg-ivoire-violet/40 p-6 sm:p-10 rounded-3xl border border-violet-imperial/10"
           >
-            {/* Header de la famille */}
+            {/* Header du forfait */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-violet-imperial/10 pb-6">
               <div className="space-y-2 max-w-2xl">
                 <div className="flex items-center gap-2.5">
@@ -299,7 +299,7 @@ export const Offres: React.FC = () => {
                     <Share2 className="w-4 h-4 text-violet-imperial" />
                   </div>
                   <span className="text-xs sm:text-sm font-bold text-or-champagne uppercase tracking-widest">
-                    Famille {familySocial.number}
+                    Forfait {familySocial.number}
                   </span>
                   {familySocial.badge && (
                     <span className="px-3 py-0.5 rounded-full bg-violet-imperial/10 text-violet-imperial text-xs font-semibold uppercase tracking-wider">
@@ -416,7 +416,7 @@ export const Offres: React.FC = () => {
           </section>
 
           {/* --------------------------------------------------------------- */}
-          {/* FAMILLE 03 : COMMUNICATION ÉVÉNEMENTIELLE                       */}
+          {/* FORFAIT 03 : COMMUNICATION ÉVÉNEMENTIELLE                        */}
           {/* --------------------------------------------------------------- */}
           <section
             id={familyEvent.anchorId}
@@ -434,7 +434,7 @@ export const Offres: React.FC = () => {
                     <Calendar className="w-4 h-4" />
                   </div>
                   <span className="text-xs sm:text-sm font-bold text-or-champagne uppercase tracking-widest font-body">
-                    Famille {familyEvent.number}
+                    Forfait {familyEvent.number}
                   </span>
                   <span className="px-3 py-0.5 rounded-full bg-or-champagne/15 text-[#8A5E2E] border border-or-champagne/30 text-xs font-semibold uppercase tracking-wider">
                     {familyEvent.badge}
@@ -471,7 +471,7 @@ export const Offres: React.FC = () => {
           </section>
 
           {/* --------------------------------------------------------------- */}
-          {/* FAMILLE 04 : SITES WEB (MOMENT FORT — BANDE SOMBRE ONYX)        */}
+          {/* FORFAIT 04 : SITES WEB (MOMENT FORT : BANDE SOMBRE ONYX)         */}
           {/* --------------------------------------------------------------- */}
           <section
             id={familyWeb.anchorId}
@@ -491,7 +491,7 @@ export const Offres: React.FC = () => {
                       <Globe className="w-4 h-4 text-or-champagne" />
                     </div>
                     <span className="text-xs sm:text-sm font-bold text-or-champagne uppercase tracking-widest">
-                      Famille {familyWeb.number}
+                      Forfait {familyWeb.number}
                     </span>
                   </div>
 
@@ -690,7 +690,7 @@ export const Offres: React.FC = () => {
           </section>
 
           {/* --------------------------------------------------------------- */}
-          {/* FAMILLE 05 : VISUELS À L'UNITÉ (BANDE FINE SOBRE)               */}
+          {/* FORFAIT 05 : VISUELS À L'UNITÉ (BANDE FINE SOBRE)                */}
           {/* --------------------------------------------------------------- */}
           <section
             id={familyPrint.anchorId}
@@ -708,7 +708,7 @@ export const Offres: React.FC = () => {
                     <Zap className="w-4 h-4 text-violet-imperial" />
                   </div>
                   <span className="text-xs sm:text-sm font-bold text-ardoise uppercase tracking-widest font-body">
-                    Famille {familyPrint.number}
+                    Forfait {familyPrint.number}
                   </span>
                   <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-or-champagne/15 text-[#8A5E2E] border border-or-champagne/30 text-xs font-semibold uppercase tracking-wider">
                     <Clock className="w-3.5 h-3.5" />

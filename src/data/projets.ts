@@ -29,7 +29,7 @@ export const projectsData: Project[] = [
     clientGoal: 'Faire mieux que l’édition précédente de l’événement en termes de visibilité et d’engouement.',
     designedSolution: 'Conception principale autour d’un carrousel créatif et stratégique surfant sur la Saint-Valentin ; ensemble de visuels complémentaires comprenant l’annonce de stand disponible, les concours et la couverture officielle du rapport d’activité.',
     result: 'Client pleinement satisfait de la dynamique créée et de la cohérence globale sur tous les canaux.',
-    testimonialPlaceholder: '« Scott a su capter l’esprit de notre événement et concevoir des supports qui ont immédiatement suscité des réactions et des inscriptions. » — Comité d’organisation 72h CJ',
+    testimonialPlaceholder: '« Scott a su capter l’esprit de notre événement et concevoir des supports qui ont immédiatement suscité des réactions et des inscriptions. » - Comité d’organisation 72h CJ',
     heroImage: '/assets/projets/72h-cj-2026/Carrousel 0 72h 2026.png',
     gallery: [
       {
@@ -38,15 +38,15 @@ export const projectsData: Project[] = [
       },
       {
         src: '/assets/projets/72h-cj-2026/Carrousel 1 72h 2026.png',
-        caption: 'Carrousel — Slide 1 : Le déclic'
+        caption: 'Carrousel - Slide 1 : Le déclic'
       },
       {
         src: '/assets/projets/72h-cj-2026/Carrousel 2 72h 2026.png',
-        caption: 'Carrousel — Slide 2 : La promesse'
+        caption: 'Carrousel - Slide 2 : La promesse'
       },
       {
         src: '/assets/projets/72h-cj-2026/Carrousel 3 72h 2026.png',
-        caption: 'Carrousel — Slide 3 : L’appel à l’action'
+        caption: 'Carrousel - Slide 3 : L’appel à l’action'
       },
       {
         src: "/assets/projets/72h-cj-2026/Cover Rapport d'Activités 72H 2026.png",
@@ -54,11 +54,11 @@ export const projectsData: Project[] = [
       },
       {
         src: '/assets/projets/72h-cj-2026/Stands disponibles 72h 2026.png',
-        caption: 'Annonce commerciale — Réservation des stands exposants'
+        caption: 'Annonce commerciale - Réservation des stands exposants'
       },
       {
         src: '/assets/projets/72h-cj-2026/Final des Compétitions v1.png',
-        caption: 'Visuel officiel — Grande finale des compétitions'
+        caption: 'Visuel officiel - Grande finale des compétitions'
       },
       {
         src: '/assets/projets/72h-cj-2026/Ambassadrice & Ambassadeur 72h 2026 v2.1.png',
@@ -70,7 +70,7 @@ export const projectsData: Project[] = [
       },
       {
         src: '/assets/projets/72h-cj-2026/Visuel Prix Pazouknam Ouedraogo v2.png',
-        caption: 'Visuel de distinction — Prix Pazouknam Ouédraogo'
+        caption: 'Visuel de distinction - Prix Pazouknam Ouédraogo'
       },
       {
         src: '/assets/projets/72h-cj-2026/8 mars 72h 2026.png',
@@ -82,15 +82,15 @@ export const projectsData: Project[] = [
       },
       {
         src: '/assets/projets/72h-cj-2026/Chronogramme Jour 1 72h ed 26 PAD.png',
-        caption: 'Programme détaillé — Jour 1'
+        caption: 'Programme détaillé - Jour 1'
       },
       {
         src: '/assets/projets/72h-cj-2026/Chronogramme Jour 2 72h 26 PAD.png',
-        caption: 'Programme détaillé — Jour 2'
+        caption: 'Programme détaillé - Jour 2'
       },
       {
         src: '/assets/projets/72h-cj-2026/Chronogramme Jour 3 72h 26 PAD.png',
-        caption: 'Programme détaillé — Jour 3'
+        caption: 'Programme détaillé - Jour 3'
       }
     ]
   },
@@ -104,7 +104,7 @@ export const projectsData: Project[] = [
     clientGoal: 'Faire connaître un nouveau format de thérapie destiné aux hommes, à l’occasion du mois de la santé mentale.',
     designedSolution: 'Une identité visuelle pensée pour apaiser l’esprit et libérer des surcharges mentales : palette chromatique douce, typographie bienveillante et gestion aérée des espaces négatifs, orchestrées au service d’un message profondément humain.',
     result: 'Client satisfait de l’accueil bienveillant et de la justesse du ton véhiculé par chaque support.',
-    testimonialPlaceholder: '« L’approche visuelle a immédiatement posé un cadre rassurant pour les participants. Scott a traduit avec pudeur et force ce que nous voulions transmettre. » — Initiateur du projet',
+    testimonialPlaceholder: '« L’approche visuelle a immédiatement posé un cadre rassurant pour les participants. Scott a traduit avec pudeur et force ce que nous voulions transmettre. » - Initiateur du projet',
     heroImage: '/assets/projets/mon-frere-parle/Mon_Frère_Parle_Visuel_Principal.jpg',
     gallery: [
       {
@@ -141,15 +141,15 @@ export const projectsData: Project[] = [
       },
       {
         src: '/assets/projets/mon-frere-parle/Mon_Frère_Parle_Coming_soon_0.jpg',
-        caption: 'Teaser — Annonce Coming Soon 1'
+        caption: 'Teaser - Annonce Coming Soon 1'
       },
       {
         src: '/assets/projets/mon-frere-parle/Mon_Frère_Parle_Coming_soon_2.jpg',
-        caption: 'Teaser — Annonce Coming Soon 2'
+        caption: 'Teaser - Annonce Coming Soon 2'
       },
       {
         src: '/assets/projets/mon-frere-parle/Mon_Frère_Parle_Coming_soon_3.jpg',
-        caption: 'Teaser — Annonce Coming Soon 3'
+        caption: 'Teaser - Annonce Coming Soon 3'
       },
       {
         src: '/assets/projets/mon-frere-parle/Mon_Frère_Parle_Décompte.jpg',
@@ -189,9 +189,9 @@ export const projectsData: Project[] = [
     tagline: 'Une conception épurée pour marquer les esprits dès la première édition.',
     accroche: 'Une conception épurée pour marquer les esprits dès la première édition.',
     clientGoal: 'Captiver et marquer les esprits pour installer la toute première édition de l’événement.',
-    designedSolution: 'Une direction artistique axée sur la simplicité radicale et l’espace, pensée pour retenir l’attention du public sans surcharger son esprit — en résonance directe avec le concept de déconnexion numérique.',
+    designedSolution: 'Une direction artistique axée sur la simplicité radicale et l’espace, pensée pour retenir l’attention du public sans surcharger son esprit - en résonance directe avec le concept de déconnexion numérique.',
     result: 'Client satisfait du niveau d’attention et de la mémorisation forte suscités par la campagne.',
-    testimonialPlaceholder: '« Les visuels ont donné vie au concept avant même le jour J. L’impact a été instantané auprès de notre audience. » — Équipe Off Day',
+    testimonialPlaceholder: '« Les visuels ont donné vie au concept avant même le jour J. L’impact a été instantané auprès de notre audience. » - Équipe Off Day',
     disclaimer: 'Note d’attribution : Le logo de cet événement a été conçu par un autre graphiste via intelligence artificielle, sans intervention créative de Scott Nana / Class S. L’intervention de Class S a porté exclusivement sur la stratégie visuelle, la conception graphique des supports et la campagne de communication.',
     heroImage: '/assets/projets/off-day/Off_Day_Visual_v2.2 Corrigé.png',
     gallery: [
@@ -201,23 +201,23 @@ export const projectsData: Project[] = [
       },
       {
         src: '/assets/projets/off-day/Off_Day_StayFree_00.png',
-        caption: 'Série Stay Free — Concept 00'
+        caption: 'Série Stay Free - Concept 00'
       },
       {
         src: '/assets/projets/off-day/Off_Day_StayFree_01.png',
-        caption: 'Série Stay Free — Concept 01'
+        caption: 'Série Stay Free - Concept 01'
       },
       {
         src: '/assets/projets/off-day/Off_Day_StayFree_02.png',
-        caption: 'Série Stay Free — Concept 02'
+        caption: 'Série Stay Free - Concept 02'
       },
       {
         src: '/assets/projets/off-day/Off_Day_StayFree_03.png',
-        caption: 'Série Stay Free — Concept 03'
+        caption: 'Série Stay Free - Concept 03'
       },
       {
         src: '/assets/projets/off-day/Off_Day_StayFree_04.png',
-        caption: 'Série Stay Free — Concept 04'
+        caption: 'Série Stay Free - Concept 04'
       },
       {
         src: '/assets/projets/off-day/Off_Day_Movie_Night_14th_v2.2.png',
@@ -237,7 +237,7 @@ export const projectsData: Project[] = [
       },
       {
         src: '/assets/projets/off-day/Off_Day_Mode_Snooz_v2.png',
-        caption: 'Concept visuel — Mode Snooze activé'
+        caption: 'Concept visuel - Mode Snooze activé'
       },
       {
         src: '/assets/projets/off-day/Off_Day_Invisibilité_Défi.png',
@@ -249,39 +249,39 @@ export const projectsData: Project[] = [
       },
       {
         src: '/assets/projets/off-day/Off_Day_Coming_Soon_v2.png',
-        caption: 'Teaser d’annonce — Coming Soon v1'
+        caption: 'Teaser d’annonce - Coming Soon v1'
       },
       {
         src: '/assets/projets/off-day/Off_Day_Coming_Soon_2_v2.png',
-        caption: 'Teaser d’annonce — Coming Soon v2'
+        caption: 'Teaser d’annonce - Coming Soon v2'
       },
       {
         src: '/assets/projets/off-day/Off_Day_Coming_Soon_3.2.png',
-        caption: 'Teaser d’annonce — Coming Soon v3'
+        caption: 'Teaser d’annonce - Coming Soon v3'
       },
       {
         src: '/assets/projets/off-day/Profis_Quiz_OffDay_Le_Conscient.png',
-        caption: 'Profil Quiz — Le Conscient'
+        caption: 'Profil Quiz - Le Conscient'
       },
       {
         src: '/assets/projets/off-day/Profis_Quiz_OffDay_La_Consciente.png',
-        caption: 'Profil Quiz — La Consciente'
+        caption: 'Profil Quiz - La Consciente'
       },
       {
         src: '/assets/projets/off-day/Profis_Quiz_OffDay_Le_Fragile.png',
-        caption: 'Profil Quiz — Le Fragile'
+        caption: 'Profil Quiz - Le Fragile'
       },
       {
         src: '/assets/projets/off-day/Profis_Quiz_OffDay_La_Fragile.png',
-        caption: 'Profil Quiz — La Fragile'
+        caption: 'Profil Quiz - La Fragile'
       },
       {
         src: '/assets/projets/off-day/Profis_Quiz_OffDay_Le_Zombie_connecte.png',
-        caption: 'Profil Quiz — Le Zombie connecté'
+        caption: 'Profil Quiz - Le Zombie connecté'
       },
       {
         src: '/assets/projets/off-day/Profis_Quiz_OffDay_La_Zombie_connectee.png',
-        caption: 'Profil Quiz — La Zombie connectée'
+        caption: 'Profil Quiz - La Zombie connectée'
       },
       {
         src: '/assets/projets/off-day/Off_Day_Quiz_Teaser.png',
@@ -323,40 +323,40 @@ export const projectsData: Project[] = [
     clientGoal: 'Obtenir des visuels de qualité pour alimenter régulièrement sa page Facebook et lancer des campagnes publicitaires performantes.',
     designedSolution: 'Création en amont d’une mini-charte graphique cohérente (palette, codes typographiques, templates de mise en page) à partir du logo initial, suivie de la production mensuelle de visuels percutants adaptés aux temps forts du café.',
     result: 'Les nouveaux visuels ont nettement capté et attiré davantage l’attention que les publications antérieures du client.',
-    testimonialPlaceholder: '« Nos clients nous ont fait des retours immédiats sur le changement d’image de la page. C’est beaucoup plus pro et nos offres ressortent enfin. » — Gérance Café Inspire',
+    testimonialPlaceholder: '« Nos clients nous ont fait des retours immédiats sur le changement d’image de la page. C’est beaucoup plus pro et nos offres ressortent enfin. » - Gérance Café Inspire',
     heroImage: '/assets/projets/cafe-inspire/01_Café Pyramide v3.png',
     gallery: [
       {
         src: '/assets/projets/cafe-inspire/01_Café Pyramide v3.png',
-        caption: 'Mise en avant signature — Café Pyramide (Version principale)'
+        caption: 'Mise en avant signature - Café Pyramide (Version principale)'
       },
       {
         src: '/assets/projets/cafe-inspire/02_Café Pyramide v2.png',
-        caption: 'Déclinaison visuelle — Café Pyramide'
+        caption: 'Déclinaison visuelle - Café Pyramide'
       },
       {
         src: '/assets/projets/cafe-inspire/03_Anniversaire_Café_Inspire_v2.1.png',
-        caption: 'Visuel événementiel — Anniversaire Café Inspire'
+        caption: 'Visuel événementiel - Anniversaire Café Inspire'
       },
       {
         src: '/assets/projets/cafe-inspire/04_Livraison_Gratuite_Mercredi_Café Inspire v2.png',
-        caption: 'Offre promotionnelle — Livraison gratuite du mercredi'
+        caption: 'Offre promotionnelle - Livraison gratuite du mercredi'
       },
       {
         src: '/assets/projets/cafe-inspire/05_Bon_Mois_Septembre v2.png',
-        caption: 'Visuel relationnel & vœux — Bon mois de septembre'
+        caption: 'Visuel relationnel & vœux - Bon mois de septembre'
       },
       {
         src: '/assets/projets/cafe-inspire/06_Tacos_Café_Inspire v2.png',
-        caption: 'Mise en avant gourmande — Tacos & restauration'
+        caption: 'Mise en avant gourmande - Tacos & restauration'
       },
       {
         src: '/assets/projets/cafe-inspire/07_Hiring_AideChef.png',
-        caption: 'Avis de recrutement — Aide Chef cuisinier'
+        caption: 'Avis de recrutement - Aide Chef cuisinier'
       },
       {
         src: '/assets/projets/cafe-inspire/08_Nouveau_Plat_Café Inspire.png',
-        caption: 'Lancement au menu — Nouveau plat Café Inspire'
+        caption: 'Lancement au menu - Nouveau plat Café Inspire'
       }
     ]
   },
@@ -370,7 +370,7 @@ export const projectsData: Project[] = [
     clientGoal: 'Rendre plus faciles et stimulantes les révisions des étudiants et élèves grâce à une identité visuelle distincte, mémorable et structurée.',
     designedSolution: 'Création d’une identité unique avec une palette chromatique audacieuse rompant avec les codes académiques conventionnels, et conception d’un logotype original garanti sans similitude avec les marques existantes sur les moteurs de recherche.',
     result: 'Client pleinement satisfait du positionnement novateur et de la reconnaissance immédiate de la marque.',
-    testimonialPlaceholder: '« L’identité Bang a tout de suite trouvé son public. Elle dégage exactement l’énergie moderne et motivante dont les étudiants ont besoin. » — Fondateur Bang',
+    testimonialPlaceholder: '« L’identité Bang a tout de suite trouvé son public. Elle dégage exactement l’énergie moderne et motivante dont les étudiants ont besoin. » - Fondateur Bang',
     heroImage: '/assets/projets/bang/Présentation_bang_logo.png',
     gallery: [
       {

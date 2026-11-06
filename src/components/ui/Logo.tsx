@@ -29,7 +29,7 @@ export const Logo: React.FC<LogoProps> = ({
     <div className={`inline-flex items-center gap-2 select-none transition-transform duration-300 hover:scale-[1.02] ${className}`}>
       <img
         src={imageSrc}
-        alt="Class S — L'identité visuelle qui vous impose"
+        alt="Class S • L'identité visuelle qui vous impose"
         className={`${sizeClasses[size]} object-contain`}
         loading="eager"
       />

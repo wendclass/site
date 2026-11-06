@@ -93,7 +93,7 @@ export const Accueil: React.FC = () => {
             « Si vous me confiez votre image, chaque visuel est pensé pour que celui qui le voit prenne contact, et que votre activité vende plus. »
           </p>
           <span className="text-xs text-amethyste font-body block font-medium">
-            — Scott Nana, Fondateur de Class S
+            • Scott Nana, Fondateur de Class S
           </span>
         </div>
       </section>
