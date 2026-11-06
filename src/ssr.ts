@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { offersData } from './data/offres';
+import { offerFamilies, websiteFormats, GUIDE_SITUATIONS } from './data/offres';
 import { projectsData, Project } from './data/projets';
 import { FAQ_ITEMS } from './data/faq';
 import { SITE_URL, SITE_CONFIG } from './config/site';
@@ -700,7 +700,7 @@ export default async function handler(req: any, res: any) {
   else if (normalizedRoute === '/offres') {
     pageTitle = "Formules & Accompagnement Brand Design | Class S";
     pageDesc =
-      "Découvrez nos 5 formules d'accompagnement en identité visuelle, branding social media, sites web et communication événementielle à Ouagadougou.";
+      "Découvrez nos 5 familles d'accompagnement : Logo & Identité Visuelle, Branding Social Media, Communication Événementielle, Sites Web et Visuels 24h à Ouagadougou.";
     pageCanonical = `${baseUrl}/offres`;
 
     jsonLd = {
@@ -715,16 +715,16 @@ export default async function handler(req: any, res: any) {
         url: baseUrl,
       },
       mainEntity: {
-        '@type': 'ItemList',
-        name: "Formules d'accompagnement Class S",
-        numberOfItems: offersData.length,
-        itemListElement: offersData.map((offer, index) => ({
+        '@type': 'OfferCatalog',
+        name: "Catalogue des solutions d'accompagnement Class S",
+        numberOfItems: offerFamilies.length,
+        itemListElement: offerFamilies.map((fam, index) => ({
           '@type': 'ListItem',
           position: index + 1,
           item: {
             '@type': 'Service',
-            name: offer.title,
-            description: offer.subtitle,
+            name: fam.title,
+            description: fam.subtitle,
             provider: {
               '@type': 'ProfessionalService',
               name: SITE_CONFIG.name,
@@ -734,89 +734,331 @@ export default async function handler(req: any, res: any) {
       },
     };
 
+    const renderTable = (headers: { id: string; label: string }[], rows: { label: string; values: Record<string, string | boolean> }[], caption: string, isDark = false) => {
+      const borderCol = isDark ? 'rgba(255,255,255,0.15)' : 'rgba(102,0,204,0.15)';
+      const bgHeader = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(102,0,204,0.05)';
+      const textCol = isDark ? '#F8F5FF' : '#0D0A18';
+      return `
+        <div style="overflow-x:auto; margin: 2rem 0;">
+          <table style="width:100%; border-collapse:collapse; font-size:0.875rem; text-align:left; border:1px solid ${borderCol}; color:${textCol};">
+            <caption style="text-align:left; font-weight:600; padding:0.5rem 0; font-size:1rem;">${caption}</caption>
+            <thead>
+              <tr style="background:${bgHeader}; border-bottom:2px solid ${borderCol};">
+                <th scope="col" style="padding:12px 16px;">Critère</th>
+                ${headers.map(h => `<th scope="col" style="padding:12px 16px; text-align:center;">${h.label}</th>`).join('')}
+              </tr>
+            </thead>
+            <tbody>
+              ${rows.map(r => `
+                <tr style="border-bottom:1px solid ${borderCol};">
+                  <th scope="row" style="padding:10px 16px; font-weight:500;">${r.label}</th>
+                  ${headers.map(h => {
+                    const val = r.values[h.id];
+                    let text = '—';
+                    if (val === true) text = '✓ Inclus';
+                    else if (val === false) text = '—';
+                    else if (val) text = String(val);
+                    return `<td style="padding:10px 16px; text-align:center;">${text}</td>`;
+                  }).join('')}
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    };
+
+    const familyLogo = offerFamilies.find(f => f.id === 'logo-identite')!;
+    const familySocial = offerFamilies.find(f => f.id === 'social-media')!;
+    const familyEvent = offerFamilies.find(f => f.id === 'evenementiel')!;
+    const familyWeb = offerFamilies.find(f => f.id === 'sites-web')!;
+    const familySingle = offerFamilies.find(f => f.id === 'visuels-unite')!;
+
     ssrContent = `
       <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
-        <!-- Header -->
-        <div class="text-center max-w-3xl mx-auto mb-12">
+        <!-- Entête compact -->
+        <header class="text-center max-w-3xl mx-auto mb-10">
           <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider mb-4">
             <span>Nos formules d'accompagnement</span>
           </div>
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-title font-semibold text-onyx leading-tight mb-4" style="font-family:'Cormorant Garamond', Georgia, serif;">
             Des formules conçues pour faire grandir votre activité
           </h1>
-          <p class="text-base sm:text-lg text-onyx/75 leading-relaxed">
-            Chaque offre est calibrée pour apporter une réponse graphique stratégique à un besoin précis. Aucun tarif générique : chaque collaboration fait l’objet d’un échange préalable pour adapter le dispositif à vos objectifs.
+          <p class="text-base sm:text-lg text-onyx/75 leading-relaxed mb-6">
+            Chaque offre est calibrée pour apporter une réponse graphique stratégique à un besoin précis. Aucun tarif générique : chaque collaboration fait l'objet d'un échange préalable pour adapter le dispositif à vos objectifs.
           </p>
-        </div>
+          <div class="p-5 rounded-2xl bg-gradient-to-r from-violet-imperial/10 via-white to-or-champagne/10 border border-violet-imperial/20 text-center">
+            <p class="text-base sm:text-lg font-title italic" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              « Chaque élément de votre identité sera construit pour qu'elle s'impose dans votre marché et ne se noie pas parmi vos concurrents. »
+            </p>
+            <span class="text-xs text-violet-imperial font-semibold uppercase tracking-wider mt-1 block">— Engagement de conception Class S</span>
+          </div>
+        </header>
 
-        <!-- Engagement -->
-        <div class="p-6 rounded-2xl bg-gradient-to-r from-violet-imperial/10 via-white to-or-champagne/10 border border-violet-imperial/20 text-center mb-12">
-          <p class="text-lg font-title italic" style="font-family:'Cormorant Garamond', Georgia, serif;">
-            « Chaque élément de votre identité sera construit pour qu'elle s'impose dans votre marché et ne se noie pas parmi vos concurrents. »
+        <!-- Guide : Quelle offre pour vous ? -->
+        <section aria-labelledby="guide-heading" class="mb-12 p-6 sm:p-8 rounded-3xl bg-white border border-violet-imperial/15 shadow-soft">
+          <h2 id="guide-heading" class="text-2xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+            Quelle offre pour vous ?
+          </h2>
+          <p class="text-sm text-onyx/75 mb-6">
+            Sélectionnez votre situation actuelle pour accéder directement à la formule adaptée :
           </p>
-          <span class="text-xs text-violet-imperial font-semibold uppercase tracking-wider mt-2 block">— Engagement de conception Class S</span>
-        </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            ${GUIDE_SITUATIONS.map(s => `
+              <a href="#${s.targetId}" class="p-3.5 rounded-2xl bg-ivoire-violet/50 border border-violet-imperial/10 hover:border-violet-imperial/30 block text-sm font-medium text-onyx transition-colors">
+                <span>${s.text}</span>
+                <span class="block text-xs text-violet-imperial font-semibold mt-1">→ ${s.category}</span>
+              </a>
+            `).join('')}
+          </div>
+        </section>
 
-        <!-- 5 Offers with ALL Accordion Content in DOM -->
-        <div class="space-y-8 mb-16">
-          ${offersData.map((offer) => `
-            <article class="bg-white rounded-3xl p-6 sm:p-8 border border-violet-imperial/15 shadow-soft">
+        <!-- Navigation ancres -->
+        <nav aria-label="Familles d'offres" class="mb-14 flex flex-wrap gap-2.5 justify-center">
+          ${offerFamilies.map(fam => `
+            <a href="#${fam.anchorId}" class="px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-white border border-violet-imperial/20 text-onyx hover:bg-violet-imperial hover:text-white transition-colors">
+              ${fam.navLabel}
+            </a>
+          `).join('')}
+        </nav>
+
+        <!-- Famille 01 : Logo & Identité Visuelle -->
+        <section id="famille-logo" class="mb-20 scroll-mt-28">
+          <div class="mb-8">
+            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">01 · Logo & Identité</span>
+            <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mt-1 mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              ${familyLogo.title}
+            </h2>
+            <p class="text-base text-onyx/75 max-w-2xl">${familyLogo.subtitle}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            ${(familyLogo.formulas || []).map(f => `
+              <article id="${f.slugAnchor}" class="p-6 rounded-3xl bg-white border border-violet-imperial/15 shadow-soft flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-violet-imperial">Formule</span>
+                    ${f.badge ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-or-champagne/20 text-onyx">${f.badge}</span>` : ''}
+                  </div>
+                  <h3 class="text-2xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+                    ${f.name}
+                  </h3>
+                  <p class="text-sm italic text-violet-imperial/90 mb-4 bg-ivoire-violet/60 p-3 rounded-xl border border-violet-imperial/10">
+                    ${f.idealFor}
+                  </p>
+                  <ul class="space-y-2 text-sm text-onyx/80 mb-6">
+                    ${f.keyPoints.map(kp => `<li class="flex items-start gap-2"><span class="text-[#6600CC]">✓</span><span>${kp}</span></li>`).join('')}
+                  </ul>
+                </div>
+                <div class="pt-4 border-t border-violet-imperial/10">
+                  ${f.deliveryTime ? `<p class="text-xs text-onyx/65 mb-3">Délai moyen : <strong>${f.deliveryTime}</strong></p>` : ''}
+                  <a href="/#contact?type=logo" class="block w-full text-center px-4 py-2.5 bg-violet-imperial text-white font-medium text-sm rounded-full">
+                    Choisir la formule ${f.name}
+                  </a>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+
+          ${familyLogo.namingOptionNote ? `
+            <div class="p-4 rounded-2xl bg-ivoire-violet/70 border border-violet-imperial/15 text-xs text-onyx/80 mb-8">
+              <strong>Option Naming :</strong> ${familyLogo.namingOptionNote}
+            </div>
+          ` : ''}
+
+          <!-- Matrice Logo -->
+          <div class="mt-8">
+            <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              Comparer les formules Logo & Identité en détail
+            </h3>
+            ${renderTable(familyLogo.comparisonHeaders!, familyLogo.comparisonRows!, 'Matrice comparative — Logo & Identité')}
+          </div>
+        </section>
+
+        <!-- Famille 02 : Branding Social Media -->
+        <section id="famille-social" class="mb-20 scroll-mt-28">
+          <div class="mb-8">
+            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">02 · Réseaux Sociaux</span>
+            <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mt-1 mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              ${familySocial.title}
+            </h2>
+            <p class="text-base text-onyx/75 max-w-2xl">${familySocial.subtitle}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            ${(familySocial.formulas || []).map(f => `
+              <article id="${f.slugAnchor}" class="p-6 sm:p-8 rounded-3xl bg-white border border-violet-imperial/15 shadow-soft flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-violet-imperial">Formule Mensuelle</span>
+                    ${f.badge ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-violet-imperial/10 text-violet-imperial">${f.badge}</span>` : ''}
+                  </div>
+                  <h3 class="text-2xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+                    ${f.name}
+                  </h3>
+                  <p class="text-sm italic text-violet-imperial/90 mb-4 bg-ivoire-violet/60 p-3 rounded-xl border border-violet-imperial/10">
+                    ${f.idealFor}
+                  </p>
+                  <ul class="space-y-2 text-sm text-onyx/80 mb-6">
+                    ${f.keyPoints.map(kp => `<li class="flex items-start gap-2"><span class="text-[#6600CC]">✓</span><span>${kp}</span></li>`).join('')}
+                  </ul>
+                </div>
+                <div class="pt-4 border-t border-violet-imperial/10">
+                  ${f.deliveryTime ? `<p class="text-xs text-onyx/65 mb-3">Rythme : <strong>${f.deliveryTime}</strong></p>` : ''}
+                  <a href="/#contact?type=social" class="block w-full text-center px-4 py-2.5 bg-violet-imperial text-white font-medium text-sm rounded-full">
+                    Activer ${f.name}
+                  </a>
+                </div>
+              </article>
+            `).join('')}
+          </div>
+
+          <!-- Matrice Social Media -->
+          <div class="mt-8">
+            <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              Comparer les formules Réseaux Sociaux en détail
+            </h3>
+            ${renderTable(familySocial.comparisonHeaders!, familySocial.comparisonRows!, 'Matrice comparative — Branding Social Media')}
+          </div>
+        </section>
+
+        <!-- Famille 03 : Communication Événementielle -->
+        <section id="famille-evenementiel" class="mb-20 scroll-mt-28">
+          <div class="p-6 sm:p-10 rounded-3xl bg-white border border-or-champagne/30 shadow-soft">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <span class="text-xs font-bold text-or-champagne uppercase tracking-wider">03 · Événementiel</span>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-or-champagne/15 text-[#8A5E2E]">Sur devis personnalisé</span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              ${familyEvent.title}
+            </h2>
+            <p class="text-base text-onyx/75 max-w-2xl mb-4">${familyEvent.subtitle}</p>
+            <p class="text-sm italic text-violet-imperial mb-6 bg-ivoire-violet/60 p-3 rounded-xl border border-violet-imperial/10 max-w-2xl">
+              ${familyEvent.idealFor}
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-sm text-onyx/80">
+              <div class="p-4 rounded-2xl bg-ivoire-violet/40">
+                <h4 class="font-semibold text-onyx mb-2">Supports Print & Signalétique</h4>
+                <p>Affiches officielles, kakémonos, bâches, badges d'invités, programmes imprimés et signalétique d'orientation sur site.</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-ivoire-violet/40">
+                <h4 class="font-semibold text-onyx mb-2">Campagne Numérique & Médias</h4>
+                <p>Visuels de teasing, compte à rebours, annonces d'intervenants, bannières partenaires et habillage vidéo d'écran scène.</p>
+              </div>
+            </div>
+            <a href="/#contact?type=event" class="inline-block px-6 py-3 bg-or-champagne text-onyx font-semibold text-sm rounded-full">
+              Demander un devis événementiel
+            </a>
+          </div>
+        </section>
+
+        <!-- Famille 04 : Sites Web (Bande sombre Onyx) -->
+        <section id="famille-sites-web" class="mb-20 scroll-mt-28 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-16" style="background-color:#0D0A18; color:#F8F5FF;">
+          <div class="max-w-6xl mx-auto">
+            <div class="mb-10 text-center max-w-3xl mx-auto">
+              <span class="text-xs font-bold uppercase tracking-wider" style="color:#C9A070;">04 · Présence Web Haute Performance</span>
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold mt-2 mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#F8F5FF;">
+                ${familyWeb.title}
+              </h2>
+              <p class="text-base text-ivoire-violet/75 max-w-2xl mx-auto mb-6">${familyWeb.subtitle}</p>
+              
+              <!-- Vitesse comparative -->
+              <div class="p-4 rounded-2xl border border-white/10 max-w-xl mx-auto text-left" style="background:rgba(255,255,255,0.03);">
+                <p class="text-xs text-ivoire-violet/70 mb-2 font-medium">Temps moyen de chargement mobile sur réseau 3G/4G locale :</p>
+                <div class="space-y-2 text-xs">
+                  <div>
+                    <div class="flex justify-between mb-1 text-ivoire-violet/60"><span>Standards marché classiques</span><span>4 à 8 secondes</span></div>
+                    <div class="w-full bg-white/10 h-2 rounded-full"><div class="bg-red-400/80 h-2 rounded-full" style="width:85%"></div></div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between mb-1" style="color:#C9A070;"><span>Architecture Class S ultra-optimisée</span><span>~1 seconde</span></div>
+                    <div class="w-full bg-white/10 h-2 rounded-full"><div class="h-2 rounded-full" style="width:20%; background-color:#C9A070;"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2 Formats Web -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+              ${websiteFormats.map(fmt => `
+                <div class="p-6 sm:p-8 rounded-3xl border border-white/10 flex flex-col justify-between" style="background:rgba(255,255,255,0.03);">
+                  <div>
+                    <h3 class="text-2xl font-title font-semibold mb-2" style="font-family:'Cormorant Garamond', Georgia, serif; color:#F8F5FF;">
+                      ${fmt.title}
+                    </h3>
+                    <p class="text-sm text-ivoire-violet/70 mb-6">${fmt.subtitle}</p>
+
+                    <div class="space-y-6">
+                      <!-- Variante Essentiel -->
+                      <div class="p-4 rounded-2xl border border-white/10" style="background:rgba(255,255,255,0.02);">
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-or-champagne mb-1">${fmt.variants.essentiel.label}</h4>
+                        <p class="text-xs italic text-ivoire-violet/70 mb-3">${fmt.variants.essentiel.idealFor}</p>
+                        <ul class="space-y-1.5 text-xs text-ivoire-violet/80">
+                          ${fmt.variants.essentiel.keyPoints.map(kp => `<li>• ${kp}</li>`).join('')}
+                        </ul>
+                      </div>
+
+                      <!-- Variante Premium -->
+                      <div class="p-4 rounded-2xl border border-or-champagne/30" style="background:rgba(201,160,112,0.05);">
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-or-champagne mb-1">${fmt.variants.premium.label}</h4>
+                        <p class="text-xs italic text-ivoire-violet/70 mb-3">${fmt.variants.premium.idealFor}</p>
+                        <ul class="space-y-1.5 text-xs text-ivoire-violet/80">
+                          ${fmt.variants.premium.keyPoints.map(kp => `<li>• ${kp}</li>`).join('')}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pt-6 mt-6 border-t border-white/10">
+                    <a href="/#contact?type=website" class="block w-full text-center px-4 py-3 bg-white text-onyx font-semibold text-sm rounded-full">
+                      Commander mon site ${fmt.title}
+                    </a>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+
+            ${familyWeb.hostingDomainNote ? `
+              <p class="text-xs text-center text-ivoire-violet/60 mb-8 max-w-2xl mx-auto">
+                ${familyWeb.hostingDomainNote}
+              </p>
+            ` : ''}
+
+            <!-- Matrice Web -->
+            <div class="mt-8">
+              <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#F8F5FF;">
+                Comparer les formats de sites web
+              </h3>
+              ${renderTable(familyWeb.comparisonHeaders!, familyWeb.comparisonRows!, 'Matrice comparative — Sites Web', true)}
+            </div>
+          </div>
+        </section>
+
+        <!-- Famille 05 : Visuels à l'unité -->
+        <section id="famille-visuels" class="mb-20 scroll-mt-28">
+          <div class="p-6 sm:p-8 rounded-3xl bg-white border border-violet-imperial/15 shadow-soft flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="max-w-2xl">
               <div class="flex items-center gap-3 mb-2">
-                <span class="text-sm font-bold text-[#C9A070] uppercase">${offer.number}</span>
-                ${offer.badge ? `<span class="px-3 py-0.5 rounded-full bg-violet-imperial/10 text-violet-imperial text-xs font-semibold">${offer.badge}</span>` : ''}
-                ${offer.isCustomQuoteOnly ? `<span class="px-3 py-0.5 rounded-full bg-[#C9A070]/15 text-[#8A5E2E] text-xs font-semibold">Sur devis personnalisé</span>` : ''}
+                <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">05 · Réactivité</span>
+                <span class="px-3 py-0.5 rounded-full text-xs font-semibold bg-violet-imperial/10 text-violet-imperial">Livraison garantie sous 24h</span>
               </div>
               <h2 class="text-2xl sm:text-3xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
-                ${offer.title}
+                ${familySingle.title}
               </h2>
-              <p class="text-sm sm:text-base text-onyx/75 mb-4">${offer.subtitle}</p>
+              <p class="text-sm text-onyx/75 mb-3">${familySingle.subtitle}</p>
+              <p class="text-xs italic text-violet-imperial/90 mb-0">
+                ${familySingle.idealFor}
+              </p>
+            </div>
+            <a href="/#contact?type=print" class="shrink-0 px-6 py-3 bg-violet-imperial text-white font-medium text-sm rounded-full">
+              Commander un visuel express
+            </a>
+          </div>
+        </section>
 
-              ${offer.highlightPromise ? `
-                <div class="p-4 rounded-xl bg-violet-imperial/5 border border-violet-imperial/10 mb-4 text-xs font-medium text-onyx/85">
-                  ${offer.highlightPromise}
-                </div>
-              ` : ''}
-
-              ${offer.highlightDetails && offer.highlightDetails.length > 0 ? `
-                <ul class="space-y-2 mb-6 text-sm text-onyx/80">
-                  ${offer.highlightDetails.map((detail) => `
-                    <li class="flex items-start gap-2">
-                      <span class="text-[#6600CC]">✓</span>
-                      <span>${detail}</span>
-                    </li>
-                  `).join('')}
-                </ul>
-              ` : ''}
-
-              <!-- Contenu des accordéons PRÉSENT DANS LE DOM INITIAL -->
-              ${offer.accordionDetails && offer.accordionDetails.length > 0 ? `
-                <div class="pt-4 border-t border-violet-imperial/10 space-y-3">
-                  ${offer.accordionDetails.map((acc) => `
-                    <div class="bg-ivoire-violet/50 rounded-xl p-4">
-                      <h3 class="font-semibold text-xs uppercase tracking-wider text-onyx mb-2">${acc.title}</h3>
-                      <ul class="space-y-1.5 text-xs text-onyx/75">
-                        ${acc.items.map((it) => `
-                          <li class="flex items-start gap-2">
-                            <span class="text-[#C9A070]">•</span>
-                            <span>${it}</span>
-                          </li>
-                        `).join('')}
-                      </ul>
-                    </div>
-                  `).join('')}
-                </div>
-              ` : ''}
-
-              <div class="mt-6 pt-4">
-                <a href="/#contact" class="inline-block px-5 py-2.5 bg-[#6600CC] text-white text-sm font-semibold rounded-full">${offer.ctaText}</a>
-              </div>
-            </article>
-          `).join('')}
-        </div>
-
-        <!-- FAQ -->
-        <section class="max-w-4xl mx-auto mb-16">
-          <h2 class="text-2xl sm:text-3xl font-title font-semibold text-center mb-8" style="font-family:'Cormorant Garamond', Georgia, serif;">
+        <!-- FAQ Prestations -->
+        <section aria-labelledby="faq-heading" class="max-w-4xl mx-auto mb-16">
+          <h2 id="faq-heading" class="text-2xl sm:text-3xl font-title font-semibold text-center mb-8" style="font-family:'Cormorant Garamond', Georgia, serif;">
             Questions fréquentes sur nos prestations
           </h2>
           <div class="space-y-4">
@@ -827,6 +1069,19 @@ export default async function handler(req: any, res: any) {
               </div>
             `).join('')}
           </div>
+        </section>
+
+        <!-- Bandeau final CTA -->
+        <section class="max-w-4xl mx-auto text-center p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-violet-imperial/10 via-white to-or-champagne/10 border border-violet-imperial/20 mb-16">
+          <h2 class="text-2xl sm:text-3xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
+            Un projet spécifique ou une question sur nos formules ?
+          </h2>
+          <p class="text-sm sm:text-base text-onyx/75 max-w-xl mx-auto mb-6">
+            Chaque identité de marque est unique. Échangeons sur vos ambitions et concevons l'accompagnement le plus pertinent pour vous imposer.
+          </p>
+          <a href="/#contact" class="inline-block px-8 py-3.5 bg-violet-imperial text-white font-medium text-base rounded-full shadow-soft hover:shadow-glow">
+            Prendre contact avec Scott Nana
+          </a>
         </section>
 
         <footer class="py-8 border-t border-violet-imperial/10 text-center text-xs text-onyx/70">

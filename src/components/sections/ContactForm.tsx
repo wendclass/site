@@ -43,6 +43,26 @@ export const ContactForm: React.FC = () => {
   const maxStepReachedRef = React.useRef<number>(1);
   const isSubmittedRef = React.useRef<boolean>(false);
 
+  // Pre-select project type from URL search params (?type=)
+  React.useEffect(() => {
+    try {
+      const search = window.location.search;
+      if (search) {
+        const params = new URLSearchParams(search);
+        const typeParam = params.get('type');
+        if (
+          typeParam &&
+          ['logo', 'social', 'print', 'event', 'website'].includes(typeParam)
+        ) {
+          setFormData((prev) => ({
+            ...prev,
+            projectType: typeParam as ProjectType,
+          }));
+        }
+      }
+    } catch {}
+  }, []);
+
   // Track initial step 1 on mount
   React.useEffect(() => {
     trackVisitEvent({

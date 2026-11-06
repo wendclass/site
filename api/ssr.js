@@ -3,104 +3,475 @@ import fs from "fs";
 import path from "path";
 
 // src/data/offres.ts
-var offersData = [
+var GUIDE_SITUATIONS = [
+  {
+    id: "launch-biz",
+    text: "Je lance mon activit\xE9",
+    targetId: "formule-logo-essentiel",
+    category: "Logo \u2014 Essentiel"
+  },
+  {
+    id: "coherent-brand",
+    text: "Je veux une image coh\xE9rente partout",
+    targetId: "formule-logo-standard",
+    category: "Logo \u2014 Standard"
+  },
+  {
+    id: "investors-clients",
+    text: "Je vise des investisseurs ou de grands clients",
+    targetId: "formule-logo-signature",
+    category: "Logo \u2014 Signature"
+  },
+  {
+    id: "no-social-manager",
+    text: "Je n\u2019ai personne pour animer mes r\xE9seaux",
+    targetId: "formule-social-presence",
+    category: "R\xE9seaux \u2014 Pr\xE9sence Continue"
+  },
+  {
+    id: "sell-continuously",
+    text: "Je veux vendre en continu, pas seulement exister en ligne",
+    targetId: "formule-social-croissance",
+    category: "R\xE9seaux \u2014 Croissance Acc\xE9l\xE9r\xE9e"
+  },
+  {
+    id: "need-website-fast",
+    text: "Il me faut un site, vite",
+    targetId: "famille-sites-web",
+    category: "Sites Web"
+  },
+  {
+    id: "event-organization",
+    text: "J\u2019organise un \xE9v\xE9nement",
+    targetId: "famille-evenementiel",
+    category: "Communication \xC9v\xE9nementielle"
+  }
+];
+var offerFamilies = [
+  // ---------------------------------------------------------------------------
+  // 01. Logo & Identité Visuelle
+  // ---------------------------------------------------------------------------
   {
     id: "logo-identite",
     number: "01",
+    anchorId: "famille-logo",
+    navLabel: "01 Logo & Identit\xE9",
     title: "Logo & Identit\xE9 Visuelle",
     subtitle: "Chaque \xE9l\xE9ment de votre identit\xE9 sera construit pour qu\u2019elle s\u2019impose dans votre march\xE9 et ne se noie pas parmi vos concurrents.",
-    highlightPromise: "3 niveaux adapt\xE9s \xE0 votre stade de d\xE9veloppement (Essentiel, Standard, Signature) pour poser des fondations in\xE9branlables.",
-    highlightDetails: [
-      "Recherche de logo sur mesure, avec plusieurs propositions de concepts originaux selon le niveau choisi.",
-      "Charte graphique compl\xE8te et fichiers finaux export\xE9s dans tous les formats utiles \xE0 votre usage quotidien (print & digital).",
-      "Accompagnement et garanties : r\xE9visions incluses, garantie de satisfaction, jusqu\u2019\xE0 l\u2019exclusivit\xE9 sectorielle pour le niveau Signature."
-    ],
-    accordionDetails: [
+    accentColor: "#6600CC",
+    // Violet Impérial
+    ctaText: "Discuter de mon identit\xE9 visuelle",
+    ctaTypeParam: "logo",
+    namingOptionNote: "Option Naming disponible : recherche de nom originale, analyse d\u2019\xE9vocation et v\xE9rification de disponibilit\xE9 avant cr\xE9ation graphique.",
+    formulas: [
       {
-        title: "Livrables & D\xE9clinaisons compl\xE9mentaires",
-        items: [
-          "Mises en situation r\xE9alistes (mockups premium) pour visualiser la marque en conditions r\xE9elles",
-          "Kit de lancement pour vos profils de r\xE9seaux sociaux (banni\xE8res, avatars normalis\xE9s)",
-          "Sauvegarde s\xE9curis\xE9e permanente de vos fichiers sources originaux",
-          "Dossier complet de pr\xE9sentation et d\u2019argumentation de marque",
-          "Acc\xE8s \xE0 un mod\xE8le d\u2019outil de devis / facturation aux couleurs de votre identit\xE9",
-          "D\xE9lais d\u2019ex\xE9cution clairs et engagements de livraison respect\xE9s"
+        id: "essentiel",
+        name: "Essentiel",
+        slugAnchor: "formule-logo-essentiel",
+        idealFor: "Id\xE9al si vous lancez votre activit\xE9 et avez besoin d\u2019un logo solide, rapidement.",
+        deliveryTime: "3 \xE0 5 jours",
+        keyPoints: [
+          "1 proposition de concept originale sur mesure",
+          "2 r\xE9visions incluses sur la piste retenue",
+          "Fichiers finaux livr\xE9s en vectoriel (SVG/AI), PDF haute d\xE9finition et PNG transparent",
+          "4 mises en situation r\xE9alistes (mockups premium) pour visualiser votre marque"
+        ]
+      },
+      {
+        id: "standard",
+        name: "Standard",
+        slugAnchor: "formule-logo-standard",
+        idealFor: "Id\xE9al si vous voulez une image coh\xE9rente, et pouvoir cr\xE9er vos propres supports ensuite.",
+        deliveryTime: "Environ 10 jours",
+        badge: "\xC9quilibre & Autonomie",
+        highlighted: true,
+        keyPoints: [
+          "2 propositions de concepts originaux explor\xE9s",
+          "Charte graphique de base (palette chromatique, r\xE8gles typographiques, marges de s\xE9curit\xE9)",
+          "Kit de lancement r\xE9seaux sociaux (banni\xE8res de couverture et avatars normalis\xE9s)",
+          "10 mockups premium + 4 r\xE9visions incluses pour un rendu irr\xE9prochable"
+        ]
+      },
+      {
+        id: "signature",
+        name: "Signature",
+        slugAnchor: "formule-logo-signature",
+        idealFor: "Id\xE9al si vous visez des interlocuteurs exigeants : investisseurs, partenaires, grands clients.",
+        deliveryTime: "2 semaines",
+        badge: "Exclusivit\xE9 & Autorit\xE9",
+        keyPoints: [
+          "3 propositions de concepts originaux approfondis",
+          "Charte graphique compl\xE8te et d\xE9taill\xE9e (guide d\u2019usage print & digital)",
+          "Fichiers finaux complets + fichiers sources natifs avec cession totale et exclusive des droits",
+          "Exclusivit\xE9 sectorielle garantie 6 mois et dossier complet de pr\xE9sentation de marque"
         ]
       }
     ],
-    ctaText: "Discuter de mon identit\xE9 visuelle"
+    comparisonHeaders: [
+      { id: "essentiel", label: "Essentiel" },
+      { id: "standard", label: "Standard" },
+      { id: "signature", label: "Signature" }
+    ],
+    comparisonRows: [
+      {
+        label: "Propositions de concepts originaux",
+        values: { essentiel: "1 concept", standard: "2 concepts", signature: "3 concepts" }
+      },
+      {
+        label: "Nombre de r\xE9visions incluses",
+        values: { essentiel: "2 r\xE9visions", standard: "4 r\xE9visions", signature: "6 r\xE9visions" }
+      },
+      {
+        label: "Charte graphique",
+        values: { essentiel: false, standard: "De base (couleurs & typos)", signature: "Compl\xE8te et d\xE9taill\xE9e" }
+      },
+      {
+        label: "Formats de fichiers finaux export\xE9s",
+        values: {
+          essentiel: "PNG, PDF, vectoriels",
+          standard: "Tous formats utiles print & web",
+          signature: "Tous formats + fichiers sources natifs"
+        }
+      },
+      {
+        label: "Cession des droits d\u2019auteur",
+        values: { essentiel: false, standard: false, signature: "Totale et exclusive" }
+      },
+      {
+        label: "Mises en situation r\xE9alistes (mockups premium)",
+        values: { essentiel: "4 mockups", standard: "10 mockups", signature: "20 mockups" }
+      },
+      {
+        label: "Kit de lancement pour vos r\xE9seaux sociaux",
+        values: {
+          essentiel: false,
+          standard: "Inclus (banni\xE8res & avatars)",
+          signature: "Inclus + papeterie \xE9largie (en-t\xEAte, enveloppe)"
+        }
+      },
+      {
+        label: "Dossier de pr\xE9sentation de marque (investisseurs/partenaires)",
+        values: { essentiel: false, standard: false, signature: "Inclus" }
+      },
+      {
+        label: "Licences (typographies, iconographie, banques d\u2019images)",
+        values: { essentiel: false, standard: false, signature: "Incluses" }
+      },
+      {
+        label: "Garantie d\u2019exclusivit\xE9 sectorielle",
+        values: { essentiel: false, standard: false, signature: "6 mois" }
+      },
+      {
+        label: "Acc\xE8s au mod\xE8le d\u2019outil de devis / facturation aux couleurs de marque",
+        values: { essentiel: "1 mois", standard: "2 mois", signature: "3 mois" }
+      },
+      {
+        label: "Sauvegarde s\xE9curis\xE9e permanente des fichiers",
+        values: { essentiel: false, standard: "6 mois", signature: "1 an" }
+      },
+      {
+        label: "Suivi et ajustements apr\xE8s livraison",
+        values: { essentiel: false, standard: false, signature: "1 mois" }
+      },
+      {
+        label: "D\xE9lai moyen d\u2019ex\xE9cution",
+        values: { essentiel: "3 \xE0 5 jours", standard: "Environ 10 jours", signature: "2 semaines" }
+      }
+    ]
   },
+  // ---------------------------------------------------------------------------
+  // 02. Branding Social Media
+  // ---------------------------------------------------------------------------
   {
     id: "branding-social-media",
     number: "02",
+    anchorId: "famille-social",
+    navLabel: "02 R\xE9seaux sociaux",
     title: "Branding Social Media",
     subtitle: "Une pr\xE9sence visuelle continue et percutante chaque mois pour nourrir l\u2019autorit\xE9 de votre marque sans jamais conna\xEEtre la panne d\u2019id\xE9es.",
     badge: "Abonnement mensuel",
-    highlightPromise: "2 formules d\u2019accompagnement continu (Pr\xE9sence Continue, Croissance Acc\xE9l\xE9r\xE9e) pens\xE9es comme un moteur de conversion r\xE9gulier.",
-    highlightDetails: [
-      "Un rythme de publication r\xE9gulier et un planning \xE9ditorial visuel \xE9tabli au pr\xE9alable en d\xE9but de chaque mois.",
-      "Des visuels finis, harmonis\xE9s avec votre charte, accompagn\xE9s d\u2019une proposition d\u2019accroche pr\xEAte \xE0 publier.",
-      "Un accompagnement strat\xE9gique d\xE9di\xE9 : cr\xE9neau garanti et point d\u2019\xE9change mensuel d\u2019optimisation pour la formule la plus compl\xE8te."
-    ],
-    accordionDetails: [
+    accentColor: "#A87FE8",
+    // Améthyste
+    ctaText: "Mettre en place mon abonnement social media",
+    ctaTypeParam: "social",
+    formulas: [
       {
-        title: "Avantages inclus dans l\u2019abonnement",
-        items: [
-          "D\xE9clinaison au format Story offerte pour chaque publication pour maximiser la port\xE9e",
+        id: "presence",
+        name: "Pr\xE9sence Continue",
+        slugAnchor: "formule-social-presence",
+        idealFor: "Id\xE9al si vous avez d\xE9j\xE0 une identit\xE9, mais personne pour la faire vivre chaque semaine.",
+        badge: "2 visuels / semaine",
+        keyPoints: [
+          "8 visuels finis par mois (rythme r\xE9gulier de 2 publications par semaine)",
+          "D\xE9clinaison au format Story offerte syst\xE9matiquement pour chaque publication",
+          "Proposition d\u2019accroche et l\xE9gende strat\xE9gique pr\xEAte \xE0 copier-coller",
+          "Planning \xE9ditorial visuel valid\xE9 au pr\xE9alable en d\xE9but de chaque mois"
+        ]
+      },
+      {
+        id: "croissance",
+        name: "Croissance Acc\xE9l\xE9r\xE9e",
+        slugAnchor: "formule-social-croissance",
+        idealFor: "Id\xE9al si vous voulez vendre en continu, pas seulement exister en ligne.",
+        badge: "4 visuels / semaine",
+        highlighted: true,
+        keyPoints: [
+          "16 visuels finis par mois (rythme soutenu de 4 publications par semaine)",
           "Conception de carrousels p\xE9dagogiques et strat\xE9giques pour booster l\u2019engagement",
-          "R\xE9visions incluses sur chaque livraison de visuels",
-          "Garantie de r\xE9activit\xE9 et de retouche rapide en cas d\u2019ajustement impr\xE9vu"
+          "Cr\xE9neau de conception hebdomadaire garanti sans temps mort",
+          "Point d\u2019\xE9change mensuel d\u2019optimisation strat\xE9gique de 30 minutes inclus"
         ]
       }
     ],
-    ctaText: "Mettre en place mon abonnement social media"
-  },
-  {
-    id: "sites-web",
-    number: "03",
-    title: "Sites Web",
-    subtitle: "Un site web moderne, rapide et optimis\xE9 pour transformer vos visiteurs en prises de contact directes sur WhatsApp.",
-    highlightPromise: "2 formats sur mesure (Vitrine une page ou Multi-pages) avec un atout d\xE9cisif : livr\xE9 en quelques jours.",
-    highlightDetails: [
-      "Un site livr\xE9 en quelques jours, pas en plusieurs semaines : commencez \xE0 convertir sans d\xE9lai.",
-      "Une structure ergonomique fluide pens\xE9e pour valoriser votre offre et pousser chaque visiteur \xE0 l\u2019action.",
-      "Un accompagnement post-lancement : p\xE9riode de support et d\u2019ajustements techniques incluse apr\xE8s la mise en ligne."
+    comparisonHeaders: [
+      { id: "presence", label: "Pr\xE9sence Continue" },
+      { id: "croissance", label: "Croissance Acc\xE9l\xE9r\xE9e" }
     ],
-    accordionDetails: [
+    comparisonRows: [
       {
-        title: "Sp\xE9cifications techniques & Inclusions",
-        items: [
-          "Architecture one-page ou multi-pages selon la complexit\xE9 de votre catalogue d\u2019offres",
-          "Optimisation SEO technique de base pour le r\xE9f\xE9rencement local (Ouagadougou & sous-r\xE9gion)",
-          "Design 100% responsive et fluide sur mobile, tablette et \xE9cran desktop",
-          "Int\xE9gration directe des canaux de contact direct (WhatsApp, formulaires conditionnels)",
-          "Important : l\u2019h\xE9bergement et le nom de domaine restent \xE0 la charge du client (conseils de choix fournis)."
-        ]
+        label: "Nombre de visuels finis par mois",
+        values: { presence: "8 visuels (2 / semaine)", croissance: "16 visuels (4 / semaine)" }
+      },
+      {
+        label: "D\xE9clinaison au format Story offerte",
+        values: { presence: true, croissance: true }
+      },
+      {
+        label: "R\xE9visions incluses par visuel",
+        values: { presence: "1 r\xE9vision", croissance: "1 r\xE9vision" }
+      },
+      {
+        label: "Accroche et l\xE9gende sugg\xE9r\xE9es avec chaque publication",
+        values: { presence: true, croissance: true }
+      },
+      {
+        label: "Planning de contenu \xE9tabli en d\xE9but de mois",
+        values: { presence: true, croissance: true }
+      },
+      {
+        label: "Formats sp\xE9ciaux (carrousels p\xE9dagogiques & visuels tendance)",
+        values: { presence: true, croissance: true }
+      },
+      {
+        label: "Garantie de retouche r\xE9active sous 24 h",
+        values: { presence: true, croissance: true }
+      },
+      {
+        label: "Cr\xE9neau de production hebdomadaire garanti",
+        values: { presence: false, croissance: true }
+      },
+      {
+        label: "Appel mensuel strat\xE9gique d\u2019optimisation (30 minutes)",
+        values: { presence: false, croissance: true }
       }
-    ],
-    ctaText: "Lancer la cr\xE9ation de mon site web"
+    ]
   },
+  // ---------------------------------------------------------------------------
+  // 03. Communication Événementielle
+  // ---------------------------------------------------------------------------
   {
     id: "communication-evenementielle",
-    number: "04",
+    number: "03",
+    anchorId: "famille-evenementiel",
+    navLabel: "03 \xC9v\xE9nementiel",
     title: "Communication \xC9v\xE9nementielle",
     subtitle: "Chaque \xE9v\xE9nement a son envergure, son public et ses contraintes propres. Votre dispositif visuel est calibr\xE9 sur mesure pour marquer les esprits.",
+    badge: "Sur devis",
+    accentColor: "#C9A070",
+    // Or Champagne
     isCustomQuoteOnly: true,
-    highlightPromise: "Dispositif complet personnalis\xE9 : affichage grand format, roll-ups, tickets, badges, dossiers de partenariat et campagne digitale.",
-    highlightDetails: [],
-    ctaText: "Demander un devis sur mesure"
+    idealFor: "Id\xE9al si vous organisez un \xE9v\xE9nement et voulez que chaque support soit coh\xE9rent.",
+    ctaText: "Demander un devis sur mesure",
+    ctaTypeParam: "event"
   },
+  // ---------------------------------------------------------------------------
+  // 04. Sites Web
+  // ---------------------------------------------------------------------------
+  {
+    id: "sites-web",
+    number: "04",
+    anchorId: "famille-sites-web",
+    navLabel: "04 Sites web",
+    title: "Un site complet en quelques jours, pas en plusieurs semaines.",
+    subtitle: "Un site web moderne, rapide et optimis\xE9 pour transformer vos visiteurs en prises de contact directes sur WhatsApp.",
+    accentColor: "#C9A070",
+    isDarkBand: true,
+    // Seule bande sombre Onyx
+    hostingDomainNote: "Important : l\u2019h\xE9bergement et le nom de domaine restent \xE0 la charge du client (conseils et accompagnement de choix fournis).",
+    ctaText: "Lancer la cr\xE9ation de mon site web",
+    ctaTypeParam: "website",
+    comparisonHeaders: [
+      { id: "vitrine-essentiel", label: "Vitrine Essentiel" },
+      { id: "vitrine-premium", label: "Vitrine Premium" },
+      { id: "multi-essentiel", label: "Multi-pages Essentiel" },
+      { id: "multi-premium", label: "Multi-pages Premium" }
+    ],
+    comparisonRows: [
+      {
+        label: "Nombre de pages",
+        values: {
+          "vitrine-essentiel": "1 page",
+          "vitrine-premium": "1 page",
+          "multi-essentiel": "Jusqu\u2019\xE0 5 pages",
+          "multi-premium": "Jusqu\u2019\xE0 8 pages + blog"
+        }
+      },
+      {
+        label: "Contenu & structure",
+        values: {
+          "vitrine-essentiel": "Sections essentielles (pr\xE9sentation, services, contact)",
+          "vitrine-premium": "Sections enrichies & parcours de conversion",
+          "multi-essentiel": "Formulaire de contact structur\xE9",
+          "multi-premium": "Formulaire avanc\xE9 + int\xE9gration r\xE9seaux"
+        }
+      },
+      {
+        label: "Optimisation pour le r\xE9f\xE9rencement (SEO)",
+        values: {
+          "vitrine-essentiel": false,
+          "vitrine-premium": "De base (balises & m\xE9tadonn\xE9es)",
+          "multi-essentiel": "De base (balises & structure)",
+          "multi-premium": "Renforc\xE9 (architecture s\xE9mantique & blog)"
+        }
+      },
+      {
+        label: "Design responsive (mobile, tablette, ordinateur)",
+        values: {
+          "vitrine-essentiel": true,
+          "vitrine-premium": true,
+          "multi-essentiel": true,
+          "multi-premium": true
+        }
+      },
+      {
+        label: "Nombre de r\xE9visions incluses",
+        values: {
+          "vitrine-essentiel": false,
+          "vitrine-premium": false,
+          "multi-essentiel": "2 r\xE9visions",
+          "multi-premium": "4 r\xE9visions"
+        }
+      },
+      {
+        label: "Support & accompagnement technique apr\xE8s lancement",
+        values: {
+          "vitrine-essentiel": false,
+          "vitrine-premium": false,
+          "multi-essentiel": "30 jours inclus",
+          "multi-premium": "60 jours inclus"
+        }
+      },
+      {
+        label: "D\xE9lai d\u2019ex\xE9cution moyen",
+        values: {
+          "vitrine-essentiel": "48 heures",
+          "vitrine-premium": "72 heures",
+          "multi-essentiel": "5 jours",
+          "multi-premium": "Sur mesure"
+        }
+      }
+    ]
+  },
+  // ---------------------------------------------------------------------------
+  // 05. Visuels à l’unité
+  // ---------------------------------------------------------------------------
   {
     id: "visuels-a-lunite",
     number: "05",
+    anchorId: "famille-visuels",
+    navLabel: "05 Visuels",
     title: "Visuels \xE0 l\u2019unit\xE9 & Supports imprim\xE9s",
-    subtitle: "Un besoin ponctuel et urgent ? Vos visuels unitaires ou supports imprim\xE9s (kak\xE9monos, b\xE2ches, affiches) con\xE7us et livr\xE9s sous 24 heures.",
+    subtitle: "Un besoin ponctuel et urgent ? Vos visuels unitaires ou supports imprim\xE9s con\xE7us et livr\xE9s sous 24 heures.",
+    accentColor: "#3A2F5C",
+    // Ardoise
     isSingleLine: true,
     deliveryTime: "Livraison garantie sous 24h",
-    highlightDetails: [],
-    ctaText: "Commander un visuel express"
+    idealFor: "Id\xE9al si vous avez besoin d\u2019un support pr\xE9cis, sans abonnement.",
+    ctaText: "Commander un visuel express",
+    ctaTypeParam: "print"
   }
 ];
+var websiteFormats = [
+  {
+    id: "vitrine",
+    slugAnchor: "formule-site-vitrine",
+    title: "Site Vitrine (1 page)",
+    subtitle: "Une architecture concise pens\xE9e pour valoriser votre offre en quelques secondes et pousser chaque visiteur \xE0 vous contacter sur WhatsApp.",
+    variants: {
+      essentiel: {
+        id: "essentiel",
+        label: "Essentiel",
+        idealFor: "Id\xE9al si vous avez besoin d\u2019une page claire qui pr\xE9sente votre activit\xE9, vite.",
+        deliveryTime: "48 heures",
+        keyPoints: [
+          "Architecture one-page fluide (pr\xE9sentation, services, contact direct)",
+          "Design 100% responsive et fluide sur mobile, tablette et ordinateur",
+          "Int\xE9gration directe des boutons de contact WhatsApp & prise de rendez-vous",
+          "Livraison rapide garantie en 48 heures"
+        ]
+      },
+      premium: {
+        id: "premium",
+        label: "Premium",
+        idealFor: "Id\xE9al si vous voulez une page vitrine enrichie avec conversion renforc\xE9e.",
+        deliveryTime: "72 heures",
+        keyPoints: [
+          "Sections enrichies, animations d\u2019interaction et design sur mesure",
+          "Optimisation SEO technique de base pour le r\xE9f\xE9rencement local",
+          "Int\xE9gration de formulaires de contact conditionnels et r\xE9seaux sociaux",
+          "Livraison rapide garantie en 72 heures"
+        ]
+      }
+    }
+  },
+  {
+    id: "multipages",
+    slugAnchor: "formule-site-multipages",
+    title: "Site Multi-pages",
+    subtitle: "Une plateforme compl\xE8te pour d\xE9tailler chaque volet de votre offre, structurer vos contenus et asseoir une autorit\xE9 incontestable dans votre secteur.",
+    variants: {
+      essentiel: {
+        id: "essentiel",
+        label: "Essentiel",
+        idealFor: "Id\xE9al si vous avez plusieurs services \xE0 pr\xE9senter et voulez un site complet.",
+        deliveryTime: "5 jours",
+        keyPoints: [
+          "Jusqu\u2019\xE0 5 pages structur\xE9es avec navigation ergonomique d\xE9di\xE9e",
+          "Formulaire de contact structur\xE9 avec routage direct des demandes",
+          "2 r\xE9visions incluses + 30 jours de support technique post-lancement",
+          "Livraison garantie en 5 jours"
+        ]
+      },
+      premium: {
+        id: "premium",
+        label: "Premium",
+        idealFor: "Id\xE9al si vous avez plusieurs services et voulez un site complet avec blog.",
+        deliveryTime: "Sur mesure",
+        keyPoints: [
+          "Jusqu\u2019\xE0 8 pages compl\xE8tes + section blog \xE9ditorial int\xE9gr\xE9e",
+          "R\xE9f\xE9rencement SEO technique renforc\xE9 (architecture s\xE9mantique & vitesse)",
+          "4 r\xE9visions incluses + 60 jours d\u2019assistance technique et support",
+          "Accompagnement post-lancement et conseils d\u2019optimisation"
+        ]
+      }
+    }
+  }
+];
+var offersData = offerFamilies.map((fam) => {
+  return {
+    id: fam.id,
+    number: fam.number,
+    title: fam.id === "sites-web" ? "Sites Web" : fam.title,
+    subtitle: fam.subtitle,
+    badge: fam.badge,
+    isCustomQuoteOnly: fam.isCustomQuoteOnly,
+    isSingleLine: fam.isSingleLine,
+    deliveryTime: fam.deliveryTime,
+    highlightPromise: fam.formulas ? fam.formulas[0]?.idealFor : void 0,
+    highlightDetails: fam.formulas ? fam.formulas[0]?.keyPoints : [],
+    ctaText: fam.ctaText
+  };
+});
 
 // src/data/projets.ts
 var projectsData = [
@@ -2435,7 +2806,7 @@ async function handler(req, res) {
     `;
   } else if (normalizedRoute === "/offres") {
     pageTitle = "Formules & Accompagnement Brand Design | Class S";
-    pageDesc = "D\xE9couvrez nos 5 formules d'accompagnement en identit\xE9 visuelle, branding social media, sites web et communication \xE9v\xE9nementielle \xE0 Ouagadougou.";
+    pageDesc = "D\xE9couvrez nos 5 familles d'accompagnement : Logo & Identit\xE9 Visuelle, Branding Social Media, Communication \xC9v\xE9nementielle, Sites Web et Visuels 24h \xE0 Ouagadougou.";
     pageCanonical = `${baseUrl}/offres`;
     jsonLd = {
       "@context": "https://schema.org",
@@ -2449,16 +2820,16 @@ async function handler(req, res) {
         url: baseUrl
       },
       mainEntity: {
-        "@type": "ItemList",
-        name: "Formules d'accompagnement Class S",
-        numberOfItems: offersData.length,
-        itemListElement: offersData.map((offer, index) => ({
+        "@type": "OfferCatalog",
+        name: "Catalogue des solutions d'accompagnement Class S",
+        numberOfItems: offerFamilies.length,
+        itemListElement: offerFamilies.map((fam, index) => ({
           "@type": "ListItem",
           position: index + 1,
           item: {
             "@type": "Service",
-            name: offer.title,
-            description: offer.subtitle,
+            name: fam.title,
+            description: fam.subtitle,
             provider: {
               "@type": "ProfessionalService",
               name: SITE_CONFIG.name
@@ -2467,89 +2838,329 @@ async function handler(req, res) {
         }))
       }
     };
+    const renderTable = (headers, rows, caption, isDark = false) => {
+      const borderCol = isDark ? "rgba(255,255,255,0.15)" : "rgba(102,0,204,0.15)";
+      const bgHeader = isDark ? "rgba(255,255,255,0.05)" : "rgba(102,0,204,0.05)";
+      const textCol = isDark ? "#F8F5FF" : "#0D0A18";
+      return `
+        <div style="overflow-x:auto; margin: 2rem 0;">
+          <table style="width:100%; border-collapse:collapse; font-size:0.875rem; text-align:left; border:1px solid ${borderCol}; color:${textCol};">
+            <caption style="text-align:left; font-weight:600; padding:0.5rem 0; font-size:1rem;">${caption}</caption>
+            <thead>
+              <tr style="background:${bgHeader}; border-bottom:2px solid ${borderCol};">
+                <th scope="col" style="padding:12px 16px;">Crit\xE8re</th>
+                ${headers.map((h) => `<th scope="col" style="padding:12px 16px; text-align:center;">${h.label}</th>`).join("")}
+              </tr>
+            </thead>
+            <tbody>
+              ${rows.map((r) => `
+                <tr style="border-bottom:1px solid ${borderCol};">
+                  <th scope="row" style="padding:10px 16px; font-weight:500;">${r.label}</th>
+                  ${headers.map((h) => {
+        const val = r.values[h.id];
+        let text = "\u2014";
+        if (val === true) text = "\u2713 Inclus";
+        else if (val === false) text = "\u2014";
+        else if (val) text = String(val);
+        return `<td style="padding:10px 16px; text-align:center;">${text}</td>`;
+      }).join("")}
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    };
+    const familyLogo = offerFamilies.find((f) => f.id === "logo-identite");
+    const familySocial = offerFamilies.find((f) => f.id === "social-media");
+    const familyEvent = offerFamilies.find((f) => f.id === "evenementiel");
+    const familyWeb = offerFamilies.find((f) => f.id === "sites-web");
+    const familySingle = offerFamilies.find((f) => f.id === "visuels-unite");
     ssrContent = `
       <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
-        <!-- Header -->
-        <div class="text-center max-w-3xl mx-auto mb-12">
+        <!-- Ent\xEAte compact -->
+        <header class="text-center max-w-3xl mx-auto mb-10">
           <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-violet-imperial/10 border border-violet-imperial/20 text-violet-imperial text-xs font-semibold uppercase tracking-wider mb-4">
             <span>Nos formules d'accompagnement</span>
           </div>
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-title font-semibold text-onyx leading-tight mb-4" style="font-family:'Cormorant Garamond', Georgia, serif;">
             Des formules con\xE7ues pour faire grandir votre activit\xE9
           </h1>
-          <p class="text-base sm:text-lg text-onyx/75 leading-relaxed">
-            Chaque offre est calibr\xE9e pour apporter une r\xE9ponse graphique strat\xE9gique \xE0 un besoin pr\xE9cis. Aucun tarif g\xE9n\xE9rique : chaque collaboration fait l\u2019objet d\u2019un \xE9change pr\xE9alable pour adapter le dispositif \xE0 vos objectifs.
+          <p class="text-base sm:text-lg text-onyx/75 leading-relaxed mb-6">
+            Chaque offre est calibr\xE9e pour apporter une r\xE9ponse graphique strat\xE9gique \xE0 un besoin pr\xE9cis. Aucun tarif g\xE9n\xE9rique : chaque collaboration fait l'objet d'un \xE9change pr\xE9alable pour adapter le dispositif \xE0 vos objectifs.
           </p>
-        </div>
+          <div class="p-5 rounded-2xl bg-gradient-to-r from-violet-imperial/10 via-white to-or-champagne/10 border border-violet-imperial/20 text-center">
+            <p class="text-base sm:text-lg font-title italic" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              \xAB Chaque \xE9l\xE9ment de votre identit\xE9 sera construit pour qu'elle s'impose dans votre march\xE9 et ne se noie pas parmi vos concurrents. \xBB
+            </p>
+            <span class="text-xs text-violet-imperial font-semibold uppercase tracking-wider mt-1 block">\u2014 Engagement de conception Class S</span>
+          </div>
+        </header>
 
-        <!-- Engagement -->
-        <div class="p-6 rounded-2xl bg-gradient-to-r from-violet-imperial/10 via-white to-or-champagne/10 border border-violet-imperial/20 text-center mb-12">
-          <p class="text-lg font-title italic" style="font-family:'Cormorant Garamond', Georgia, serif;">
-            \xAB Chaque \xE9l\xE9ment de votre identit\xE9 sera construit pour qu'elle s'impose dans votre march\xE9 et ne se noie pas parmi vos concurrents. \xBB
+        <!-- Guide : Quelle offre pour vous ? -->
+        <section aria-labelledby="guide-heading" class="mb-12 p-6 sm:p-8 rounded-3xl bg-white border border-violet-imperial/15 shadow-soft">
+          <h2 id="guide-heading" class="text-2xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+            Quelle offre pour vous ?
+          </h2>
+          <p class="text-sm text-onyx/75 mb-6">
+            S\xE9lectionnez votre situation actuelle pour acc\xE9der directement \xE0 la formule adapt\xE9e :
           </p>
-          <span class="text-xs text-violet-imperial font-semibold uppercase tracking-wider mt-2 block">\u2014 Engagement de conception Class S</span>
-        </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            ${GUIDE_SITUATIONS.map((s) => `
+              <a href="#${s.targetId}" class="p-3.5 rounded-2xl bg-ivoire-violet/50 border border-violet-imperial/10 hover:border-violet-imperial/30 block text-sm font-medium text-onyx transition-colors">
+                <span>${s.text}</span>
+                <span class="block text-xs text-violet-imperial font-semibold mt-1">\u2192 ${s.category}</span>
+              </a>
+            `).join("")}
+          </div>
+        </section>
 
-        <!-- 5 Offers with ALL Accordion Content in DOM -->
-        <div class="space-y-8 mb-16">
-          ${offersData.map((offer) => `
-            <article class="bg-white rounded-3xl p-6 sm:p-8 border border-violet-imperial/15 shadow-soft">
+        <!-- Navigation ancres -->
+        <nav aria-label="Familles d'offres" class="mb-14 flex flex-wrap gap-2.5 justify-center">
+          ${offerFamilies.map((fam) => `
+            <a href="#${fam.anchorId}" class="px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-white border border-violet-imperial/20 text-onyx hover:bg-violet-imperial hover:text-white transition-colors">
+              ${fam.navLabel}
+            </a>
+          `).join("")}
+        </nav>
+
+        <!-- Famille 01 : Logo & Identit\xE9 Visuelle -->
+        <section id="famille-logo" class="mb-20 scroll-mt-28">
+          <div class="mb-8">
+            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">01 \xB7 Logo & Identit\xE9</span>
+            <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mt-1 mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              ${familyLogo.title}
+            </h2>
+            <p class="text-base text-onyx/75 max-w-2xl">${familyLogo.subtitle}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            ${(familyLogo.formulas || []).map((f) => `
+              <article id="${f.slugAnchor}" class="p-6 rounded-3xl bg-white border border-violet-imperial/15 shadow-soft flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-violet-imperial">Formule</span>
+                    ${f.badge ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-or-champagne/20 text-onyx">${f.badge}</span>` : ""}
+                  </div>
+                  <h3 class="text-2xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+                    ${f.name}
+                  </h3>
+                  <p class="text-sm italic text-violet-imperial/90 mb-4 bg-ivoire-violet/60 p-3 rounded-xl border border-violet-imperial/10">
+                    ${f.idealFor}
+                  </p>
+                  <ul class="space-y-2 text-sm text-onyx/80 mb-6">
+                    ${f.keyPoints.map((kp) => `<li class="flex items-start gap-2"><span class="text-[#6600CC]">\u2713</span><span>${kp}</span></li>`).join("")}
+                  </ul>
+                </div>
+                <div class="pt-4 border-t border-violet-imperial/10">
+                  ${f.deliveryTime ? `<p class="text-xs text-onyx/65 mb-3">D\xE9lai moyen : <strong>${f.deliveryTime}</strong></p>` : ""}
+                  <a href="/#contact?type=logo" class="block w-full text-center px-4 py-2.5 bg-violet-imperial text-white font-medium text-sm rounded-full">
+                    Choisir la formule ${f.name}
+                  </a>
+                </div>
+              </article>
+            `).join("")}
+          </div>
+
+          ${familyLogo.namingOptionNote ? `
+            <div class="p-4 rounded-2xl bg-ivoire-violet/70 border border-violet-imperial/15 text-xs text-onyx/80 mb-8">
+              <strong>Option Naming :</strong> ${familyLogo.namingOptionNote}
+            </div>
+          ` : ""}
+
+          <!-- Matrice Logo -->
+          <div class="mt-8">
+            <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              Comparer les formules Logo & Identit\xE9 en d\xE9tail
+            </h3>
+            ${renderTable(familyLogo.comparisonHeaders, familyLogo.comparisonRows, "Matrice comparative \u2014 Logo & Identit\xE9")}
+          </div>
+        </section>
+
+        <!-- Famille 02 : Branding Social Media -->
+        <section id="famille-social" class="mb-20 scroll-mt-28">
+          <div class="mb-8">
+            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">02 \xB7 R\xE9seaux Sociaux</span>
+            <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mt-1 mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              ${familySocial.title}
+            </h2>
+            <p class="text-base text-onyx/75 max-w-2xl">${familySocial.subtitle}</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            ${(familySocial.formulas || []).map((f) => `
+              <article id="${f.slugAnchor}" class="p-6 sm:p-8 rounded-3xl bg-white border border-violet-imperial/15 shadow-soft flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-violet-imperial">Formule Mensuelle</span>
+                    ${f.badge ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-violet-imperial/10 text-violet-imperial">${f.badge}</span>` : ""}
+                  </div>
+                  <h3 class="text-2xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
+                    ${f.name}
+                  </h3>
+                  <p class="text-sm italic text-violet-imperial/90 mb-4 bg-ivoire-violet/60 p-3 rounded-xl border border-violet-imperial/10">
+                    ${f.idealFor}
+                  </p>
+                  <ul class="space-y-2 text-sm text-onyx/80 mb-6">
+                    ${f.keyPoints.map((kp) => `<li class="flex items-start gap-2"><span class="text-[#6600CC]">\u2713</span><span>${kp}</span></li>`).join("")}
+                  </ul>
+                </div>
+                <div class="pt-4 border-t border-violet-imperial/10">
+                  ${f.deliveryTime ? `<p class="text-xs text-onyx/65 mb-3">Rythme : <strong>${f.deliveryTime}</strong></p>` : ""}
+                  <a href="/#contact?type=social" class="block w-full text-center px-4 py-2.5 bg-violet-imperial text-white font-medium text-sm rounded-full">
+                    Activer ${f.name}
+                  </a>
+                </div>
+              </article>
+            `).join("")}
+          </div>
+
+          <!-- Matrice Social Media -->
+          <div class="mt-8">
+            <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              Comparer les formules R\xE9seaux Sociaux en d\xE9tail
+            </h3>
+            ${renderTable(familySocial.comparisonHeaders, familySocial.comparisonRows, "Matrice comparative \u2014 Branding Social Media")}
+          </div>
+        </section>
+
+        <!-- Famille 03 : Communication \xC9v\xE9nementielle -->
+        <section id="famille-evenementiel" class="mb-20 scroll-mt-28">
+          <div class="p-6 sm:p-10 rounded-3xl bg-white border border-or-champagne/30 shadow-soft">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <span class="text-xs font-bold text-or-champagne uppercase tracking-wider">03 \xB7 \xC9v\xE9nementiel</span>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-or-champagne/15 text-[#8A5E2E]">Sur devis personnalis\xE9</span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
+              ${familyEvent.title}
+            </h2>
+            <p class="text-base text-onyx/75 max-w-2xl mb-4">${familyEvent.subtitle}</p>
+            <p class="text-sm italic text-violet-imperial mb-6 bg-ivoire-violet/60 p-3 rounded-xl border border-violet-imperial/10 max-w-2xl">
+              ${familyEvent.idealFor}
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-sm text-onyx/80">
+              <div class="p-4 rounded-2xl bg-ivoire-violet/40">
+                <h4 class="font-semibold text-onyx mb-2">Supports Print & Signal\xE9tique</h4>
+                <p>Affiches officielles, kak\xE9monos, b\xE2ches, badges d'invit\xE9s, programmes imprim\xE9s et signal\xE9tique d'orientation sur site.</p>
+              </div>
+              <div class="p-4 rounded-2xl bg-ivoire-violet/40">
+                <h4 class="font-semibold text-onyx mb-2">Campagne Num\xE9rique & M\xE9dias</h4>
+                <p>Visuels de teasing, compte \xE0 rebours, annonces d'intervenants, banni\xE8res partenaires et habillage vid\xE9o d'\xE9cran sc\xE8ne.</p>
+              </div>
+            </div>
+            <a href="/#contact?type=event" class="inline-block px-6 py-3 bg-or-champagne text-onyx font-semibold text-sm rounded-full">
+              Demander un devis \xE9v\xE9nementiel
+            </a>
+          </div>
+        </section>
+
+        <!-- Famille 04 : Sites Web (Bande sombre Onyx) -->
+        <section id="famille-sites-web" class="mb-20 scroll-mt-28 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-16" style="background-color:#0D0A18; color:#F8F5FF;">
+          <div class="max-w-6xl mx-auto">
+            <div class="mb-10 text-center max-w-3xl mx-auto">
+              <span class="text-xs font-bold uppercase tracking-wider" style="color:#C9A070;">04 \xB7 Pr\xE9sence Web Haute Performance</span>
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold mt-2 mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#F8F5FF;">
+                ${familyWeb.title}
+              </h2>
+              <p class="text-base text-ivoire-violet/75 max-w-2xl mx-auto mb-6">${familyWeb.subtitle}</p>
+              
+              <!-- Vitesse comparative -->
+              <div class="p-4 rounded-2xl border border-white/10 max-w-xl mx-auto text-left" style="background:rgba(255,255,255,0.03);">
+                <p class="text-xs text-ivoire-violet/70 mb-2 font-medium">Temps moyen de chargement mobile sur r\xE9seau 3G/4G locale :</p>
+                <div class="space-y-2 text-xs">
+                  <div>
+                    <div class="flex justify-between mb-1 text-ivoire-violet/60"><span>Standards march\xE9 classiques</span><span>4 \xE0 8 secondes</span></div>
+                    <div class="w-full bg-white/10 h-2 rounded-full"><div class="bg-red-400/80 h-2 rounded-full" style="width:85%"></div></div>
+                  </div>
+                  <div>
+                    <div class="flex justify-between mb-1" style="color:#C9A070;"><span>Architecture Class S ultra-optimis\xE9e</span><span>~1 seconde</span></div>
+                    <div class="w-full bg-white/10 h-2 rounded-full"><div class="h-2 rounded-full" style="width:20%; background-color:#C9A070;"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2 Formats Web -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+              ${websiteFormats.map((fmt) => `
+                <div class="p-6 sm:p-8 rounded-3xl border border-white/10 flex flex-col justify-between" style="background:rgba(255,255,255,0.03);">
+                  <div>
+                    <h3 class="text-2xl font-title font-semibold mb-2" style="font-family:'Cormorant Garamond', Georgia, serif; color:#F8F5FF;">
+                      ${fmt.title}
+                    </h3>
+                    <p class="text-sm text-ivoire-violet/70 mb-6">${fmt.subtitle}</p>
+
+                    <div class="space-y-6">
+                      <!-- Variante Essentiel -->
+                      <div class="p-4 rounded-2xl border border-white/10" style="background:rgba(255,255,255,0.02);">
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-or-champagne mb-1">${fmt.variants.essentiel.label}</h4>
+                        <p class="text-xs italic text-ivoire-violet/70 mb-3">${fmt.variants.essentiel.idealFor}</p>
+                        <ul class="space-y-1.5 text-xs text-ivoire-violet/80">
+                          ${fmt.variants.essentiel.keyPoints.map((kp) => `<li>\u2022 ${kp}</li>`).join("")}
+                        </ul>
+                      </div>
+
+                      <!-- Variante Premium -->
+                      <div class="p-4 rounded-2xl border border-or-champagne/30" style="background:rgba(201,160,112,0.05);">
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-or-champagne mb-1">${fmt.variants.premium.label}</h4>
+                        <p class="text-xs italic text-ivoire-violet/70 mb-3">${fmt.variants.premium.idealFor}</p>
+                        <ul class="space-y-1.5 text-xs text-ivoire-violet/80">
+                          ${fmt.variants.premium.keyPoints.map((kp) => `<li>\u2022 ${kp}</li>`).join("")}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="pt-6 mt-6 border-t border-white/10">
+                    <a href="/#contact?type=website" class="block w-full text-center px-4 py-3 bg-white text-onyx font-semibold text-sm rounded-full">
+                      Commander mon site ${fmt.title}
+                    </a>
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+
+            ${familyWeb.hostingDomainNote ? `
+              <p class="text-xs text-center text-ivoire-violet/60 mb-8 max-w-2xl mx-auto">
+                ${familyWeb.hostingDomainNote}
+              </p>
+            ` : ""}
+
+            <!-- Matrice Web -->
+            <div class="mt-8">
+              <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#F8F5FF;">
+                Comparer les formats de sites web
+              </h3>
+              ${renderTable(familyWeb.comparisonHeaders, familyWeb.comparisonRows, "Matrice comparative \u2014 Sites Web", true)}
+            </div>
+          </div>
+        </section>
+
+        <!-- Famille 05 : Visuels \xE0 l'unit\xE9 -->
+        <section id="famille-visuels" class="mb-20 scroll-mt-28">
+          <div class="p-6 sm:p-8 rounded-3xl bg-white border border-violet-imperial/15 shadow-soft flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="max-w-2xl">
               <div class="flex items-center gap-3 mb-2">
-                <span class="text-sm font-bold text-[#C9A070] uppercase">${offer.number}</span>
-                ${offer.badge ? `<span class="px-3 py-0.5 rounded-full bg-violet-imperial/10 text-violet-imperial text-xs font-semibold">${offer.badge}</span>` : ""}
-                ${offer.isCustomQuoteOnly ? `<span class="px-3 py-0.5 rounded-full bg-[#C9A070]/15 text-[#8A5E2E] text-xs font-semibold">Sur devis personnalis\xE9</span>` : ""}
+                <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">05 \xB7 R\xE9activit\xE9</span>
+                <span class="px-3 py-0.5 rounded-full text-xs font-semibold bg-violet-imperial/10 text-violet-imperial">Livraison garantie sous 24h</span>
               </div>
               <h2 class="text-2xl sm:text-3xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
-                ${offer.title}
+                ${familySingle.title}
               </h2>
-              <p class="text-sm sm:text-base text-onyx/75 mb-4">${offer.subtitle}</p>
+              <p class="text-sm text-onyx/75 mb-3">${familySingle.subtitle}</p>
+              <p class="text-xs italic text-violet-imperial/90 mb-0">
+                ${familySingle.idealFor}
+              </p>
+            </div>
+            <a href="/#contact?type=print" class="shrink-0 px-6 py-3 bg-violet-imperial text-white font-medium text-sm rounded-full">
+              Commander un visuel express
+            </a>
+          </div>
+        </section>
 
-              ${offer.highlightPromise ? `
-                <div class="p-4 rounded-xl bg-violet-imperial/5 border border-violet-imperial/10 mb-4 text-xs font-medium text-onyx/85">
-                  ${offer.highlightPromise}
-                </div>
-              ` : ""}
-
-              ${offer.highlightDetails && offer.highlightDetails.length > 0 ? `
-                <ul class="space-y-2 mb-6 text-sm text-onyx/80">
-                  ${offer.highlightDetails.map((detail) => `
-                    <li class="flex items-start gap-2">
-                      <span class="text-[#6600CC]">\u2713</span>
-                      <span>${detail}</span>
-                    </li>
-                  `).join("")}
-                </ul>
-              ` : ""}
-
-              <!-- Contenu des accord\xE9ons PR\xC9SENT DANS LE DOM INITIAL -->
-              ${offer.accordionDetails && offer.accordionDetails.length > 0 ? `
-                <div class="pt-4 border-t border-violet-imperial/10 space-y-3">
-                  ${offer.accordionDetails.map((acc) => `
-                    <div class="bg-ivoire-violet/50 rounded-xl p-4">
-                      <h3 class="font-semibold text-xs uppercase tracking-wider text-onyx mb-2">${acc.title}</h3>
-                      <ul class="space-y-1.5 text-xs text-onyx/75">
-                        ${acc.items.map((it) => `
-                          <li class="flex items-start gap-2">
-                            <span class="text-[#C9A070]">\u2022</span>
-                            <span>${it}</span>
-                          </li>
-                        `).join("")}
-                      </ul>
-                    </div>
-                  `).join("")}
-                </div>
-              ` : ""}
-
-              <div class="mt-6 pt-4">
-                <a href="/#contact" class="inline-block px-5 py-2.5 bg-[#6600CC] text-white text-sm font-semibold rounded-full">${offer.ctaText}</a>
-              </div>
-            </article>
-          `).join("")}
-        </div>
-
-        <!-- FAQ -->
-        <section class="max-w-4xl mx-auto mb-16">
-          <h2 class="text-2xl sm:text-3xl font-title font-semibold text-center mb-8" style="font-family:'Cormorant Garamond', Georgia, serif;">
+        <!-- FAQ Prestations -->
+        <section aria-labelledby="faq-heading" class="max-w-4xl mx-auto mb-16">
+          <h2 id="faq-heading" class="text-2xl sm:text-3xl font-title font-semibold text-center mb-8" style="font-family:'Cormorant Garamond', Georgia, serif;">
             Questions fr\xE9quentes sur nos prestations
           </h2>
           <div class="space-y-4">
@@ -2560,6 +3171,19 @@ async function handler(req, res) {
               </div>
             `).join("")}
           </div>
+        </section>
+
+        <!-- Bandeau final CTA -->
+        <section class="max-w-4xl mx-auto text-center p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-violet-imperial/10 via-white to-or-champagne/10 border border-violet-imperial/20 mb-16">
+          <h2 class="text-2xl sm:text-3xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
+            Un projet sp\xE9cifique ou une question sur nos formules ?
+          </h2>
+          <p class="text-sm sm:text-base text-onyx/75 max-w-xl mx-auto mb-6">
+            Chaque identit\xE9 de marque est unique. \xC9changeons sur vos ambitions et concevons l'accompagnement le plus pertinent pour vous imposer.
+          </p>
+          <a href="/#contact" class="inline-block px-8 py-3.5 bg-violet-imperial text-white font-medium text-base rounded-full shadow-soft hover:shadow-glow">
+            Prendre contact avec Scott Nana
+          </a>
         </section>
 
         <footer class="py-8 border-t border-violet-imperial/10 text-center text-xs text-onyx/70">
