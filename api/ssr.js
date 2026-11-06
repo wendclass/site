@@ -2548,7 +2548,7 @@ function render404Content() {
 }
 async function handler(req, res) {
   const baseUrl = process.env.SITE_URL || process.env.VITE_SITE_URL || SITE_URL;
-  const rawRoute = req.query.route || req.url?.split("?")[0] || "/";
+  const rawRoute = req.query?.route || req.url?.split("?")[0] || "/";
   const cleanPath = (rawRoute.split("?")[0] || "/").replace(/\/+$/, "") || "/";
   if (/\.(js|css|png|jpg|jpeg|webp|svg|ico|map|woff|woff2|ttf|json|txt|xml|pdf)$/i.test(cleanPath)) {
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
@@ -2556,7 +2556,7 @@ async function handler(req, res) {
     res.setHeader("Cache-Control", "no-store, max-age=0");
     return res.status(404).send("404 Not Found");
   }
-  const slug = cleanPath.startsWith("/blog/") ? cleanPath.slice("/blog/".length) : req.query.slug || "";
+  const slug = cleanPath.startsWith("/blog/") ? cleanPath.slice("/blog/".length) : req.query?.slug || "";
   const projectSlug = cleanPath.startsWith("/projets/") ? cleanPath.slice("/projets/".length) : "";
   let normalizedRoute = "/";
   if (cleanPath === "/contact") {
@@ -2872,10 +2872,10 @@ async function handler(req, res) {
       `;
     };
     const familyLogo = offerFamilies.find((f) => f.id === "logo-identite");
-    const familySocial = offerFamilies.find((f) => f.id === "social-media");
-    const familyEvent = offerFamilies.find((f) => f.id === "evenementiel");
+    const familySocial = offerFamilies.find((f) => f.id === "branding-social-media");
+    const familyEvent = offerFamilies.find((f) => f.id === "communication-evenementielle");
     const familyWeb = offerFamilies.find((f) => f.id === "sites-web");
-    const familySingle = offerFamilies.find((f) => f.id === "visuels-unite");
+    const familySingle = offerFamilies.find((f) => f.id === "visuels-a-lunite");
     ssrContent = `
       <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
         <!-- Ent\xEAte compact -->

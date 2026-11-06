@@ -419,7 +419,7 @@ function render404Content(): string {
 
 export default async function handler(req: any, res: any) {
   const baseUrl = process.env.SITE_URL || process.env.VITE_SITE_URL || SITE_URL;
-  const rawRoute = (req.query.route as string) || req.url?.split('?')[0] || '/';
+  const rawRoute = (req.query?.route as string) || req.url?.split('?')[0] || '/';
   // Clean and normalize incoming route
   const cleanPath = (rawRoute.split('?')[0] || '/').replace(/\/+$/, '') || '/';
 
@@ -433,7 +433,7 @@ export default async function handler(req: any, res: any) {
   const slug =
     (cleanPath.startsWith('/blog/')
       ? cleanPath.slice('/blog/'.length)
-      : (req.query.slug as string) || '');
+      : (req.query?.slug as string) || '');
   const projectSlug =
     (cleanPath.startsWith('/projets/')
       ? cleanPath.slice('/projets/'.length)
@@ -769,10 +769,10 @@ export default async function handler(req: any, res: any) {
     };
 
     const familyLogo = offerFamilies.find(f => f.id === 'logo-identite')!;
-    const familySocial = offerFamilies.find(f => f.id === 'social-media')!;
-    const familyEvent = offerFamilies.find(f => f.id === 'evenementiel')!;
+    const familySocial = offerFamilies.find(f => f.id === 'branding-social-media')!;
+    const familyEvent = offerFamilies.find(f => f.id === 'communication-evenementielle')!;
     const familyWeb = offerFamilies.find(f => f.id === 'sites-web')!;
-    const familySingle = offerFamilies.find(f => f.id === 'visuels-unite')!;
+    const familySingle = offerFamilies.find(f => f.id === 'visuels-a-lunite')!;
 
     ssrContent = `
       <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20" style="font-family:'Jost', sans-serif; color:#0D0A18;">
