@@ -8,31 +8,31 @@ var GUIDE_SITUATIONS = [
     id: "launch-biz",
     text: "Je lance mon activit\xE9",
     targetId: "formule-logo-essentiel",
-    category: "Logo \u2014 Essentiel"
+    category: "Logo : Essentiel"
   },
   {
     id: "coherent-brand",
     text: "Je veux une image coh\xE9rente partout",
     targetId: "formule-logo-standard",
-    category: "Logo \u2014 Standard"
+    category: "Logo : Standard"
   },
   {
     id: "investors-clients",
     text: "Je vise des investisseurs ou de grands clients",
     targetId: "formule-logo-signature",
-    category: "Logo \u2014 Signature"
+    category: "Logo : Signature"
   },
   {
     id: "no-social-manager",
     text: "Je n\u2019ai personne pour animer mes r\xE9seaux",
     targetId: "formule-social-presence",
-    category: "R\xE9seaux \u2014 Pr\xE9sence Continue"
+    category: "R\xE9seaux : Pr\xE9sence Continue"
   },
   {
     id: "sell-continuously",
     text: "Je veux vendre en continu, pas seulement exister en ligne",
     targetId: "formule-social-croissance",
-    category: "R\xE9seaux \u2014 Croissance Acc\xE9l\xE9r\xE9e"
+    category: "R\xE9seaux : Croissance Acc\xE9l\xE9r\xE9e"
   },
   {
     id: "need-website-fast",
@@ -485,7 +485,7 @@ var projectsData = [
     clientGoal: "Faire mieux que l\u2019\xE9dition pr\xE9c\xE9dente de l\u2019\xE9v\xE9nement en termes de visibilit\xE9 et d\u2019engouement.",
     designedSolution: "Conception principale autour d\u2019un carrousel cr\xE9atif et strat\xE9gique surfant sur la Saint-Valentin ; ensemble de visuels compl\xE9mentaires comprenant l\u2019annonce de stand disponible, les concours et la couverture officielle du rapport d\u2019activit\xE9.",
     result: "Client pleinement satisfait de la dynamique cr\xE9\xE9e et de la coh\xE9rence globale sur tous les canaux.",
-    testimonialPlaceholder: "\xAB Scott a su capter l\u2019esprit de notre \xE9v\xE9nement et concevoir des supports qui ont imm\xE9diatement suscit\xE9 des r\xE9actions et des inscriptions. \xBB \u2014 Comit\xE9 d\u2019organisation 72h CJ",
+    testimonialPlaceholder: "\xAB Scott a su capter l\u2019esprit de notre \xE9v\xE9nement et concevoir des supports qui ont imm\xE9diatement suscit\xE9 des r\xE9actions et des inscriptions. \xBB - Comit\xE9 d\u2019organisation 72h CJ",
     heroImage: "/assets/projets/72h-cj-2026/Carrousel 0 72h 2026.png",
     gallery: [
       {
@@ -494,15 +494,15 @@ var projectsData = [
       },
       {
         src: "/assets/projets/72h-cj-2026/Carrousel 1 72h 2026.png",
-        caption: "Carrousel \u2014 Slide 1 : Le d\xE9clic"
+        caption: "Carrousel - Slide 1 : Le d\xE9clic"
       },
       {
         src: "/assets/projets/72h-cj-2026/Carrousel 2 72h 2026.png",
-        caption: "Carrousel \u2014 Slide 2 : La promesse"
+        caption: "Carrousel - Slide 2 : La promesse"
       },
       {
         src: "/assets/projets/72h-cj-2026/Carrousel 3 72h 2026.png",
-        caption: "Carrousel \u2014 Slide 3 : L\u2019appel \xE0 l\u2019action"
+        caption: "Carrousel - Slide 3 : L\u2019appel \xE0 l\u2019action"
       },
       {
         src: "/assets/projets/72h-cj-2026/Cover Rapport d'Activit\xE9s 72H 2026.png",
@@ -510,11 +510,11 @@ var projectsData = [
       },
       {
         src: "/assets/projets/72h-cj-2026/Stands disponibles 72h 2026.png",
-        caption: "Annonce commerciale \u2014 R\xE9servation des stands exposants"
+        caption: "Annonce commerciale - R\xE9servation des stands exposants"
       },
       {
         src: "/assets/projets/72h-cj-2026/Final des Comp\xE9titions v1.png",
-        caption: "Visuel officiel \u2014 Grande finale des comp\xE9titions"
+        caption: "Visuel officiel - Grande finale des comp\xE9titions"
       },
       {
         src: "/assets/projets/72h-cj-2026/Ambassadrice & Ambassadeur 72h 2026 v2.1.png",
@@ -526,7 +526,7 @@ var projectsData = [
       },
       {
         src: "/assets/projets/72h-cj-2026/Visuel Prix Pazouknam Ouedraogo v2.png",
-        caption: "Visuel de distinction \u2014 Prix Pazouknam Ou\xE9draogo"
+        caption: "Visuel de distinction - Prix Pazouknam Ou\xE9draogo"
       },
       {
         src: "/assets/projets/72h-cj-2026/8 mars 72h 2026.png",
@@ -538,15 +538,15 @@ var projectsData = [
       },
       {
         src: "/assets/projets/72h-cj-2026/Chronogramme Jour 1 72h ed 26 PAD.png",
-        caption: "Programme d\xE9taill\xE9 \u2014 Jour 1"
+        caption: "Programme d\xE9taill\xE9 - Jour 1"
       },
       {
         src: "/assets/projets/72h-cj-2026/Chronogramme Jour 2 72h 26 PAD.png",
-        caption: "Programme d\xE9taill\xE9 \u2014 Jour 2"
+        caption: "Programme d\xE9taill\xE9 - Jour 2"
       },
       {
         src: "/assets/projets/72h-cj-2026/Chronogramme Jour 3 72h 26 PAD.png",
-        caption: "Programme d\xE9taill\xE9 \u2014 Jour 3"
+        caption: "Programme d\xE9taill\xE9 - Jour 3"
       }
     ]
   },
@@ -560,7 +560,7 @@ var projectsData = [
     clientGoal: "Faire conna\xEEtre un nouveau format de th\xE9rapie destin\xE9 aux hommes, \xE0 l\u2019occasion du mois de la sant\xE9 mentale.",
     designedSolution: "Une identit\xE9 visuelle pens\xE9e pour apaiser l\u2019esprit et lib\xE9rer des surcharges mentales : palette chromatique douce, typographie bienveillante et gestion a\xE9r\xE9e des espaces n\xE9gatifs, orchestr\xE9es au service d\u2019un message profond\xE9ment humain.",
     result: "Client satisfait de l\u2019accueil bienveillant et de la justesse du ton v\xE9hicul\xE9 par chaque support.",
-    testimonialPlaceholder: "\xAB L\u2019approche visuelle a imm\xE9diatement pos\xE9 un cadre rassurant pour les participants. Scott a traduit avec pudeur et force ce que nous voulions transmettre. \xBB \u2014 Initiateur du projet",
+    testimonialPlaceholder: "\xAB L\u2019approche visuelle a imm\xE9diatement pos\xE9 un cadre rassurant pour les participants. Scott a traduit avec pudeur et force ce que nous voulions transmettre. \xBB - Initiateur du projet",
     heroImage: "/assets/projets/mon-frere-parle/Mon_Fr\xE8re_Parle_Visuel_Principal.jpg",
     gallery: [
       {
@@ -597,15 +597,15 @@ var projectsData = [
       },
       {
         src: "/assets/projets/mon-frere-parle/Mon_Fr\xE8re_Parle_Coming_soon_0.jpg",
-        caption: "Teaser \u2014 Annonce Coming Soon 1"
+        caption: "Teaser - Annonce Coming Soon 1"
       },
       {
         src: "/assets/projets/mon-frere-parle/Mon_Fr\xE8re_Parle_Coming_soon_2.jpg",
-        caption: "Teaser \u2014 Annonce Coming Soon 2"
+        caption: "Teaser - Annonce Coming Soon 2"
       },
       {
         src: "/assets/projets/mon-frere-parle/Mon_Fr\xE8re_Parle_Coming_soon_3.jpg",
-        caption: "Teaser \u2014 Annonce Coming Soon 3"
+        caption: "Teaser - Annonce Coming Soon 3"
       },
       {
         src: "/assets/projets/mon-frere-parle/Mon_Fr\xE8re_Parle_D\xE9compte.jpg",
@@ -645,9 +645,9 @@ var projectsData = [
     tagline: "Une conception \xE9pur\xE9e pour marquer les esprits d\xE8s la premi\xE8re \xE9dition.",
     accroche: "Une conception \xE9pur\xE9e pour marquer les esprits d\xE8s la premi\xE8re \xE9dition.",
     clientGoal: "Captiver et marquer les esprits pour installer la toute premi\xE8re \xE9dition de l\u2019\xE9v\xE9nement.",
-    designedSolution: "Une direction artistique ax\xE9e sur la simplicit\xE9 radicale et l\u2019espace, pens\xE9e pour retenir l\u2019attention du public sans surcharger son esprit \u2014 en r\xE9sonance directe avec le concept de d\xE9connexion num\xE9rique.",
+    designedSolution: "Une direction artistique ax\xE9e sur la simplicit\xE9 radicale et l\u2019espace, pens\xE9e pour retenir l\u2019attention du public sans surcharger son esprit - en r\xE9sonance directe avec le concept de d\xE9connexion num\xE9rique.",
     result: "Client satisfait du niveau d\u2019attention et de la m\xE9morisation forte suscit\xE9s par la campagne.",
-    testimonialPlaceholder: "\xAB Les visuels ont donn\xE9 vie au concept avant m\xEAme le jour J. L\u2019impact a \xE9t\xE9 instantan\xE9 aupr\xE8s de notre audience. \xBB \u2014 \xC9quipe Off Day",
+    testimonialPlaceholder: "\xAB Les visuels ont donn\xE9 vie au concept avant m\xEAme le jour J. L\u2019impact a \xE9t\xE9 instantan\xE9 aupr\xE8s de notre audience. \xBB - \xC9quipe Off Day",
     disclaimer: "Note d\u2019attribution : Le logo de cet \xE9v\xE9nement a \xE9t\xE9 con\xE7u par un autre graphiste via intelligence artificielle, sans intervention cr\xE9ative de Scott Nana / Class S. L\u2019intervention de Class S a port\xE9 exclusivement sur la strat\xE9gie visuelle, la conception graphique des supports et la campagne de communication.",
     heroImage: "/assets/projets/off-day/Off_Day_Visual_v2.2 Corrig\xE9.png",
     gallery: [
@@ -657,23 +657,23 @@ var projectsData = [
       },
       {
         src: "/assets/projets/off-day/Off_Day_StayFree_00.png",
-        caption: "S\xE9rie Stay Free \u2014 Concept 00"
+        caption: "S\xE9rie Stay Free - Concept 00"
       },
       {
         src: "/assets/projets/off-day/Off_Day_StayFree_01.png",
-        caption: "S\xE9rie Stay Free \u2014 Concept 01"
+        caption: "S\xE9rie Stay Free - Concept 01"
       },
       {
         src: "/assets/projets/off-day/Off_Day_StayFree_02.png",
-        caption: "S\xE9rie Stay Free \u2014 Concept 02"
+        caption: "S\xE9rie Stay Free - Concept 02"
       },
       {
         src: "/assets/projets/off-day/Off_Day_StayFree_03.png",
-        caption: "S\xE9rie Stay Free \u2014 Concept 03"
+        caption: "S\xE9rie Stay Free - Concept 03"
       },
       {
         src: "/assets/projets/off-day/Off_Day_StayFree_04.png",
-        caption: "S\xE9rie Stay Free \u2014 Concept 04"
+        caption: "S\xE9rie Stay Free - Concept 04"
       },
       {
         src: "/assets/projets/off-day/Off_Day_Movie_Night_14th_v2.2.png",
@@ -693,7 +693,7 @@ var projectsData = [
       },
       {
         src: "/assets/projets/off-day/Off_Day_Mode_Snooz_v2.png",
-        caption: "Concept visuel \u2014 Mode Snooze activ\xE9"
+        caption: "Concept visuel - Mode Snooze activ\xE9"
       },
       {
         src: "/assets/projets/off-day/Off_Day_Invisibilit\xE9_D\xE9fi.png",
@@ -705,39 +705,39 @@ var projectsData = [
       },
       {
         src: "/assets/projets/off-day/Off_Day_Coming_Soon_v2.png",
-        caption: "Teaser d\u2019annonce \u2014 Coming Soon v1"
+        caption: "Teaser d\u2019annonce - Coming Soon v1"
       },
       {
         src: "/assets/projets/off-day/Off_Day_Coming_Soon_2_v2.png",
-        caption: "Teaser d\u2019annonce \u2014 Coming Soon v2"
+        caption: "Teaser d\u2019annonce - Coming Soon v2"
       },
       {
         src: "/assets/projets/off-day/Off_Day_Coming_Soon_3.2.png",
-        caption: "Teaser d\u2019annonce \u2014 Coming Soon v3"
+        caption: "Teaser d\u2019annonce - Coming Soon v3"
       },
       {
         src: "/assets/projets/off-day/Profis_Quiz_OffDay_Le_Conscient.png",
-        caption: "Profil Quiz \u2014 Le Conscient"
+        caption: "Profil Quiz - Le Conscient"
       },
       {
         src: "/assets/projets/off-day/Profis_Quiz_OffDay_La_Consciente.png",
-        caption: "Profil Quiz \u2014 La Consciente"
+        caption: "Profil Quiz - La Consciente"
       },
       {
         src: "/assets/projets/off-day/Profis_Quiz_OffDay_Le_Fragile.png",
-        caption: "Profil Quiz \u2014 Le Fragile"
+        caption: "Profil Quiz - Le Fragile"
       },
       {
         src: "/assets/projets/off-day/Profis_Quiz_OffDay_La_Fragile.png",
-        caption: "Profil Quiz \u2014 La Fragile"
+        caption: "Profil Quiz - La Fragile"
       },
       {
         src: "/assets/projets/off-day/Profis_Quiz_OffDay_Le_Zombie_connecte.png",
-        caption: "Profil Quiz \u2014 Le Zombie connect\xE9"
+        caption: "Profil Quiz - Le Zombie connect\xE9"
       },
       {
         src: "/assets/projets/off-day/Profis_Quiz_OffDay_La_Zombie_connectee.png",
-        caption: "Profil Quiz \u2014 La Zombie connect\xE9e"
+        caption: "Profil Quiz - La Zombie connect\xE9e"
       },
       {
         src: "/assets/projets/off-day/Off_Day_Quiz_Teaser.png",
@@ -779,40 +779,40 @@ var projectsData = [
     clientGoal: "Obtenir des visuels de qualit\xE9 pour alimenter r\xE9guli\xE8rement sa page Facebook et lancer des campagnes publicitaires performantes.",
     designedSolution: "Cr\xE9ation en amont d\u2019une mini-charte graphique coh\xE9rente (palette, codes typographiques, templates de mise en page) \xE0 partir du logo initial, suivie de la production mensuelle de visuels percutants adapt\xE9s aux temps forts du caf\xE9.",
     result: "Les nouveaux visuels ont nettement capt\xE9 et attir\xE9 davantage l\u2019attention que les publications ant\xE9rieures du client.",
-    testimonialPlaceholder: "\xAB Nos clients nous ont fait des retours imm\xE9diats sur le changement d\u2019image de la page. C\u2019est beaucoup plus pro et nos offres ressortent enfin. \xBB \u2014 G\xE9rance Caf\xE9 Inspire",
+    testimonialPlaceholder: "\xAB Nos clients nous ont fait des retours imm\xE9diats sur le changement d\u2019image de la page. C\u2019est beaucoup plus pro et nos offres ressortent enfin. \xBB - G\xE9rance Caf\xE9 Inspire",
     heroImage: "/assets/projets/cafe-inspire/01_Caf\xE9 Pyramide v3.png",
     gallery: [
       {
         src: "/assets/projets/cafe-inspire/01_Caf\xE9 Pyramide v3.png",
-        caption: "Mise en avant signature \u2014 Caf\xE9 Pyramide (Version principale)"
+        caption: "Mise en avant signature - Caf\xE9 Pyramide (Version principale)"
       },
       {
         src: "/assets/projets/cafe-inspire/02_Caf\xE9 Pyramide v2.png",
-        caption: "D\xE9clinaison visuelle \u2014 Caf\xE9 Pyramide"
+        caption: "D\xE9clinaison visuelle - Caf\xE9 Pyramide"
       },
       {
         src: "/assets/projets/cafe-inspire/03_Anniversaire_Caf\xE9_Inspire_v2.1.png",
-        caption: "Visuel \xE9v\xE9nementiel \u2014 Anniversaire Caf\xE9 Inspire"
+        caption: "Visuel \xE9v\xE9nementiel - Anniversaire Caf\xE9 Inspire"
       },
       {
         src: "/assets/projets/cafe-inspire/04_Livraison_Gratuite_Mercredi_Caf\xE9 Inspire v2.png",
-        caption: "Offre promotionnelle \u2014 Livraison gratuite du mercredi"
+        caption: "Offre promotionnelle - Livraison gratuite du mercredi"
       },
       {
         src: "/assets/projets/cafe-inspire/05_Bon_Mois_Septembre v2.png",
-        caption: "Visuel relationnel & v\u0153ux \u2014 Bon mois de septembre"
+        caption: "Visuel relationnel & v\u0153ux - Bon mois de septembre"
       },
       {
         src: "/assets/projets/cafe-inspire/06_Tacos_Caf\xE9_Inspire v2.png",
-        caption: "Mise en avant gourmande \u2014 Tacos & restauration"
+        caption: "Mise en avant gourmande - Tacos & restauration"
       },
       {
         src: "/assets/projets/cafe-inspire/07_Hiring_AideChef.png",
-        caption: "Avis de recrutement \u2014 Aide Chef cuisinier"
+        caption: "Avis de recrutement - Aide Chef cuisinier"
       },
       {
         src: "/assets/projets/cafe-inspire/08_Nouveau_Plat_Caf\xE9 Inspire.png",
-        caption: "Lancement au menu \u2014 Nouveau plat Caf\xE9 Inspire"
+        caption: "Lancement au menu - Nouveau plat Caf\xE9 Inspire"
       }
     ]
   },
@@ -826,7 +826,7 @@ var projectsData = [
     clientGoal: "Rendre plus faciles et stimulantes les r\xE9visions des \xE9tudiants et \xE9l\xE8ves gr\xE2ce \xE0 une identit\xE9 visuelle distincte, m\xE9morable et structur\xE9e.",
     designedSolution: "Cr\xE9ation d\u2019une identit\xE9 unique avec une palette chromatique audacieuse rompant avec les codes acad\xE9miques conventionnels, et conception d\u2019un logotype original garanti sans similitude avec les marques existantes sur les moteurs de recherche.",
     result: "Client pleinement satisfait du positionnement novateur et de la reconnaissance imm\xE9diate de la marque.",
-    testimonialPlaceholder: "\xAB L\u2019identit\xE9 Bang a tout de suite trouv\xE9 son public. Elle d\xE9gage exactement l\u2019\xE9nergie moderne et motivante dont les \xE9tudiants ont besoin. \xBB \u2014 Fondateur Bang",
+    testimonialPlaceholder: "\xAB L\u2019identit\xE9 Bang a tout de suite trouv\xE9 son public. Elle d\xE9gage exactement l\u2019\xE9nergie moderne et motivante dont les \xE9tudiants ont besoin. \xBB - Fondateur Bang",
     heroImage: "/assets/projets/bang/Pr\xE9sentation_bang_logo.png",
     gallery: [
       {
@@ -924,7 +924,7 @@ var SITE_CONFIG = {
   locality: "Ouagadougou",
   country: "Burkina Faso",
   anchorPhrase: "Class S est un studio d'identit\xE9 visuelle \xE0 Ouagadougou, au service des entrepreneurs et des PME.",
-  defaultTitle: "Class S \u2014 L'identit\xE9 visuelle qui vous impose | Scott Nana",
+  defaultTitle: "Class S \u2022 L'identit\xE9 visuelle qui vous impose | Scott Nana",
   defaultDescription: "Class S est un studio d'identit\xE9 visuelle \xE0 Ouagadougou, au service des entrepreneurs et des PME. D'une image qui existe \xE0 une image qui fait vendre.",
   logoUrl: `${SITE_URL}/assets/logo/logo-violet.png`,
   // Bannière de partage officielle 1200x630 (PNG, < 300 Ko)
@@ -2806,7 +2806,7 @@ async function handler(req, res) {
     `;
   } else if (normalizedRoute === "/offres") {
     pageTitle = "Formules & Accompagnement Brand Design | Class S";
-    pageDesc = "D\xE9couvrez nos 5 familles d'accompagnement : Logo & Identit\xE9 Visuelle, Branding Social Media, Communication \xC9v\xE9nementielle, Sites Web et Visuels 24h \xE0 Ouagadougou.";
+    pageDesc = "D\xE9couvrez nos 5 forfaits d'accompagnement : Logo & Identit\xE9 Visuelle, Branding Social Media, Communication \xC9v\xE9nementielle, Sites Web et Visuels 24h \xE0 Ouagadougou.";
     pageCanonical = `${baseUrl}/offres`;
     jsonLd = {
       "@context": "https://schema.org",
@@ -2821,7 +2821,7 @@ async function handler(req, res) {
       },
       mainEntity: {
         "@type": "OfferCatalog",
-        name: "Catalogue des solutions d'accompagnement Class S",
+        name: "Catalogue des forfaits d'accompagnement Class S",
         numberOfItems: offerFamilies.length,
         itemListElement: offerFamilies.map((fam, index) => ({
           "@type": "ListItem",
@@ -2858,9 +2858,9 @@ async function handler(req, res) {
                   <th scope="row" style="padding:10px 16px; font-weight:500;">${r.label}</th>
                   ${headers.map((h) => {
         const val = r.values[h.id];
-        let text = "\u2014";
+        let text = "-";
         if (val === true) text = "\u2713 Inclus";
-        else if (val === false) text = "\u2014";
+        else if (val === false) text = "-";
         else if (val) text = String(val);
         return `<td style="padding:10px 16px; text-align:center;">${text}</td>`;
       }).join("")}
@@ -2893,7 +2893,7 @@ async function handler(req, res) {
             <p class="text-base sm:text-lg font-title italic" style="font-family:'Cormorant Garamond', Georgia, serif;">
               \xAB Chaque \xE9l\xE9ment de votre identit\xE9 sera construit pour qu'elle s'impose dans votre march\xE9 et ne se noie pas parmi vos concurrents. \xBB
             </p>
-            <span class="text-xs text-violet-imperial font-semibold uppercase tracking-wider mt-1 block">\u2014 Engagement de conception Class S</span>
+            <span class="text-xs text-violet-imperial font-semibold uppercase tracking-wider mt-1 block">\u2022 Engagement de conception Class S</span>
           </div>
         </header>
 
@@ -2916,7 +2916,7 @@ async function handler(req, res) {
         </section>
 
         <!-- Navigation ancres -->
-        <nav aria-label="Familles d'offres" class="mb-14 flex flex-wrap gap-2.5 justify-center">
+        <nav aria-label="Forfaits d'offres" class="mb-14 flex flex-wrap gap-2.5 justify-center">
           ${offerFamilies.map((fam) => `
             <a href="#${fam.anchorId}" class="px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-white border border-violet-imperial/20 text-onyx hover:bg-violet-imperial hover:text-white transition-colors">
               ${fam.navLabel}
@@ -2924,10 +2924,10 @@ async function handler(req, res) {
           `).join("")}
         </nav>
 
-        <!-- Famille 01 : Logo & Identit\xE9 Visuelle -->
+        <!-- Forfait 01 : Logo & Identit\xE9 Visuelle -->
         <section id="famille-logo" class="mb-20 scroll-mt-28">
           <div class="mb-8">
-            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">01 \xB7 Logo & Identit\xE9</span>
+            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">01 \xB7 Forfait Logo & Identit\xE9</span>
             <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mt-1 mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
               ${familyLogo.title}
             </h2>
@@ -2973,14 +2973,14 @@ async function handler(req, res) {
             <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
               Comparer les formules Logo & Identit\xE9 en d\xE9tail
             </h3>
-            ${renderTable(familyLogo.comparisonHeaders, familyLogo.comparisonRows, "Matrice comparative \u2014 Logo & Identit\xE9")}
+            ${renderTable(familyLogo.comparisonHeaders, familyLogo.comparisonRows, "Matrice comparative : Logo & Identit\xE9")}
           </div>
         </section>
 
-        <!-- Famille 02 : Branding Social Media -->
+        <!-- Forfait 02 : Branding Social Media -->
         <section id="famille-social" class="mb-20 scroll-mt-28">
           <div class="mb-8">
-            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">02 \xB7 R\xE9seaux Sociaux</span>
+            <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">02 \xB7 Forfait R\xE9seaux Sociaux</span>
             <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mt-1 mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
               ${familySocial.title}
             </h2>
@@ -3020,15 +3020,15 @@ async function handler(req, res) {
             <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
               Comparer les formules R\xE9seaux Sociaux en d\xE9tail
             </h3>
-            ${renderTable(familySocial.comparisonHeaders, familySocial.comparisonRows, "Matrice comparative \u2014 Branding Social Media")}
+            ${renderTable(familySocial.comparisonHeaders, familySocial.comparisonRows, "Matrice comparative : Branding Social Media")}
           </div>
         </section>
 
-        <!-- Famille 03 : Communication \xC9v\xE9nementielle -->
+        <!-- Forfait 03 : Communication \xC9v\xE9nementielle -->
         <section id="famille-evenementiel" class="mb-20 scroll-mt-28">
           <div class="p-6 sm:p-10 rounded-3xl bg-white border border-or-champagne/30 shadow-soft">
             <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-              <span class="text-xs font-bold text-or-champagne uppercase tracking-wider">03 \xB7 \xC9v\xE9nementiel</span>
+              <span class="text-xs font-bold text-or-champagne uppercase tracking-wider">03 \xB7 Forfait \xC9v\xE9nementiel</span>
               <span class="px-3 py-1 rounded-full text-xs font-semibold bg-or-champagne/15 text-[#8A5E2E]">Sur devis personnalis\xE9</span>
             </div>
             <h2 class="text-3xl sm:text-4xl font-title font-semibold text-onyx mb-3" style="font-family:'Cormorant Garamond', Georgia, serif;">
@@ -3054,11 +3054,11 @@ async function handler(req, res) {
           </div>
         </section>
 
-        <!-- Famille 04 : Sites Web (Bande sombre Onyx) -->
+        <!-- Forfait 04 : Sites Web (Bande sombre Onyx) -->
         <section id="famille-sites-web" class="mb-20 scroll-mt-28 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-16" style="background-color:#0D0A18; color:#F8F5FF;">
           <div class="max-w-6xl mx-auto">
             <div class="mb-10 text-center max-w-3xl mx-auto">
-              <span class="text-xs font-bold uppercase tracking-wider" style="color:#C9A070;">04 \xB7 Pr\xE9sence Web Haute Performance</span>
+              <span class="text-xs font-bold uppercase tracking-wider" style="color:#C9A070;">04 \xB7 Forfait Sites Web Haute Performance</span>
               <h2 class="text-3xl sm:text-4xl lg:text-5xl font-title font-semibold mt-2 mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#F8F5FF;">
                 ${familyWeb.title}
               </h2>
@@ -3131,17 +3131,17 @@ async function handler(req, res) {
               <h3 class="text-xl font-title font-semibold mb-3" style="font-family:'Cormorant Garamond', Georgia, serif; color:#F8F5FF;">
                 Comparer les formats de sites web
               </h3>
-              ${renderTable(familyWeb.comparisonHeaders, familyWeb.comparisonRows, "Matrice comparative \u2014 Sites Web", true)}
+              ${renderTable(familyWeb.comparisonHeaders, familyWeb.comparisonRows, "Matrice comparative : Sites Web", true)}
             </div>
           </div>
         </section>
 
-        <!-- Famille 05 : Visuels \xE0 l'unit\xE9 -->
+        <!-- Forfait 05 : Visuels \xE0 l'unit\xE9 -->
         <section id="famille-visuels" class="mb-20 scroll-mt-28">
           <div class="p-6 sm:p-8 rounded-3xl bg-white border border-violet-imperial/15 shadow-soft flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="max-w-2xl">
               <div class="flex items-center gap-3 mb-2">
-                <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">05 \xB7 R\xE9activit\xE9</span>
+                <span class="text-xs font-bold text-violet-imperial uppercase tracking-wider">05 \xB7 Forfait R\xE9activit\xE9 24h</span>
                 <span class="px-3 py-0.5 rounded-full text-xs font-semibold bg-violet-imperial/10 text-violet-imperial">Livraison garantie sous 24h</span>
               </div>
               <h2 class="text-2xl sm:text-3xl font-title font-semibold text-onyx mb-2" style="font-family:'Cormorant Garamond', Georgia, serif;">
